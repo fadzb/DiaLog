@@ -24,15 +24,15 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-  return (
-    <View style={styles.container}>
-      <Text>
-        Healthy App
-      </Text>
-    </View>
-  );
-};
+import { LoginScreen } from './screens/LoginScreen';
+import { RouterComponent } from './Router'
+
+const App = () => (
+  <View style={{ flex: 1 }}>
+    <StatusBar barStyle='default' backgroundColor={'blue'} />
+    <RouterComponent></RouterComponent>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   }
-
 });
 
 export default App;
