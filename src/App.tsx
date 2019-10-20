@@ -1,28 +1,8 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import { LoginScreen } from './screens/LoginScreen';
+import { View } from 'react-native';
 import { RouterComponent } from './Router';
 import { connect } from 'react-redux';
 import { addPlace } from './actions/place';
-
-const state = {
-  placeName: '',
-  places: [],
-};
 
 const App = () => (
   <View style={{ flex: 1 }}>
