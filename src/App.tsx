@@ -4,6 +4,11 @@ import { RouterComponent } from './Router';
 import { connect } from 'react-redux';
 import { addPlace } from './actions/place';
 
+// const state = {
+//   placeName: '',
+//   places: [],
+// };
+
 const App = () => (
   <View style={{ flex: 1 }}>
     <RouterComponent></RouterComponent>
