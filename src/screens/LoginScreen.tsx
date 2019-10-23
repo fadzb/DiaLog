@@ -11,7 +11,10 @@ export class LoginScreen extends Component {
     return (
       <View style={styles.container}>
         <Text>Welcome to HealthyApp. Login/Register</Text>
-        <Button label="" onPress={this.handleLoginPress}></Button>
+        <Button
+          label="Login"
+          onPress={this.handleLoginPress}
+        ></Button>
       </View>
     );
   }

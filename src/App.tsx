@@ -15,15 +15,15 @@ const App = () => (
   </View>
 );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
-    places: state.places.places,
+    places: state.places,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {
   return {
-    add: name => {
+    add: (name: any) => {
       dispatch(addPlace(name));
     },
   };
