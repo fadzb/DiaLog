@@ -10,8 +10,11 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.22",
+    "@emotion/native": "^10.0.22",
     "@types/react-redux": "^7.1.5",
     "prettier": "^1.18.2",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-router-flux": "^4.0.6",
