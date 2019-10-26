@@ -1,4 +1,3 @@
-// import { css } from '@emotion/native';
 import colors from '../colors';
 import { Component } from 'react';
 import { StyleSheet } from 'react-native';
