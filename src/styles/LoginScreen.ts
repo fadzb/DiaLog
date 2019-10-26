@@ -1,19 +1,25 @@
-import { css } from '@emotion/native';
+// import { css } from '@emotion/native';
 import colors from '../colors';
 import { Component } from 'react';
+import { StyleSheet } from 'react-native';
 
-export class Styles {
-  static container = css`
-    flex: 1;
-    background-color: ${colors.GRAY_ULTRA_LIGHT};
-    justify-content: space-between;
-    align-items: center;
-    paddingtop: 50;
-  `;
-
-  static form = css`
-    flex: 1;
-    justifycontent: center;
-    width: 80%;
-  `;
-}
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.GRAY_ULTRA_LIGHT,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 50,
+  },
+  form: {
+    bottom: 300,
+    justifyContent: 'center',
+    width: '80%',
+  },
+  text: {
+    height: 40,
+    borderColor: colors.BLACK,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 20,
+  },
+});
