@@ -20,7 +20,7 @@ const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => (
   <View style={{ flex: 1 }}>
-    <LoginScreen />
+    <AppContainer />
   </View>
 );
 
