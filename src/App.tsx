@@ -2,29 +2,30 @@ import React from 'react';
 import { View } from 'react-native';
 import { RouterComponent } from './Router';
 import { connect } from 'react-redux';
-import { addPlace } from './actions/place';
+import { addName } from './actions/actions';
+import { LoginScreen } from './screens/LoginScreen';
 
-// const state = {
-//   placeName: '',
-//   places: [],
-// };
+const state = {
+  name: 'user',
+};
 
 const App = () => (
   <View style={{ flex: 1 }}>
-    <RouterComponent></RouterComponent>
+    {/* <RouterComponent></RouterComponent> */}
+    <LoginScreen />
   </View>
 );
 
 const mapStateToProps = (state: any) => {
   return {
-    places: state.places,
+    name: state.name,
   };
 };
 
 const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {
   return {
-    add: (name: any) => {
-      dispatch(addPlace(name));
+    addName: (name: any) => {
+      dispatch(addName(name));
     },
   };
 };

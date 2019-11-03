@@ -4,6 +4,9 @@ import Button from '../components/Button';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import { styles } from '../styles/LoginScreen';
 import colors from '../colors';
+import { addName } from '../actions/actions';
+import { connect } from 'react-redux';
+import App from '../App';
 const EMAIL_PLACEHOLDER = 'Email';
 const PASSWORD_PLACEHOLDER = 'Password';
 const LOGIN_LABEL = 'Login';
@@ -52,3 +55,16 @@ export class LoginScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    name: state.name,
+  };
+};
+
+const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginScreen);
