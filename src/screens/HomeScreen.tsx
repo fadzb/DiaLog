@@ -3,6 +3,9 @@ import { View, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { LoginScreen } from './LoginScreen';
+import { CarbScreen } from './CarbScreen';
+import { LogActScreen } from './LogActScreen';
+import { TrainScreen } from './TrainScreen';
 import Button from '../components/Button';
 
 class HomeScreen extends React.Component {
@@ -12,8 +15,20 @@ class HomeScreen extends React.Component {
     console.log(props);
   }
 
-  handleButtonPress = () => {
+  handleLoginNav = () => {
     this.props.navigation.navigate('Login', {});
+  };
+
+  handleEstimateNav = () => {
+    this.props.navigation.navigate('Carb', {});
+  };
+
+  handleLogActNav = () => {
+    this.props.navigation.navigate('LogAct', {});
+  };
+
+  handleTrainNav = () => {
+    this.props.navigation.navigate('Train', {});
   };
 
   render() {
@@ -28,7 +43,19 @@ class HomeScreen extends React.Component {
         <Text>Home Screen</Text>
         <Button
           label={'Go to login page'}
-          onPress={this.handleButtonPress}
+          onPress={this.handleLoginNav}
+        />
+        <Button
+          label={'Estimate CHO'}
+          onPress={this.handleEstimateNav}
+        />
+        <Button
+          label={'Log Activity'}
+          onPress={this.handleLogActNav}
+        />
+        <Button
+          label={'Training Modules'}
+          onPress={this.handleTrainNav}
         />
       </View>
     );
@@ -38,8 +65,10 @@ class HomeScreen extends React.Component {
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
-    // Carb: CarbScreen,
     Login: LoginScreen,
+    Carb: CarbScreen,
+    LogAct: LogActScreen,
+    Train: TrainScreen,
   },
   {
     initialRouteName: 'Home',
