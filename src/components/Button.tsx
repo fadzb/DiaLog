@@ -19,7 +19,7 @@ class Button extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue',

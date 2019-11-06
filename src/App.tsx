@@ -2,29 +2,38 @@ import React from 'react';
 import { View } from 'react-native';
 import { RouterComponent } from './Router';
 import { connect } from 'react-redux';
-import { addPlace } from './actions/place';
+import { addName } from './actions/actions';
+import { LoginScreen } from './screens/LoginScreen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import HomeScreen from './screens/HomeScreen';
 
-// const state = {
-//   placeName: '',
-//   places: [],
-// };
+const state = {
+  name: 'user',
+};
+
+const AppNavigator = createStackNavigator({
+  Home: HomeScreen,
+});
+
+const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => (
   <View style={{ flex: 1 }}>
-    <RouterComponent></RouterComponent>
+    <AppContainer />
   </View>
 );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
   return {
-    places: state.places.places,
+    name: state.name,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {
   return {
-    add: name => {
-      dispatch(addPlace(name));
+    addName: (name: any) => {
+      dispatch(addName(name));
     },
   };
 };

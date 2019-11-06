@@ -7,10 +7,9 @@ export class RouterComponent extends Component {
     return (
       <Router>
         <Stack key="root">
-          {/* LOGIN SCREEN */}
-          {/* <Stack key='login' type={ActionConst.REPLACE} hideNavBar> */}
-          <Scene component={LoginScreen} />
-          {/* </Stack> */}
+          <Stack key="login" hideNavBar>
+            <Scene component={LoginScreen} />
+          </Stack>
         </Stack>
       </Router>
     );
