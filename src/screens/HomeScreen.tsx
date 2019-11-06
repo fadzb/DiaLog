@@ -8,6 +8,13 @@ import { LogActScreen } from './LogActScreen';
 import { TrainScreen } from './TrainScreen';
 import Button from '../components/Button';
 
+const labels = {
+  LOGIN: 'Login',
+  CARB: 'Estimate CHO',
+  LOG_ACT: 'Log Activity',
+  TRAIN: 'Training Modules',
+};
+
 class HomeScreen extends React.Component {
   constructor(props: Readonly<{}>) {
     super(props);
@@ -41,22 +48,10 @@ class HomeScreen extends React.Component {
         }}
       >
         <Text>Home Screen</Text>
-        <Button
-          label={'Go to login page'}
-          onPress={this.handleLoginNav}
-        />
-        <Button
-          label={'Estimate CHO'}
-          onPress={this.handleEstimateNav}
-        />
-        <Button
-          label={'Log Activity'}
-          onPress={this.handleLogActNav}
-        />
-        <Button
-          label={'Training Modules'}
-          onPress={this.handleTrainNav}
-        />
+        <Button label={labels.LOGIN} onPress={this.handleLoginNav} />
+        <Button label={labels.CARB} onPress={this.handleEstimateNav} />
+        <Button label={labels.LOG_ACT} onPress={this.handleLogActNav} />
+        <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
       </View>
     );
   }

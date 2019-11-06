@@ -12,9 +12,15 @@ const state = {
   name: 'user',
 };
 
-const AppNavigator = createStackNavigator({
-  Home: HomeScreen,
-});
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'none',
+  },
+);
 
 const AppContainer = createAppContainer(AppNavigator);
 
