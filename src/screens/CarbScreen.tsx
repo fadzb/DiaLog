@@ -7,14 +7,27 @@ export class CarbScreen extends React.Component {
     super(props);
   }
 
+  state = {
+    query: '',
+  };
+
   handleSearchBar = (query: string) => {
-    this.setState({ firstQuery: query });
+    this.setState({ query });
+  };
+
+  handleSubmit = () => {
+    console.log(this.state.query);
   };
 
   render() {
     return (
       <View>
-        <Searchbar placeholder="Search" onChangeText={this.handleSearchBar} value={''} />
+        <Searchbar
+          placeholder="Search"
+          onChangeText={this.handleSearchBar}
+          onSubmitEditing={this.handleSubmit}
+          value={this.state.query}
+        />
       </View>
     );
   }
