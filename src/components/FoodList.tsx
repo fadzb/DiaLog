@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
-import { FoodItem } from './FoodItem';
+import { FoodItemContainer } from './FoodItemContainer';
+import { FoodItem } from '../typings/FoodItem';
 
 interface FoodListProps {
   query: string;
@@ -12,13 +13,22 @@ export class FoodList extends React.Component<FoodListProps> {
   }
 
   render() {
-    const foodItems: any = ['item1', 'item2'];
+    const item1: FoodItem = {
+      name: 'carrot',
+      cho: '8.5g',
+    };
+
+    const item2: FoodItem = {
+      name: 'apple',
+      cho: '10g',
+    };
+    const foodItems: FoodItem[] = [item1, item2];
 
     return (
       <View>
         <Text>{this.props.query}</Text>
-        {foodItems.map(function(name: any, index: any) {
-          return <FoodItem key={index} name={name}></FoodItem>;
+        {foodItems.map(function(item: FoodItem, index: any) {
+          return <FoodItemContainer item={item} key={index} />;
         })}
       </View>
     );
