@@ -1,4 +1,5 @@
 import { FoodItem } from '../typings/FoodItem';
+import { fakeJson } from './FakeJson';
 
 let responseJSON: any;
 
@@ -33,36 +34,8 @@ export function getFoodItems(query: string) {
   //parse response json
   //const parsedJson = JSON.parse(responseJSON);
 
-  const fakeJson = JSON.stringify({
-    common: [
-      {
-        food_name: 'burger',
-        serving_unit: 'sandwich',
-        tag_name: 'hamburger',
-        serving_qty: 1,
-        common_type: null,
-        tag_id: '608',
-        photo: {
-          thumb: 'https://d2xdmhkmkbyw75.cloudfront.net/608_thumb.jpg',
-        },
-        locale: 'en_US',
-      },
-      {
-        food_name: 'burgers',
-        serving_unit: 'sandwich',
-        tag_name: 'hamburger',
-        serving_qty: 1,
-        common_type: null,
-        tag_id: '608',
-        photo: {
-          thumb: 'https://d2xdmhkmkbyw75.cloudfront.net/608_thumb.jpg',
-        },
-        locale: 'en_US',
-      },
-    ],
-  });
-
-  const parsedJson = JSON.parse(fakeJson);
+  const _fakeJson = JSON.stringify(fakeJson);
+  const parsedJson = JSON.parse(_fakeJson);
 
   const food_names: string[] = [];
   for (let i = 0; i < parsedJson.common.length; i++) {
