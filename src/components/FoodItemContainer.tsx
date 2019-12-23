@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 
 interface PropTypes {
@@ -16,7 +16,8 @@ export class FoodItemContainer extends React.Component<PropTypes> {
     return (
       <View>
         <Text>
-          {this.props.item.name} {this.props.item.cho}
+          {this.props.item.name}{' '}
+          <Image source={{ uri: this.props.item.photo_url }} style={{ width: 20, height: 20 }} />
         </Text>
       </View>
     );

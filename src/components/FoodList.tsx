@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { FoodItemContainer } from './FoodItemContainer';
 import { FoodItem } from '../typings/FoodItem';
+import { getFoodItems } from '../api/FoodAPI';
 
 interface FoodListProps {
   query: string;
@@ -12,21 +13,20 @@ export class FoodList extends React.Component<FoodListProps> {
     super(props);
   }
 
-  render() {
-    const item1: FoodItem = {
-      name: 'carrot',
-      cho: '8.5g',
-    };
+  populateFoodItems(query: string) {
+    return getFoodItems(query);
+  }
 
-    const item2: FoodItem = {
-      name: 'apple',
-      cho: '10g',
-    };
-    const foodItems: FoodItem[] = [item1, item2];
+  render() {
+    const { query } = this.props;
+    let foodItems: FoodItem[] = [];
+
+    // populate foodItems
+    foodItems = this.populateFoodItems(query);
 
     return (
       <View>
-        <Text>{this.props.query}</Text>
+        <Text>{query}</Text>
         {foodItems.map(function(item: FoodItem, index: any) {
           return <FoodItemContainer item={item} key={index} />;
         })}

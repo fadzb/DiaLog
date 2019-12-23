@@ -18,8 +18,8 @@ export class CarbScreen extends React.Component {
     this.setState({ query });
   };
 
-  handleSubmit = () => {
-    console.log(this.state.query);
+  handleSubmit = (e: any) => {
+    //not handling submit differently atm
   };
 
   render() {
