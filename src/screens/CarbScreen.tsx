@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { FoodList } from '../components/FoodList';
+import { styles } from '../styles/CarbScreen';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
@@ -24,7 +25,7 @@ export class CarbScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Searchbar
           placeholder={SEARCH_PLACEHOLDER}
           onChangeText={this.handleSearchBar}
@@ -33,7 +34,7 @@ export class CarbScreen extends React.Component {
         />
         <Text>Render List of results</Text>
         <FoodList query={this.state.query} />
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Modal, Alert } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
+import { styles } from '../styles/CarbScreen';
+import Button from './Button';
+import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 
 interface PropTypes {
   item: FoodItem;
@@ -12,14 +15,50 @@ export class FoodItemContainer extends React.Component<PropTypes> {
     super(props);
   }
 
+  state = {
+    modalVisible: false,
+  };
+
+  setModalVisible(visible: boolean) {
+    this.setState({ modalVisible: visible });
+  }
+
+  handleClick = () => {
+    // send post request and show new screen
+    this.setState({ modalVisible: true });
+  };
+
   render() {
     return (
-      <View>
-        <Text>
+      <TouchableOpacity onPress={this.handleClick} style={styles.item}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}
+        >
+          <View style={{ marginTop: 52 }}>
+            <View>
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+              >
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+        <Text style={styles.text}>
           {this.props.item.name}{' '}
-          <Image source={{ uri: this.props.item.photo_url }} style={{ width: 20, height: 20 }} />
+          <Image
+            source={{ uri: this.props.item.photo_url }}
+            style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
+          />
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
