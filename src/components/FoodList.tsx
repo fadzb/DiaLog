@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { FoodItemContainer } from './FoodItemContainer';
 import { FoodItem } from '../typings/FoodItem';
-import { getFoodItems } from '../api/FoodAPI';
+import { requestFoods } from '../api/FoodAPI';
 import { CarbScreen } from '../screens/CarbScreen';
 import { styles } from '../styles/CarbScreen';
 
@@ -16,7 +16,7 @@ export class FoodList extends React.Component<FoodListProps> {
   }
 
   populateFoodItems(query: string) {
-    return getFoodItems(query);
+    return requestFoods(query);
   }
 
   render() {
