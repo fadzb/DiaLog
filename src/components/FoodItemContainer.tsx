@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Modal,
-  Alert,
-  TouchableOpacity,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Text, Image, Modal, TouchableOpacity } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
