@@ -1,7 +1,9 @@
 import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
+import { fakeDetailedJson } from './FakeDetailedJson';
 
 let responseJSON: any;
+let detailedResponseJSON: any;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -10,7 +12,7 @@ const headers = {
   'x-remote-user-id': '0',
 };
 
-function makeRequest() {
+function makeGetRequest() {
   const requestOptions: any = {
     method: 'GET',
     headers: headers,
@@ -19,8 +21,25 @@ function makeRequest() {
   return requestOptions;
 }
 
+function makePostRequest() {
+  const requestOptions: any = {
+    method: 'POST',
+    headers: headers,
+    redirect: 'follow',
+  };
+  return requestOptions;
+}
+
+//GET
 function requestFoods(query: string) {
-  fetch('https://trackapi.nutritionix.com/v2/search/instant?query=' + query, makeRequest())
+  fetch('https://trackapi.nutritionix.com/v2/search/instant?query=' + query, makeGetRequest())
+    .then(response => (responseJSON = response.json()))
+    .catch(error => console.log('error', error));
+}
+
+//POST
+function requestFoodDetails(query: string) {
+  fetch('https://trackapi.nutritionix.com/v2/search/instant?query=' + query, makePostRequest())
     .then(response => (responseJSON = response.json()))
     .catch(error => console.log('error', error));
 }
@@ -49,4 +68,19 @@ export function getFoodItems(query: string) {
   }
 
   return foodItems;
+}
+
+export function getFoodItemCHO(item: FoodItem) {
+  let cho = '0';
+  // requestFoodDetails(item);
+
+  //parse response json
+  //const parsedJson = JSON.parse(detailedResponseJSON);
+
+  const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
+  const parsedJson = JSON.parse(_fakeDetailedJson);
+
+  cho = parsedJson.foods[0].nf_total_carbohydrate;
+
+  return cho;
 }

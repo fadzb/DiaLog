@@ -4,6 +4,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import Button from './Button';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
+import { getFoodItemCHO } from '../api/FoodAPI';
 
 interface PropTypes {
   item: FoodItem;
@@ -25,6 +26,11 @@ export class FoodItemContainer extends React.Component<PropTypes> {
 
   handleClick = () => {
     // send post request and show new screen
+    const { item } = this.props;
+
+    //sends post request to get CHO
+    item.cho = getFoodItemCHO(item);
+
     this.setState({ modalVisible: true });
   };
 
@@ -49,6 +55,15 @@ export class FoodItemContainer extends React.Component<PropTypes> {
                 <Text>Hide Modal</Text>
               </TouchableHighlight>
             </View>
+
+            <Text style={styles.text}>
+              {this.props.item.name}
+              <Image
+                source={{ uri: this.props.item.photo_url }}
+                style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
+              />
+              {this.props.item.cho}
+            </Text>
           </View>
         </Modal>
         <Text style={styles.text}>
