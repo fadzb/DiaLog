@@ -24,7 +24,9 @@ export class FoodList extends React.Component<FoodListProps> {
     let foodItems: FoodItem[] = [];
 
     // populate foodItems
-    foodItems = this.populateFoodItems(query);
+    if (query) {
+      foodItems = this.populateFoodItems(query);
+    }
 
     return (
       <View>

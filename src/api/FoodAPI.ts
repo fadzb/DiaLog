@@ -21,10 +21,15 @@ function makeGetRequest() {
   return requestOptions;
 }
 
-function makePostRequest() {
+function makePostRequest(query: string) {
+  const payload = JSON.stringify({
+    query: query,
+  });
+
   const requestOptions: any = {
     method: 'POST',
     headers: headers,
+    body: payload,
     redirect: 'follow',
   };
   return requestOptions;
@@ -39,8 +44,8 @@ function requestFoods(query: string) {
 
 //POST
 function requestFoodDetails(query: string) {
-  fetch('https://trackapi.nutritionix.com/v2/search/instant?query=' + query, makePostRequest())
-    .then(response => (responseJSON = response.json()))
+  fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
+    .then(response => (detailedResponseJSON = response.json()))
     .catch(error => console.log('error', error));
 }
 
@@ -48,13 +53,13 @@ export function getFoodItems(query: string) {
   //parse response and return array of food items
   const foodItems: FoodItem[] = [];
 
-  // requestFoods(query);
+  requestFoods(query);
 
   //parse response json
-  //const parsedJson = JSON.parse(responseJSON);
+  const parsedJson = JSON.parse(responseJSON);
 
-  const _fakeJson = JSON.stringify(fakeJson);
-  const parsedJson = JSON.parse(_fakeJson);
+  // const _fakeJson = JSON.stringify(fakeJson);
+  // const parsedJson = JSON.parse(_fakeJson);
 
   const food_names: string[] = [];
   for (let i = 0; i < parsedJson.common.length; i++) {
@@ -72,15 +77,17 @@ export function getFoodItems(query: string) {
 
 export function getFoodItemCHO(item: FoodItem) {
   let cho = '0';
-  // requestFoodDetails(item);
+
+  const query = item.name;
+  // requestFoodDetails(query);
 
   //parse response json
-  //const parsedJson = JSON.parse(detailedResponseJSON);
+  // const parsedJson = JSON.parse(detailedResponseJSON);
 
-  const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
-  const parsedJson = JSON.parse(_fakeDetailedJson);
+  // const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
+  // const parsedJson = JSON.parse(_fakeDetailedJson);
 
-  cho = parsedJson.foods[0].nf_total_carbohydrate;
+  // cho = parsedJson.foods[0].nf_total_carbohydrate;
 
   return cho;
 }
