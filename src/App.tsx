@@ -1,16 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import { RouterComponent } from './Router';
 import { connect } from 'react-redux';
 import { addName } from './actions/actions';
-import { LoginScreen } from './screens/LoginScreen';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './screens/HomeScreen';
 
-const state = {
-  name: 'user',
-};
+// const state = {
+//   name: 'user',
+// };
 
 const AppNavigator = createStackNavigator(
   {

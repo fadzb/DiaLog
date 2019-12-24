@@ -8,6 +8,10 @@ import { LogActScreen } from './LogActScreen';
 import { TrainScreen } from './TrainScreen';
 import Button from '../components/Button';
 
+interface HomeScreenProps {
+  navigation: any;
+}
+
 const labels = {
   LOGIN: 'Login',
   CARB: 'Estimate CHO',
@@ -15,11 +19,9 @@ const labels = {
   TRAIN: 'Training Modules',
 };
 
-class HomeScreen extends React.Component {
-  constructor(props: Readonly<{}>) {
+class HomeScreen extends React.Component<HomeScreenProps> {
+  constructor(props: any) {
     super(props);
-    // Just to see what was passed...
-    console.log(props);
   }
 
   handleLoginNav = () => {

@@ -163,7 +163,7 @@ export const fakeJson = {
     {
       food_name: 'mcdonalds burger',
       serving_unit: 'sandwich',
-      tag_name: "mcdonald's hamburger",
+      tag_name: 'mcdonalds hamburger',
       serving_qty: 1,
       common_type: null,
       tag_id: '2156',

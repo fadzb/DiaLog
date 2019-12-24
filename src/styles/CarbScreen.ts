@@ -1,7 +1,5 @@
 import colors from '../colors';
-import { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { black } from 'react-native-paper/lib/typescript/src/styles/colors';
 
 export const styles = StyleSheet.create({
   container: {

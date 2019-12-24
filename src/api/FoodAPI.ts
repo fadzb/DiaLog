@@ -1,9 +1,10 @@
 import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
+const API_ENABLED = false;
 
-let responseJSON: any;
-let detailedResponseJSON: any;
+// let responseJSON: any;
+// let detailedResponseJSON: any;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -35,21 +36,27 @@ function makePostRequest(query: string) {
   return requestOptions;
 }
 
-//GET
+//GET (list of foods from natural language search)
 export function requestFoods(query: string) {
-  return fetch(
-    'https://trackapi.nutritionix.com/v2/search/instant?query=' + query,
-    makeGetRequest(),
-  )
-    .then(response => response.json())
-    .catch(error => console.log('error', error));
+  if (API_ENABLED) {
+    return fetch(
+      'https://trackapi.nutritionix.com/v2/search/instant?query=' + query,
+      makeGetRequest(),
+    )
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+  }
+  return fetch('http://localhost:8081/');
 }
 
-//POST
+//POST (food nutrient information (eg. CHO content))
 export function requestFoodDetails(query: string) {
-  return fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
-    .then(response => (detailedResponseJSON = response.json()))
-    .catch(error => console.log('error', error));
+  if (API_ENABLED) {
+    return fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+  }
+  return fetch('http://localhost:8081/');
 }
 
 export function parseFoodItems(responseJSON: any) {
@@ -61,7 +68,6 @@ export function parseFoodItems(responseJSON: any) {
   const _fakeJson = JSON.stringify(fakeJson);
   const parsedJson = JSON.parse(_fakeJson);
 
-  const food_names: string[] = [];
   for (let i = 0; i < parsedJson.common.length; i++) {
     const foodItem: FoodItem = {
       name: parsedJson.common[i].food_name,

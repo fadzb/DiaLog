@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text, Image, Modal, Alert } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
-import Button from './Button';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
 
@@ -24,8 +23,8 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     this.setState({ modalVisible: visible });
   }
 
+  //send post request and show new screen
   handleClick = () => {
-    // send post request and show new screen
     const { item } = this.props;
 
     const promise = requestFoodDetails(item.name);
