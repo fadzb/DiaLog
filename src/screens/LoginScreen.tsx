@@ -1,18 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
 import Button from '../components/Button';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 import { styles } from '../styles/LoginScreen';
-import colors from '../colors';
-import { addName } from '../actions/actions';
 import { connect } from 'react-redux';
-import App from '../App';
 const EMAIL_PLACEHOLDER = 'Email';
 const PASSWORD_PLACEHOLDER = 'Password';
 const LOGIN_LABEL = 'Login';
 
 export class LoginScreen extends React.Component {
-  readonly state: any = {
+  state: any = {
     email: '',
     password: '',
   };
@@ -46,10 +42,7 @@ export class LoginScreen extends React.Component {
             placeholder={PASSWORD_PLACEHOLDER}
             onChangeText={this.handlePasswordChange}
           />
-          <Button
-            label={LOGIN_LABEL}
-            onPress={this.handleLoginPress}
-          />
+          <Button label={LOGIN_LABEL} onPress={this.handleLoginPress} />
         </View>
       </View>
     );
