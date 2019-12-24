@@ -28,7 +28,6 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     // send post request and show new screen
     const { item } = this.props;
 
-    //sends post request to get CHO
     const promise = requestFoodDetails(item.name);
 
     promise

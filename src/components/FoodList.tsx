@@ -17,6 +17,7 @@ export class FoodList extends React.Component<FoodListProps> {
 
   state = {
     foodItems: [],
+    lastQuery: '',
   };
 
   // get a promise from food api and handle
@@ -25,7 +26,8 @@ export class FoodList extends React.Component<FoodListProps> {
 
     promise
       .then(responseJson => {
-        this.setState({ foodItems: parseFoodItems(responseJson) });
+        console.log('promise resolved...should update state now');
+        this.setState({ lastQuery: this.props.query, foodItems: parseFoodItems(responseJson) });
       })
       .catch(error => console.log('error', error));
   }
@@ -34,9 +36,9 @@ export class FoodList extends React.Component<FoodListProps> {
     const { query } = this.props;
     // let foodItems: FoodItem[] = [];
 
-    // populate foodItems
-    if (query) {
-      this.populateFoodItems(query);
+    // populate foodItems... only if the current query is different to last query
+    if (this.props.query && this.props.query !== this.state.lastQuery) {
+      this.populateFoodItems(this.props.query);
     }
 
     return (

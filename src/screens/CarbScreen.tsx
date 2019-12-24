@@ -25,6 +25,7 @@ export class CarbScreen extends React.Component {
   };
 
   render() {
+    console.log('rendering CarbScreen');
     return (
       <ScrollView>
         <SearchBar handleSubmit={this.handleSubmit} />
