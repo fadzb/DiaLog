@@ -4,14 +4,14 @@ import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import Button from './Button';
 import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
-import { getFoodItemCHO } from '../api/FoodAPI';
+import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
 
-interface PropTypes {
+interface FoodItemContainerProps {
   item: FoodItem;
   key: string;
 }
 
-export class FoodItemContainer extends React.Component<PropTypes> {
+export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
   constructor(props: any) {
     super(props);
   }
@@ -29,9 +29,14 @@ export class FoodItemContainer extends React.Component<PropTypes> {
     const { item } = this.props;
 
     //sends post request to get CHO
-    item.cho = getFoodItemCHO(item);
+    const promise = requestFoodDetails(item.name);
 
-    this.setState({ modalVisible: true });
+    promise
+      .then(responseJson => {
+        item.cho = parseFoodItemCHO(responseJson);
+        this.setState({ modalVisible: true });
+      })
+      .catch(error => console.log('error', error));
   };
 
   render() {

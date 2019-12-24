@@ -46,23 +46,20 @@ export function requestFoods(query: string) {
 }
 
 //POST
-function requestFoodDetails(query: string) {
-  fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
+export function requestFoodDetails(query: string) {
+  return fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
     .then(response => (detailedResponseJSON = response.json()))
     .catch(error => console.log('error', error));
 }
 
 export function parseFoodItems(responseJSON: any) {
-  //parse response and return array of food items
   const foodItems: FoodItem[] = [];
   //parse response json
   // const parsedJson = JSON.parse(responseJSON);
-  const parsedJson = responseJSON;
+  // const parsedJson = responseJSON;
 
-  // const _fakeJson = JSON.stringify(fakeJson);
-  // const parsedJson = JSON.parse(_fakeJson);
-
-  console.log(parsedJson);
+  const _fakeJson = JSON.stringify(fakeJson);
+  const parsedJson = JSON.parse(_fakeJson);
 
   const food_names: string[] = [];
   for (let i = 0; i < parsedJson.common.length; i++) {
@@ -78,19 +75,16 @@ export function parseFoodItems(responseJSON: any) {
   return foodItems;
 }
 
-export function getFoodItemCHO(item: FoodItem) {
+export function parseFoodItemCHO(responseJSON: any) {
   let cho = '0';
 
-  const query = item.name;
-  // requestFoodDetails(query);
-
   //parse response json
-  // const parsedJson = JSON.parse(detailedResponseJSON);
+  // const parsedJson = JSON.parse(responseJSON);
 
-  // const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
-  // const parsedJson = JSON.parse(_fakeDetailedJson);
+  const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
+  const parsedJson = JSON.parse(_fakeDetailedJson);
 
-  // cho = parsedJson.foods[0].nf_total_carbohydrate;
+  cho = parsedJson.foods[0].nf_total_carbohydrate;
 
   return cho;
 }

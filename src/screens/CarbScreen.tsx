@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, Text } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { SearchBar } from '../components/SearchBar';
 import { FoodList } from '../components/FoodList';
 import { styles } from '../styles/CarbScreen';
 
@@ -19,19 +19,15 @@ export class CarbScreen extends React.Component {
     this.setState({ query });
   };
 
-  handleSubmit = (e: any) => {
-    //not handling submit differently atm
+  handleSubmit = (search: string) => {
+    this.setState({ query: search });
+    console.log(search);
   };
 
   render() {
     return (
       <ScrollView>
-        <Searchbar
-          placeholder={SEARCH_PLACEHOLDER}
-          onChangeText={this.handleSearchBar}
-          onSubmitEditing={this.handleSubmit}
-          value={this.state.query}
-        />
+        <SearchBar handleSubmit={this.handleSubmit} />
         <Text>Render List of results</Text>
         <FoodList query={this.state.query} />
       </ScrollView>
