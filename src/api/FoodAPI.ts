@@ -37,14 +37,12 @@ function makePostRequest(query: string) {
 
 //GET
 export function requestFoods(query: string) {
-  let toReturn: FoodItem[] = [];
-  fetch('https://trackapi.nutritionix.com/v2/search/instant?query=' + query, makeGetRequest())
+  return fetch(
+    'https://trackapi.nutritionix.com/v2/search/instant?query=' + query,
+    makeGetRequest(),
+  )
     .then(response => response.json())
-    .then(foodItemsJson => (toReturn = parseFoodItems(foodItemsJson)))
     .catch(error => console.log('error', error));
-
-  console.log(toReturn);
-  return toReturn;
 }
 
 //POST
@@ -54,15 +52,17 @@ function requestFoodDetails(query: string) {
     .catch(error => console.log('error', error));
 }
 
-function parseFoodItems(responseJSON: any) {
+export function parseFoodItems(responseJSON: any) {
   //parse response and return array of food items
   const foodItems: FoodItem[] = [];
-
   //parse response json
-  const parsedJson = JSON.parse(responseJSON);
+  // const parsedJson = JSON.parse(responseJSON);
+  const parsedJson = responseJSON;
 
   // const _fakeJson = JSON.stringify(fakeJson);
   // const parsedJson = JSON.parse(_fakeJson);
+
+  console.log(parsedJson);
 
   const food_names: string[] = [];
   for (let i = 0; i < parsedJson.common.length; i++) {

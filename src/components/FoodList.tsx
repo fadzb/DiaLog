@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { FoodItemContainer } from './FoodItemContainer';
 import { FoodItem } from '../typings/FoodItem';
-import { requestFoods } from '../api/FoodAPI';
+import { requestFoods, parseFoodItems } from '../api/FoodAPI';
 import { CarbScreen } from '../screens/CarbScreen';
 import { styles } from '../styles/CarbScreen';
 
@@ -15,23 +15,34 @@ export class FoodList extends React.Component<FoodListProps> {
     super(props);
   }
 
+  state = {
+    foodItems: [],
+  };
+
+  // get a promise from food api and handle
   populateFoodItems(query: string) {
-    return requestFoods(query);
+    const promise = requestFoods(query);
+
+    promise
+      .then(responseJson => {
+        this.setState({ foodItems: parseFoodItems(responseJson) });
+      })
+      .catch(error => console.log('error', error));
   }
 
   render() {
     const { query } = this.props;
-    let foodItems: FoodItem[] = [];
+    // let foodItems: FoodItem[] = [];
 
     // populate foodItems
     if (query) {
-      foodItems = this.populateFoodItems(query);
+      this.populateFoodItems(query);
     }
 
     return (
       <View>
         <Text>{query}</Text>
-        {foodItems.map(function(item: FoodItem, index: any) {
+        {this.state.foodItems.map(function(item: FoodItem, index: any) {
           return <FoodItemContainer item={item} key={index} />;
         })}
       </View>
