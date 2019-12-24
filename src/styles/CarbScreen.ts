@@ -19,4 +19,22 @@ export const styles = StyleSheet.create({
     borderColor: colors.GRAY_LIGHT,
     borderWidth: 3,
   },
+  listItemContainer: {
+    height: 60,
+    width: '90%',
+    padding: 10,
+    marginVertical: 1,
+    marginHorizontal: 1,
+    borderColor: colors.GRAY_LIGHT,
+    borderWidth: 3,
+  },
+  foodListContainer: {
+    alignItems: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    width: '100%',
+  },
 });

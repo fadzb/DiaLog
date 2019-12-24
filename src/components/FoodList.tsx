@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { FoodItemContainer } from './FoodItemContainer';
 import { FoodItem } from '../typings/FoodItem';
 import { requestFoods, parseFoodItems } from '../api/FoodAPI';
+import { styles } from '../styles/CarbScreen';
 
 interface FoodListProps {
   query: string;
@@ -38,8 +39,8 @@ export class FoodList extends React.Component<FoodListProps> {
     }
 
     return (
-      <View>
-        <Text>{query}</Text>
+      <View style={styles.foodListContainer}>
+        <Text style={{ alignSelf: 'flex-start' }}>{query}</Text>
         {this.state.foodItems.map((item: FoodItem, index: any) => {
           return <FoodItemContainer item={item} key={index} />;
         })}

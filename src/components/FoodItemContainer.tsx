@@ -1,8 +1,15 @@
 import * as React from 'react';
-import { View, Text, Image, Modal, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Modal,
+  Alert,
+  TouchableOpacity,
+  TouchableHighlight,
+} from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
-import { TouchableOpacity, TouchableHighlight } from 'react-native-gesture-handler';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
 
 interface FoodItemContainerProps {
@@ -37,26 +44,24 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
       .catch(error => console.log('error', error));
   };
 
+  handleModalClose = () => {
+    this.setModalVisible(false);
+  };
+
   render() {
     return (
-      <TouchableOpacity onPress={this.handleClick} style={styles.item}>
+      <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
         <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
+          onRequestClose={this.handleModalClose}
         >
           <View style={{ marginTop: 52 }}>
             <View>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-              >
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
+              <TouchableOpacity style={styles.button} onPress={this.handleModalClose}>
+                <Text>Back to Search</Text>
+              </TouchableOpacity>
             </View>
 
             <Text style={styles.text}>
