@@ -9,10 +9,10 @@ import {
   Button,
   Text,
   Form,
-  DatePicker,
+  Badge,
 } from 'native-base';
 import { styles } from '../styles/LogActScreen';
-import { Badge } from 'react-native-paper';
+import DateTimePicker from '../components/DateTimePicker';
 
 interface LogActScreenProps {}
 
@@ -28,13 +28,13 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
 
   handleInsulinChange = (insulinInput: string) => {
     this.setState({
-      insulinInput,
+      insulinInput: insulinInput ? insulinInput : 0,
     });
   };
 
   handleChoChange = (choInput: string) => {
     this.setState({
-      choInput,
+      choInput: choInput ? choInput : 0,
     });
   };
 
@@ -46,15 +46,22 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
         </Header>
         <Content style={styles.contentContainer}>
           <Form style={styles.form}>
+            <DateTimePicker />
             <Item rounded style={styles.inputPills}>
-              <Input placeholder="Enter Insulin" onChangeText={this.handleInsulinChange} />
-              <Badge style={styles.badge}>
+              <Input placeholder="Enter Glucose" onChangeText={this.handleInsulinChange} />
+              <Badge success style={styles.badge}>
                 <Text>{this.state.insulinInput} mmo/l</Text>
               </Badge>
             </Item>
             <Item rounded style={styles.inputPills}>
+              <Input placeholder="Enter Insulin" onChangeText={this.handleInsulinChange} />
+              <Badge info style={styles.badge}>
+                <Text>{this.state.insulinInput} Units</Text>
+              </Badge>
+            </Item>
+            <Item rounded style={styles.inputPills}>
               <Input placeholder="Enter CHO" onChangeText={this.handleChoChange} />
-              <Badge style={styles.badge}>
+              <Badge warning style={styles.badge}>
                 <Text>{this.state.choInput} g</Text>
               </Badge>
             </Item>
