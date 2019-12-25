@@ -22,8 +22,15 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
   }
 
   state = {
+    glucoseInput: 0,
     insulinInput: 0,
     choInput: 0,
+  };
+
+  handleGlucoseChange = (glucoseInput: string) => {
+    this.setState({
+      glucoseInput: glucoseInput ? glucoseInput : 0,
+    });
   };
 
   handleInsulinChange = (insulinInput: string) => {
@@ -48,9 +55,9 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Form style={styles.form}>
             <DateTimePicker />
             <Item rounded style={styles.inputPills}>
-              <Input placeholder="Enter Glucose" onChangeText={this.handleInsulinChange} />
+              <Input placeholder="Enter Glucose" onChangeText={this.handleGlucoseChange} />
               <Badge success style={styles.badge}>
-                <Text>{this.state.insulinInput} mmo/l</Text>
+                <Text>{this.state.glucoseInput} mmo/l</Text>
               </Badge>
             </Item>
             <Item rounded style={styles.inputPills}>
