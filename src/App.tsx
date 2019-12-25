@@ -6,6 +6,9 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './screens/HomeScreen';
 
+// TODO: May need to add async functions to wait for fonts for Native Base: https://github.com/GeekyAnts/NativeBase
+// TODO: Need to sort out redux
+
 // const state = {
 //   name: 'user',
 // };
