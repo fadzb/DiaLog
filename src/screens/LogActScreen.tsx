@@ -52,8 +52,8 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Title>Log Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
+          <DateTimeInput />
           <Form style={styles.form}>
-            <DateTimeInput />
             <Item rounded style={styles.inputPills}>
               <Input placeholder="Enter Glucose" onChangeText={this.handleGlucoseChange} />
               <Badge success style={styles.badge}>
