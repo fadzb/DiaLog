@@ -12,7 +12,7 @@ import {
   Badge,
 } from 'native-base';
 import { styles } from '../styles/LogActScreen';
-import DateTimePicker from '../components/DateTimePicker';
+import DateTimeInput from '../components/DateTimeInput';
 
 interface LogActScreenProps {}
 
@@ -53,7 +53,7 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
         </Header>
         <Content style={styles.contentContainer}>
           <Form style={styles.form}>
-            <DateTimePicker />
+            <DateTimeInput />
             <Item rounded style={styles.inputPills}>
               <Input placeholder="Enter Glucose" onChangeText={this.handleGlucoseChange} />
               <Badge success style={styles.badge}>
