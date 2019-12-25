@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, Platform } from 'react-native';
+import { View, Platform, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
@@ -61,7 +61,6 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
   render() {
     const { show, date } = this.state;
-    console.log('rendering');
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
