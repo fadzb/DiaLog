@@ -4,15 +4,15 @@ import { Log } from '../typings/Log';
 const ACTIVITY_LOG_KEY = 'activityLogs';
 
 // TESTING Store Activity logs
-export function storeActivity(item: Log) {
+export function storeItem(item: Log) {
   const key = ACTIVITY_LOG_KEY;
   aysncStoreItem(key, item);
 }
 
 // TESTING Retrieve all Activity logs
-export function getActivity() {
+export function getItem() {
   const key = ACTIVITY_LOG_KEY;
-  asyncRetrieveItem(key).then(response => console.log(response));
+  asyncGetItem(key).then(response => console.log(response));
 }
 
 // TESTING Retrieve all keys
@@ -30,20 +30,37 @@ export function clearAllKeys() {
   });
 }
 
+// TESTING Merge new item on top of existing item
+export function mergeItems(key: string, newItem: any) {
+  asyncMergeItems(key, newItem)
+    .then(() => console.log('items merged'))
+    // query key to see merged item
+    .then(() => asyncGetItem(key))
+    .then(items => console.log(items));
+}
+
+// TESTING Get multiple items from array of keys (all keys)
+export function multiGetItems() {
+  asyncGetAllKeys().then(keys => {
+    asyncMultiGetItems(keys).then(items => console.log(items));
+  });
+}
+
 // API calls
-async function aysncStoreItem(key: string, item: any) {
+
+export async function aysncStoreItem(key: string, item: any) {
   console.log('storing...');
   await AsyncStorage.setItem(key, JSON.stringify(item))
     .then(() => console.log('Item Stored Succesfully...'))
     .catch(error => console.log('Error Storing Item...' + error));
 }
 
-async function asyncRetrieveItem(key: string) {
+async function asyncGetItem(key: string) {
   console.log('retrieving...');
   try {
     const retrievedItem = await AsyncStorage.getItem(key);
-    const item = JSON.parse(retrievedItem + '');
-    console.log('amount: ' + item.length);
+    // const item = JSON.parse(retrievedItem + '');
+    console.log('amount: ' + retrievedItem.length);
     return retrievedItem;
   } catch (error) {
     console.log(error.message);
@@ -72,4 +89,32 @@ async function asyncMultiRemove(keys: any) {
     .catch(error => {
       console.log('Error while removing keys...' + error);
     });
+}
+
+async function asyncMergeItems(key: string, newItem: any) {
+  console.log('merging new item with existing item...');
+  await AsyncStorage.mergeItem(key, JSON.stringify(newItem))
+    .then(() => console.log('items merged...'))
+    .catch(error => {
+      console.log('Error while merging items...' + error);
+    });
+}
+
+async function asyncMultiGetItems(keys: string[] | void) {
+  console.log('retrieving multiple items...');
+  try {
+    const retrievedItems = await AsyncStorage.multiGet(keys || []);
+    const items: Object[] = [];
+    for (let i = 0; i < retrievedItems.length; i++) {
+      const item = {
+        key: retrievedItems[i][0],
+        value: JSON.parse(retrievedItems[i][1]),
+      };
+      items.push(item);
+    }
+    return items;
+  } catch (error) {
+    console.log(error.message);
+  }
+  return;
 }

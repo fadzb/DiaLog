@@ -3,7 +3,17 @@ import { styles } from '../styles/LogActScreen';
 import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
-import { storeActivity, getActivity, getAllKeys, clearAllKeys } from '../storage/AsyncStorage';
+import {
+  storeItem,
+  getItem,
+  getAllKeys,
+  clearAllKeys,
+  mergeItems,
+  multiGetItems,
+  aysncStoreItem,
+} from '../storage/AsyncStorage';
+
+const ACTIVITY_LOG_KEY = 'activityLogs';
 
 interface ActivityFormProps {}
 
@@ -54,7 +64,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     };
 
     // Store this log
-    storeActivity(log);
+    aysncStoreItem(log.time.toString(), log).then(() => multiGetItems());
+
+    // Record Submitted: go to view activity screen
   };
 
   render() {
