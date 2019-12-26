@@ -13,6 +13,8 @@ import {
 } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import DateTimeInput from '../components/DateTimeInput';
+import { Log } from '../typings/Log';
+import { ActivityForm } from '../components/ActivityForm';
 
 interface LogActScreenProps {}
 
@@ -22,27 +24,34 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
   }
 
   state = {
+    dateTimeInput: new Date(),
     glucoseInput: 0,
     insulinInput: 0,
     choInput: 0,
   };
 
-  handleGlucoseChange = (glucoseInput: string) => {
+  handleChange = (formState: any) => {
+    this.setState(formState);
+    console.log('changed state');
+  };
+
+  handleUpdateDateTime = (dateTimeInput: any) => {
     this.setState({
-      glucoseInput: glucoseInput ? glucoseInput : 0,
+      dateTimeInput,
     });
   };
 
-  handleInsulinChange = (insulinInput: string) => {
-    this.setState({
-      insulinInput: insulinInput ? insulinInput : 0,
-    });
-  };
+  handleSubmit = () => {
+    const { dateTimeInput, glucoseInput, insulinInput, choInput } = this.state;
 
-  handleChoChange = (choInput: string) => {
-    this.setState({
-      choInput: choInput ? choInput : 0,
-    });
+    const log: Log = {
+      time: dateTimeInput,
+      glucose: glucoseInput,
+      insulin: insulinInput,
+      cho: choInput,
+    };
+
+    console.log(log);
   };
 
   render() {
@@ -52,28 +61,9 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Title>Log Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <DateTimeInput />
-          <Form style={styles.form}>
-            <Item rounded style={styles.inputPills}>
-              <Input placeholder="Enter Glucose" onChangeText={this.handleGlucoseChange} />
-              <Badge success style={styles.badge}>
-                <Text>{this.state.glucoseInput} mmo/l</Text>
-              </Badge>
-            </Item>
-            <Item rounded style={styles.inputPills}>
-              <Input placeholder="Enter Insulin" onChangeText={this.handleInsulinChange} />
-              <Badge info style={styles.badge}>
-                <Text>{this.state.insulinInput} Units</Text>
-              </Badge>
-            </Item>
-            <Item rounded style={styles.inputPills}>
-              <Input placeholder="Enter CHO" onChangeText={this.handleChoChange} />
-              <Badge warning style={styles.badge}>
-                <Text>{this.state.choInput} g</Text>
-              </Badge>
-            </Item>
-          </Form>
-          <Button primary style={styles.submitButton}>
+          <DateTimeInput updateDateTime={this.handleUpdateDateTime} />
+          <ActivityForm handleChange={this.handleChange} />
+          <Button primary style={styles.submitButton} onPress={this.handleSubmit}>
             <Text>Submit Records</Text>
           </Button>
         </Content>

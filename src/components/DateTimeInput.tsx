@@ -4,7 +4,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 
-interface DateTimeInputProps {}
+interface DateTimeInputProps {
+  updateDateTime: (dateTimeInput: any) => void;
+}
 
 export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   constructor(props: any) {
@@ -12,8 +14,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   }
 
   state = {
-    date: new Date(),
-    mode: '',
+    dateTime: new Date(),
     show: false,
   };
 
@@ -27,18 +28,21 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
     const dateTime = new Date(year, month, date, hours, min, sec);
     this.setState({
-      date: dateTime,
+      dateTime,
     });
+
+    this.props.updateDateTime(dateTime);
   };
 
-  // TODO: Need to revist this function
-  setDate = (event: any, date: any) => {
-    date = date || this.state.date;
+  setDateTime = (event: any, dateTime: any) => {
+    if (dateTime) {
+      this.setState({
+        show: Platform.OS === 'ios' ? true : false,
+        dateTime,
+      });
+    }
 
-    this.setState({
-      show: Platform.OS === 'ios' ? true : false,
-      date,
-    });
+    this.props.updateDateTime(dateTime);
   };
 
   showPicker = () => {
@@ -60,15 +64,15 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   };
 
   render() {
-    const { show, date } = this.state;
+    const { show, dateTime } = this.state;
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
           <Button onPress={this.showPicker} title="Change Time" />
           <Button onPress={this.hidePicker} title="Hide" />
         </View>
-        {show && <DateTimePicker value={date} mode={'datetime'} onChange={this.setDate} />}
-        <Text>{this.parseDate(date)}</Text>
+        {show && <DateTimePicker value={dateTime} mode={'datetime'} onChange={this.setDateTime} />}
+        <Text>{this.parseDate(dateTime)}</Text>
       </View>
     );
   }
