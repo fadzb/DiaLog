@@ -3,29 +3,29 @@ import { Container, Header, Content, Title, Button, Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import { ActivityForm } from '../components/ActivityForm';
 
-interface LogActScreenProps {
-  navigation: any;
-}
+interface ViewActScreenProps {}
 
-export class LogActScreen extends React.Component<LogActScreenProps> {
+export class ViewActScreen extends React.Component<ViewActScreenProps> {
   constructor(props: any) {
     super(props);
   }
 
   state = {};
 
-  handleGoToViewAct = () => {
-    this.props.navigation.navigate('ViewAct');
+  handleGoBack = () => {
+    this.props.navigation.goBack();
   };
 
   render() {
     return (
       <Container style={styles.container}>
         <Header>
-          <Title>Log Activity</Title>
+          <Title>View Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <ActivityForm goToViewAct={this.handleGoToViewAct} />
+          <Button onPress={this.handleGoBack}>
+            <Text>Go back</Text>
+          </Button>
         </Content>
       </Container>
     );

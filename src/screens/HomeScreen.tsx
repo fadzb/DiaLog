@@ -6,6 +6,7 @@ import { LoginScreen } from './LoginScreen';
 import { CarbScreen } from './CarbScreen';
 import { LogActScreen } from './LogActScreen';
 import { TrainScreen } from './TrainScreen';
+import { ViewActScreen } from './ViewActScreen';
 import Button from '../components/Button';
 
 interface HomeScreenProps {
@@ -16,6 +17,7 @@ const labels = {
   LOGIN: 'Login',
   CARB: 'Estimate CHO',
   LOG_ACT: 'Log Activity',
+  VIEW_ACT: 'View Activity',
   TRAIN: 'Training Modules',
 };
 
@@ -36,6 +38,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('LogAct', {});
   };
 
+  handleViewActNav = () => {
+    this.props.navigation.navigate('ViewAct', {});
+  };
+
   handleTrainNav = () => {
     this.props.navigation.navigate('Train', {});
   };
@@ -53,6 +59,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
         <Button label={labels.LOGIN} onPress={this.handleLoginNav} />
         <Button label={labels.CARB} onPress={this.handleEstimateNav} />
         <Button label={labels.LOG_ACT} onPress={this.handleLogActNav} />
+        <Button label={labels.VIEW_ACT} onPress={this.handleViewActNav} />
         <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
       </View>
     );
@@ -65,6 +72,7 @@ const AppNavigator = createStackNavigator(
     Login: LoginScreen,
     Carb: CarbScreen,
     LogAct: LogActScreen,
+    ViewAct: ViewActScreen,
     Train: TrainScreen,
   },
   {

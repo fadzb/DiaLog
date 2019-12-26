@@ -60,7 +60,6 @@ async function asyncGetItem(key: string) {
   try {
     const retrievedItem = await AsyncStorage.getItem(key);
     // const item = JSON.parse(retrievedItem + '');
-    console.log('amount: ' + retrievedItem.length);
     return retrievedItem;
   } catch (error) {
     console.log(error.message);

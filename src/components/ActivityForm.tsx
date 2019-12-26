@@ -15,7 +15,9 @@ import {
 
 const ACTIVITY_LOG_KEY = 'activityLogs';
 
-interface ActivityFormProps {}
+interface ActivityFormProps {
+  goToViewAct: () => void;
+}
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
   constructor(props: any) {
@@ -67,6 +69,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     aysncStoreItem(log.time.toString(), log).then(() => multiGetItems());
 
     // Record Submitted: go to view activity screen
+    this.props.goToViewAct();
   };
 
   render() {
