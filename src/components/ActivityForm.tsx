@@ -1,21 +1,10 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import {
-  Container,
-  Header,
-  Content,
-  Item,
-  Input,
-  Title,
-  Button,
-  Text,
-  Form,
-  Badge,
-} from 'native-base';
+import { Item, Input, Button, Text, Form, Badge } from 'native-base';
+import DateTimeInput from './DateTimeInput';
+import { Log } from '../typings/Log';
 
-interface ActivityFormProps {
-  handleChange: (state: any) => void;
-}
+interface ActivityFormProps {}
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
   constructor(props: any) {
@@ -27,6 +16,12 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     glucoseInput: 0,
     insulinInput: 0,
     choInput: 0,
+  };
+
+  handleUpdateDateTime = (dateTimeInput: any) => {
+    this.setState({
+      dateTimeInput,
+    });
   };
 
   handleGlucoseChange = (glucoseInput: string) => {
@@ -47,9 +42,21 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     });
   };
 
+  handleSubmit = () => {
+    const { dateTimeInput, glucoseInput, insulinInput, choInput } = this.state;
+
+    const log: Log = {
+      time: dateTimeInput,
+      glucose: glucoseInput,
+      insulin: insulinInput,
+      cho: choInput,
+    };
+  };
+
   render() {
     return (
       <Form style={styles.form}>
+        <DateTimeInput updateDateTime={this.handleUpdateDateTime} />
         <Item rounded style={styles.inputPills}>
           <Input
             placeholder="Enter Glucose"
@@ -80,6 +87,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             <Text>{this.state.choInput} g</Text>
           </Badge>
         </Item>
+        <Button primary style={styles.submitButton} onPress={this.handleSubmit}>
+          <Text>Submit Records</Text>
+        </Button>
       </Form>
     );
   }
