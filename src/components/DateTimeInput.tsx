@@ -65,6 +65,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
   render() {
     const { show, dateTime } = this.state;
+    const android = Platform.OS === 'android';
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
@@ -72,6 +73,9 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
           <Button onPress={this.hidePicker} title="Hide" />
         </View>
         {show && <DateTimePicker value={dateTime} mode={'datetime'} onChange={this.setDateTime} />}
+        {android && show && (
+          <DateTimePicker value={dateTime} mode={'time'} onChange={this.setDateTime} />
+        )}
         <Text>{this.parseDate(dateTime)}</Text>
       </View>
     );
