@@ -3,6 +3,7 @@ import { styles } from '../styles/LogActScreen';
 import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
+import { storeActivity, getActivity, getAllKeys, clearAllKeys } from '../storage/AsyncStorage';
 
 interface ActivityFormProps {}
 
@@ -51,6 +52,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       insulin: insulinInput,
       cho: choInput,
     };
+
+    // Store this log
+    storeActivity(log);
   };
 
   render() {

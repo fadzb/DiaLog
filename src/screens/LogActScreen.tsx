@@ -8,10 +8,7 @@ interface LogActScreenProps {}
 export class LogActScreen extends React.Component<LogActScreenProps> {
   constructor(props: any) {
     super(props);
-    this.activityFormRef = React.createRef();
   }
-
-  activityFormRef: any;
 
   state = {};
 
@@ -22,7 +19,7 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Title>Log Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <ActivityForm ref={this.activityFormRef} />
+          <ActivityForm />
         </Content>
       </Container>
     );
