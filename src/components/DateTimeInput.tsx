@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Platform, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
+import { DateUtils } from '../utils/DateUtils';
 
 interface DateTimeInputProps {
   updateDateTime: (dateTimeInput: any) => void;
 }
+
+const ANDROID = Platform.OS === 'android';
 
 export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   constructor(props: any) {
@@ -19,19 +22,13 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   };
 
   componentDidMount = () => {
-    const date = new Date().getDate(); //Current Date
-    const month = new Date().getMonth(); //Current Month
-    const year = new Date().getFullYear(); //Current Year
-    const hours = new Date().getHours(); //Current Hours
-    const min = new Date().getMinutes(); //Current Minutes
-    const sec = new Date().getSeconds(); //Current Seconds
+    const todaysDateTime = DateUtils.getTodaysDateTime();
 
-    const dateTime = new Date(year, month, date, hours, min, sec);
     this.setState({
-      dateTime,
+      dateTime: todaysDateTime,
     });
 
-    this.props.updateDateTime(dateTime);
+    this.props.updateDateTime(todaysDateTime);
   };
 
   setDateTime = (event: any, dateTime: any) => {
@@ -57,15 +54,9 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     });
   };
 
-  parseDate = (date: any) => {
-    let dateString = '';
-    dateString += date.toString();
-    return dateString;
-  };
-
   render() {
     const { show, dateTime } = this.state;
-    const android = Platform.OS === 'android';
+
     return (
       <View>
         <View style={{ flexDirection: 'row' }}>
@@ -73,10 +64,10 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
           <Button onPress={this.hidePicker} title="Hide" />
         </View>
         {show && <DateTimePicker value={dateTime} mode={'datetime'} onChange={this.setDateTime} />}
-        {android && show && (
+        {ANDROID && show && (
           <DateTimePicker value={dateTime} mode={'time'} onChange={this.setDateTime} />
         )}
-        <Text>{this.parseDate(dateTime)}</Text>
+        <Text>{DateUtils.parseDate(dateTime)}</Text>
       </View>
     );
   }
