@@ -17,4 +17,29 @@ export class DateUtils {
     dateString += date.toString();
     return dateString;
   }
+
+  static sameDay(dateTime1: Date, dateTime2: Date) {
+    if (
+      dateTime1.getDate() === dateTime2.getDate() &&
+      dateTime1.getMonth() === dateTime2.getMonth() &&
+      dateTime1.getFullYear() === dateTime2.getFullYear()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  static parseDateTimesIntoLabels(dateTimes: Date[]) {
+    const parsedDateTimes: string[] = [];
+
+    dateTimes.forEach((dateTime: any) => {
+      const hours = dateTime.getHours();
+      const minutes =
+        dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes();
+      const parsedDateTime = hours + 'h' + minutes;
+      parsedDateTimes.push(parsedDateTime);
+    });
+
+    return parsedDateTimes;
+  }
 }
