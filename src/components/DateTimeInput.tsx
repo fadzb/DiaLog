@@ -34,7 +34,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   setDateTime = (event: any, dateTime: any) => {
     if (dateTime) {
       this.setState({
-        show: Platform.OS === 'ios' ? true : false,
+        show: Platform.OS === 'ios',
         dateTime,
       });
     }

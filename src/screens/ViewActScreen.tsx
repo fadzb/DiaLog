@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Container, Header, Content, Title, Button, Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
-import { ActivityForm } from '../components/ActivityForm';
 
 interface ViewActScreenProps {}
 

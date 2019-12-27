@@ -29,10 +29,11 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    'no-console': [
-      'warn',
-      { allow: ['clear', 'info', 'error', 'dir', 'trace'] },
-    ],
+    // Uncomment to enable no-console warnings
+    // 'no-console': [
+    //   'warn',
+    //   { allow: ['clear', 'info', 'error', 'dir', 'trace'] },
+    // ],
     curly: 'error',
     'no-else-return': 'error',
     'no-unneeded-ternary': 'error',

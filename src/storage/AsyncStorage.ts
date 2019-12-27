@@ -64,7 +64,6 @@ async function asyncGetItem(key: string) {
   } catch (error) {
     console.log(error.message);
   }
-  return;
 }
 
 async function asyncGetAllKeys() {
@@ -115,5 +114,4 @@ async function asyncMultiGetItems(keys: string[] | void) {
   } catch (error) {
     console.log(error.message);
   }
-  return;
 }
