@@ -25,7 +25,7 @@ export class ViewActScreen extends React.Component<ViewActScreenProps> {
           <Title>View Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          {/* <ActivityChart /> */}
+          <ActivityChart />
           <Button onPress={this.handleGoBack}>
             <Text>Go back</Text>
           </Button>
