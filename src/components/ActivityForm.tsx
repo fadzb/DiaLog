@@ -6,7 +6,7 @@ import { Log } from '../typings/Log';
 import { multiGetItems, aysncStoreItem } from '../storage/AsyncStorage';
 
 interface ActivityFormProps {
-  goToViewAct: () => void;
+  handleSubmit: () => void;
 }
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
@@ -59,7 +59,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     aysncStoreItem(log.time.toString(), log).then(() => multiGetItems());
 
     // Record Submitted: go to view activity screen
-    this.props.goToViewAct();
+    this.props.handleSubmit();
   };
 
   render() {

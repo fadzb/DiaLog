@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Header, Content, Title, Button, Text } from 'native-base';
+import { Container, Header, Content, Title } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import { ActivityForm } from '../components/ActivityForm';
 
@@ -14,7 +14,7 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
 
   state = {};
 
-  handleGoToViewAct = () => {
+  handleFormSubmit = () => {
     this.props.navigation.navigate('ViewAct');
   };
 
@@ -25,7 +25,7 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Title>Log Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <ActivityForm goToViewAct={this.handleGoToViewAct} />
+          <ActivityForm handleSubmit={this.handleFormSubmit} />
         </Content>
       </Container>
     );
