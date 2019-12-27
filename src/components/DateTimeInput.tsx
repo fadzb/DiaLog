@@ -59,7 +59,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
     return (
       <View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={styles.pickerControls}>
           <Button onPress={this.showPicker} title="Change Time" />
           <Button onPress={this.hidePicker} title="Hide" />
         </View>

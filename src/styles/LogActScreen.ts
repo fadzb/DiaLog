@@ -20,4 +20,7 @@ export const styles = StyleSheet.create({
   badge: {
     alignSelf: 'center',
   },
+  pickerControls: {
+    flexDirection: 'row',
+  },
 });
