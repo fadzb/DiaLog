@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { Container, Header, Content, Title, Button, Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
+import { ActivityChart } from '../components/ActivityChart';
 
-interface ViewActScreenProps {}
+interface ViewActScreenProps {
+  navigation: any;
+}
 
 export class ViewActScreen extends React.Component<ViewActScreenProps> {
   constructor(props: any) {
@@ -22,6 +25,7 @@ export class ViewActScreen extends React.Component<ViewActScreenProps> {
           <Title>View Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
+          {/* <ActivityChart /> */}
           <Button onPress={this.handleGoBack}>
             <Text>Go back</Text>
           </Button>
