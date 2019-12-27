@@ -1,17 +1,17 @@
 import { AsyncStorage } from 'react-native';
 import { Log } from '../typings/Log';
 
-const ACTIVITY_LOG_KEY = 'activityLogs';
+const TEST_KEY = 'TEST KEY';
 
 // TESTING Store Activity logs
 export function storeItem(item: Log) {
-  const key = ACTIVITY_LOG_KEY;
+  const key = TEST_KEY;
   aysncStoreItem(key, item);
 }
 
 // TESTING Retrieve all Activity logs
 export function getItem() {
-  const key = ACTIVITY_LOG_KEY;
+  const key = TEST_KEY;
   asyncGetItem(key).then(response => console.log(response));
 }
 

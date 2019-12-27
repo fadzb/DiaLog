@@ -3,17 +3,7 @@ import { styles } from '../styles/LogActScreen';
 import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
-import {
-  storeItem,
-  getItem,
-  getAllKeys,
-  clearAllKeys,
-  mergeItems,
-  multiGetItems,
-  aysncStoreItem,
-} from '../storage/AsyncStorage';
-
-const ACTIVITY_LOG_KEY = 'activityLogs';
+import { multiGetItems, aysncStoreItem } from '../storage/AsyncStorage';
 
 interface ActivityFormProps {
   goToViewAct: () => void;
