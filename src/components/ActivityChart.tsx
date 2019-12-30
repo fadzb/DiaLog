@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, Colors } from 'react-native-paper';
 import {
   LineChart,
   BarChart,
@@ -10,7 +10,7 @@ import {
 } from 'react-native-chart-kit';
 import { View, Text } from 'native-base';
 import { Dimensions } from 'react-native';
-import { getLogsForDate } from '../utils/ActivityLogUtils';
+import { getLogsForDate, sortByDateAscending } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -20,8 +20,8 @@ const CHART_CONFIG = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: '#08130D',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  labelColor: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  color: (opacity = 1) => Colors.redA100,
+  labelColor: (opacity = 1) => Colors.black,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
 };
@@ -39,6 +39,9 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     logs: [],
   };
 
+  // TODO: Cancel async tasks
+  componentWillUnmount = () => {};
+
   getTodaysLogs = () => {
     // Getting logs for todays date
     getLogsForDate(DateUtils.getTodaysDateTime())
@@ -50,29 +53,29 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     this.setState({ logs });
   };
 
-  getRecentTimes(logs: any) {
-    // All logged times today
-    const times: any = [];
-    logs.forEach((log: any) => {
-      times.push(log.time);
+  getRecentLogs(logs: any) {
+    //Sort All of todays logs
+    const sortedLogs = sortByDateAscending(logs);
+
+    //Only want to return last 5
+    const recentLogs = sortedLogs.splice(sortedLogs.length - 5);
+
+    recentLogs.forEach((log: any) => {
+      console.log(log);
     });
 
-    // Sort and then get first 10
-    const recentTimes = times.sort().splice(0, 3);
+    return recentLogs;
+  }
 
-    return recentTimes;
+  getTimesFromLogs(logs: any) {
+    return [];
   }
 
   getDataBlocks(logs: any) {
     // for each log: [insulin, glucose, cho]
     const dataBlocks: any = [];
     logs.forEach((log: any) => {
-      // const dataBlock = [log.insulin, log.glucose, log.cho];
-      const dataBlock = [
-        log.insulin + Math.random() * 10,
-        log.glucose + Math.random() * 10,
-        log.cho + Math.random() * 10,
-      ];
+      const dataBlock = [log.insulin, log.glucose, log.cho];
       dataBlocks.push(dataBlock);
     });
 
@@ -81,7 +84,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   getChartData = (logs: any) => {
     // TODO: Sort logs based on time for all these underneath methods (currently datablocks not adhearing)
-    const recentTimes = this.getRecentTimes(logs);
+    const recentLogs = this.getRecentLogs(logs);
+    const recentTimes = this.getTimesFromLogs(recentLogs);
     const labels = DateUtils.parseDateTimesIntoLabels(recentTimes);
     const legend = ['Insulin', 'Glucose', 'CHO'];
     const dataBlocks = this.getDataBlocks(logs);
@@ -100,14 +104,14 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const { logs } = this.state;
 
     return (
-      <View>
+      <View style={{ margin: 5, borderWidth: 1 }}>
         <StackedBarChart
-          style={{ margin: 10 }}
+          style={{ margin: 0 }}
           data={this.getChartData(logs)}
-          width={SCREEN_WIDTH + 155}
+          width={SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}
-          hideLegend={true}
+          hideLegend={false}
         />
       </View>
     );

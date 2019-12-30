@@ -27,4 +27,11 @@ function filterByDate(items: any, dateTime: Date) {
   return logs;
 }
 
-function sort(logs: Log[]) {}
+export function sortByDateAscending(logs: Log[]) {
+  const byDate = (a: any, b: any) => {
+    return a.time - b.time;
+  };
+  const sortedLogs = logs.sort(byDate).slice(0);
+
+  return sortedLogs;
+}

@@ -56,7 +56,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     };
 
     // Store this log
-    aysncStoreItem(log.time.toString(), log).then(() => multiGetItems());
+    aysncStoreItem(log.time.toString(), log);
 
     // Record Submitted: go to view activity screen
     this.props.handleSubmit();
