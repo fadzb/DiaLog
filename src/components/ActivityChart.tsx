@@ -54,15 +54,13 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   };
 
   getRecentLogs(logs: any) {
+    //Only show a maximum of 5 logs at the moment
+    const amount = 5;
+
     //Sort All of todays logs
     const sortedLogs = sortByDateAscending(logs);
-
-    //Only want to return the most recent 5
-    const recentLogs = sortedLogs.splice(sortedLogs.length - 5);
-
-    recentLogs.forEach((log: any) => {
-      console.log(log);
-    });
+    const startIndex = sortedLogs.length > amount ? sortedLogs.length - amount : 0;
+    const recentLogs = sortedLogs.slice(startIndex);
 
     return recentLogs;
   }
