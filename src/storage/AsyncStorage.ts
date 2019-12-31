@@ -108,10 +108,11 @@ export async function asyncMultiGetItems(keys: string[] | void) {
         key: retrievedItems[i][0],
         value: JSON.parse(retrievedItems[i][1]),
       };
+
       //Convert CHO, Glucose and Insulin from strings to numbers
       item.value.cho = Number(item.value.cho);
-      item.value.insulin = Number(item.value.cho);
-      item.value.glucose = Number(item.value.cho);
+      item.value.insulin = Number(item.value.insulin);
+      item.value.glucose = Number(item.value.glucose);
 
       items.push(item);
     }

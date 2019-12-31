@@ -57,7 +57,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     //Sort All of todays logs
     const sortedLogs = sortByDateAscending(logs);
 
-    //Only want to return last 5
+    //Only want to return the most recent 5
     const recentLogs = sortedLogs.splice(sortedLogs.length - 5);
 
     recentLogs.forEach((log: any) => {
@@ -68,7 +68,12 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   }
 
   getTimesFromLogs(logs: any) {
-    return [];
+    const times: any = [];
+    logs.forEach((log: any) => {
+      times.push(log.time);
+    });
+
+    return times;
   }
 
   getDataBlocks(logs: any) {
@@ -83,12 +88,11 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   }
 
   getChartData = (logs: any) => {
-    // TODO: Sort logs based on time for all these underneath methods (currently datablocks not adhearing)
     const recentLogs = this.getRecentLogs(logs);
     const recentTimes = this.getTimesFromLogs(recentLogs);
     const labels = DateUtils.parseDateTimesIntoLabels(recentTimes);
     const legend = ['Insulin', 'Glucose', 'CHO'];
-    const dataBlocks = this.getDataBlocks(logs);
+    const dataBlocks = this.getDataBlocks(recentLogs);
 
     const chartData = {
       labels: labels,
