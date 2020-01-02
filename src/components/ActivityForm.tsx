@@ -3,7 +3,7 @@ import { styles } from '../styles/LogActScreen';
 import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
-import { multiGetItems, aysncStoreItem } from '../storage/AsyncStorage';
+import { aysncStoreItem } from '../storage/AsyncStorage';
 
 interface ActivityFormProps {
   handleSubmit: () => void;

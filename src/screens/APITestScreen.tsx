@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Container, Header, Content, Title, Button, Text } from 'native-base';
 import { styles } from '../styles/APITestScreen';
-import { ActivityChart } from '../components/ActivityChart';
 import { getLogsForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';

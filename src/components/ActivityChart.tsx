@@ -7,6 +7,7 @@ import { getLogsForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { getChartData } from '../utils/ChartUtils';
 import { Log } from '../typings/Log';
+import { styles } from '../styles/ViewActScreen';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const CHART_CONFIG = {
@@ -14,10 +15,10 @@ const CHART_CONFIG = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: '#08130D',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => Colors.redA100,
-  labelColor: (opacity = 1) => Colors.black,
+  color: () => Colors.redA100,
+  labelColor: () => Colors.black,
   strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
+  barPercentage: 0.3,
 };
 
 interface ActivityChartProps {}
@@ -51,14 +52,14 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const { logs } = this.state;
 
     return (
-      <View style={{ margin: 5, borderWidth: 1 }}>
+      <View style={styles.chartContainer}>
         <StackedBarChart
-          style={{ margin: 0 }}
+          style={styles.chart}
           data={getChartData(logs)}
           width={SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}
-          hideLegend={false}
+          hideLegend={true}
         />
       </View>
     );
