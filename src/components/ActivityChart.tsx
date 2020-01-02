@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { Searchbar, Colors } from 'react-native-paper';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
-import { View, Text } from 'native-base';
+import { Colors } from 'react-native-paper';
+import { StackedBarChart } from 'react-native-chart-kit';
+import { View } from 'native-base';
 import { Dimensions } from 'react-native';
-import { getLogsForDate, sortByDateAscending } from '../utils/ActivityLogUtils';
+import { getLogsForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
+import { getChartData } from '../utils/ChartUtils';
 import { Log } from '../typings/Log';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -45,61 +39,12 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   getTodaysLogs = () => {
     // Getting logs for todays date
     getLogsForDate(DateUtils.getTodaysDateTime())
-      .then(logs => this.updateLogs(logs))
-      .catch(error => console.log('error here...' + error));
+      .then(logs => this.updateLogs(logs || []))
+      .catch(error => console.log('Error Getting Todays Logs.' + error));
   };
 
-  updateLogs = (logs: any) => {
+  updateLogs = (logs: Log[]) => {
     this.setState({ logs });
-  };
-
-  getRecentLogs(logs: any) {
-    //Only show a maximum of 5 logs at the moment
-    const amount = 5;
-
-    //Sort All of todays logs
-    const sortedLogs = sortByDateAscending(logs);
-    const startIndex = sortedLogs.length > amount ? sortedLogs.length - amount : 0;
-    const recentLogs = sortedLogs.slice(startIndex);
-
-    return recentLogs;
-  }
-
-  getTimesFromLogs(logs: any) {
-    const times: any = [];
-    logs.forEach((log: any) => {
-      times.push(log.time);
-    });
-
-    return times;
-  }
-
-  getDataBlocks(logs: any) {
-    // for each log: [insulin, glucose, cho]
-    const dataBlocks: any = [];
-    logs.forEach((log: any) => {
-      const dataBlock = [log.insulin, log.glucose, log.cho];
-      dataBlocks.push(dataBlock);
-    });
-
-    return dataBlocks;
-  }
-
-  getChartData = (logs: any) => {
-    const recentLogs = this.getRecentLogs(logs);
-    const recentTimes = this.getTimesFromLogs(recentLogs);
-    const labels = DateUtils.parseDateTimesIntoLabels(recentTimes);
-    const legend = ['Insulin', 'Glucose', 'CHO'];
-    const dataBlocks = this.getDataBlocks(recentLogs);
-
-    const chartData = {
-      labels: labels,
-      legend: legend,
-      data: dataBlocks,
-      barColors: ['blue', 'orange', 'green'],
-    };
-
-    return chartData;
   };
 
   render() {
@@ -109,7 +54,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       <View style={{ margin: 5, borderWidth: 1 }}>
         <StackedBarChart
           style={{ margin: 0 }}
-          data={this.getChartData(logs)}
+          data={getChartData(logs)}
           width={SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}
