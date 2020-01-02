@@ -25,7 +25,7 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
     // Getting logs for todays date
     getLogsForDate(DateUtils.getTodaysDateTime())
       .then(logs => console.log(logs))
-      .catch(error => console.log('error here...' + error));
+      .catch(error => console.log('Error getting todays logs.' + error));
   };
 
   addNewLog = () => {

@@ -2,6 +2,7 @@ import { getRecentLogs, getTimesFromLogs } from './ActivityLogUtils';
 import { DateUtils } from './DateUtils';
 const LEGEND = ['Insulin', 'Glucose', 'CHO'];
 const BAR_COLORS = ['blue', 'green', 'orange'];
+const RECENT_AMOUNT = 5;
 
 function getDataBlocks(logs: any) {
   // for each log: [insulin, glucose, cho]
@@ -15,7 +16,7 @@ function getDataBlocks(logs: any) {
 }
 
 export function getChartData(logs: any) {
-  const recentLogs = getRecentLogs(logs);
+  const recentLogs = getRecentLogs(logs, RECENT_AMOUNT);
   const recentTimes = getTimesFromLogs(recentLogs);
   const labels = DateUtils.parseDateTimesIntoLabels(recentTimes);
   const dataBlocks = getDataBlocks(recentLogs);

@@ -36,11 +36,7 @@ export function sortByDateAscending(logs: Log[]) {
   return sortedLogs;
 }
 
-export function getRecentLogs(logs: any) {
-  //Only show a maximum of 5 logs at the moment
-  const amount = 5;
-
-  //Sort All of todays logs
+export function getRecentLogs(logs: any, amount: number) {
   const sortedLogs = sortByDateAscending(logs);
   const startIndex = sortedLogs.length > amount ? sortedLogs.length - amount : 0;
   const recentLogs = sortedLogs.slice(startIndex);
