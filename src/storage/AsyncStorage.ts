@@ -55,7 +55,7 @@ export async function aysncStoreItem(key: string, item: any) {
     .catch(error => console.log('Error Storing Item...' + error));
 }
 
-async function asyncGetItem(key: string) {
+export async function asyncGetItem(key: string) {
   console.log('retrieving...');
   try {
     const retrievedItem = await AsyncStorage.getItem(key);
@@ -66,11 +66,11 @@ async function asyncGetItem(key: string) {
   }
 }
 
-async function asyncGetAllKeys() {
+export async function asyncGetAllKeys() {
   console.log('getting all keys...');
   const keys: string[] | void = await AsyncStorage.getAllKeys()
     .then(keys => {
-      console.log('Keys retrieved...');
+      console.log('Keys retrieved.');
       return keys;
     })
     .catch(error => {
@@ -80,7 +80,7 @@ async function asyncGetAllKeys() {
   return keys;
 }
 
-async function asyncMultiRemove(keys: any) {
+export async function asyncMultiRemove(keys: any) {
   console.log('performing multi-removal of keys...');
   await AsyncStorage.multiRemove(keys)
     .then(() => console.log('keys removed...'))
@@ -89,7 +89,7 @@ async function asyncMultiRemove(keys: any) {
     });
 }
 
-async function asyncMergeItems(key: string, newItem: any) {
+export async function asyncMergeItems(key: string, newItem: any) {
   console.log('merging new item with existing item...');
   await AsyncStorage.mergeItem(key, JSON.stringify(newItem))
     .then(() => console.log('items merged...'))
@@ -98,7 +98,7 @@ async function asyncMergeItems(key: string, newItem: any) {
     });
 }
 
-async function asyncMultiGetItems(keys: string[] | void) {
+export async function asyncMultiGetItems(keys: string[] | void) {
   console.log('retrieving multiple items...');
   try {
     const retrievedItems = await AsyncStorage.multiGet(keys || []);
@@ -108,8 +108,15 @@ async function asyncMultiGetItems(keys: string[] | void) {
         key: retrievedItems[i][0],
         value: JSON.parse(retrievedItems[i][1]),
       };
+
+      //Convert CHO, Glucose and Insulin from strings to numbers
+      item.value.cho = Number(item.value.cho);
+      item.value.insulin = Number(item.value.insulin);
+      item.value.glucose = Number(item.value.glucose);
+
       items.push(item);
     }
+    console.log('Items retrieved.');
     return items;
   } catch (error) {
     console.log(error.message);

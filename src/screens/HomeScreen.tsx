@@ -6,6 +6,7 @@ import { LoginScreen } from './LoginScreen';
 import { CarbScreen } from './CarbScreen';
 import { LogActScreen } from './LogActScreen';
 import { TrainScreen } from './TrainScreen';
+import { APITestScreen } from './APITestScreen';
 import { ViewActScreen } from './ViewActScreen';
 import Button from '../components/Button';
 
@@ -19,6 +20,7 @@ const labels = {
   LOG_ACT: 'Log Activity',
   VIEW_ACT: 'View Activity',
   TRAIN: 'Training Modules',
+  API_TEST: 'Test APIs',
 };
 
 class HomeScreen extends React.Component<HomeScreenProps> {
@@ -46,6 +48,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('Train', {});
   };
 
+  handleApiTestNav = () => {
+    this.props.navigation.navigate('ApiTest', {});
+  };
+
   render() {
     return (
       <View
@@ -61,6 +67,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
         <Button label={labels.LOG_ACT} onPress={this.handleLogActNav} />
         <Button label={labels.VIEW_ACT} onPress={this.handleViewActNav} />
         <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
+        <Button label={labels.API_TEST} onPress={this.handleApiTestNav} />
       </View>
     );
   }
@@ -74,6 +81,7 @@ const AppNavigator = createStackNavigator(
     LogAct: LogActScreen,
     ViewAct: ViewActScreen,
     Train: TrainScreen,
+    ApiTest: APITestScreen,
   },
   {
     initialRouteName: 'Home',
