@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Container, Header, Title, Content, Button, Text } from 'native-base';
+import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
 import { TrainModuleHeader } from '../components/TrainModuleHeader';
 import { getModules } from '../utils/TrainModuleUtils';

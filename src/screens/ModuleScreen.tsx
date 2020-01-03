@@ -26,6 +26,7 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
         <Header>
           <Title>Module Screen</Title>
         </Header>
+        <Title>{module.title}</Title>
         <Content style={styles.contentContainer}>
           {module.levels.map((level: TrainLevel, index: any) => {
             return <TrainLevelHeader level={level} key={index} />;

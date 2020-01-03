@@ -83,7 +83,7 @@ const AppNavigator = createStackNavigator(
     ViewAct: ViewActScreen,
     Train: TrainScreen,
     ApiTest: APITestScreen,
-    ModuleScreen: ModuleScreen,
+    Mod: ModuleScreen,
   },
   {
     initialRouteName: 'Home',

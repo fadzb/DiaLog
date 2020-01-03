@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Title, Button, Text } from 'native-base';
+import { View, Button, Text } from 'native-base';
 import { TrainModule } from '../typings/TrainModule';
 
 interface TrainModuleProps {
@@ -14,7 +14,7 @@ export class TrainModuleHeader extends React.Component<TrainModuleProps> {
 
   // Navigate to ModuleScreen and carry module in navigation prop state
   openModule = () => {
-    this.props.navigation.navigate('ModuleScreen', { module: this.props.module });
+    this.props.navigation.navigate('Mod', { module: this.props.module });
   };
 
   render() {

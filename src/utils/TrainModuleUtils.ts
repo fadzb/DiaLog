@@ -24,6 +24,10 @@ export function getModules() {
       title: 'module 2',
       levels: moduleLevels,
     },
+    {
+      title: 'module 3',
+      levels: moduleLevels,
+    },
   ];
 
   return modules;

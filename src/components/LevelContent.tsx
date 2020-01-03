@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Title, Content, Text } from 'native-base';
+import { View, Title, Text } from 'native-base';
 import { TrainLevel } from '../typings/TrainLevel';
 
 interface LevelContentProps {
@@ -17,7 +17,7 @@ export class LevelContent extends React.Component<LevelContentProps> {
     return (
       <View style={{ borderWidth: 1 }}>
         <Title>{level.title}</Title>
-        <Text>{level.content + 'dsadsaffadsfds'}</Text>
+        <Text>{level.content}</Text>
       </View>
     );
   }
