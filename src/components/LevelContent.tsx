@@ -16,7 +16,6 @@ export class LevelContent extends React.Component<LevelContentProps> {
 
     return (
       <View style={{ borderWidth: 1 }}>
-        <Title>{level.title}</Title>
         <Text>{level.content}</Text>
       </View>
     );

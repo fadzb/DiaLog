@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, Button, Text } from 'native-base';
+import { View, Button, Text, Header, Body } from 'native-base';
 import { TrainLevel } from '../typings/TrainLevel';
 import { Modal, TouchableOpacity } from 'react-native';
 import { LevelContent } from './LevelContent';
+import { Title } from 'react-native-paper';
 
 interface TrainLevelHeaderProps {
   level: TrainLevel;
@@ -36,15 +37,18 @@ export class TrainLevelHeader extends React.Component<TrainLevelHeaderProps> {
           visible={this.state.modalVisible}
           onRequestClose={this.handleCloseModal}
         >
-          <View style={{ marginTop: 100 }}>
+          <Header>
+            <Title>{level.title}</Title>
+          </Header>
+          <Body style={{}}>
             <LevelContent level={level} />
             <TouchableOpacity
-              style={{ marginTop: 500, borderWidth: 5 }}
+              style={{ position: 'absolute', bottom: 20, borderWidth: 5 }}
               onPress={this.handleCloseModal}
             >
               <Text>Back to Levels</Text>
             </TouchableOpacity>
-          </View>
+          </Body>
         </Modal>
         <Button onPress={this.handleOpenModal}>
           <Text>{level.title}</Text>
