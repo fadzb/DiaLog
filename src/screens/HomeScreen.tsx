@@ -9,6 +9,7 @@ import { TrainScreen } from './TrainScreen';
 import { APITestScreen } from './APITestScreen';
 import { ViewActScreen } from './ViewActScreen';
 import Button from '../components/Button';
+import { ModuleScreen } from './ModuleScreen';
 
 interface HomeScreenProps {
   navigation: any;
@@ -82,6 +83,7 @@ const AppNavigator = createStackNavigator(
     ViewAct: ViewActScreen,
     Train: TrainScreen,
     ApiTest: APITestScreen,
+    Mod: ModuleScreen,
   },
   {
     initialRouteName: 'Home',
