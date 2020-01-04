@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "878031830361",
+    "firebase_url": "https://healthyapp-289a0.firebaseio.com",
+    "project_id": "healthyapp-289a0",
+    "storage_bucket": "healthyapp-289a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878031830361:android:5f0c8bf159557f12d3a048",
+        "android_client_info": {
+          "package_name": "com.healthyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878031830361-8r990s4frbiedcmp2a7ralb8h86o38kb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.healthyapp",
+            "certificate_hash": "bf6710f2d6739bc997414f532381c3e523add8fa"
+          }
+        },
+        {
+          "client_id": "878031830361-e2er9kdhv0of6nskgpnn02357c9sp63q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8hBFhHpShFdkqEWV9RCGwnfFq7jDj3OY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878031830361-e2er9kdhv0of6nskgpnn02357c9sp63q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "878031830361-bfbqt39cd1ep0jvj0b0jmng991jmgg34.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.HealthyApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
