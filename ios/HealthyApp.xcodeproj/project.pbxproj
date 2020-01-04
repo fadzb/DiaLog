@@ -20,6 +20,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* HealthyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HealthyAppTests.m */; };
 		40FF70E068665847A0B1E8E3 /* libPods-HealthyApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4B62DBCDF93DCE7932A9E3 /* libPods-HealthyApp-tvOSTests.a */; };
 		62CBB76B1C40FD186C322206 /* libPods-HealthyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60A8FA5B59724142CE26DA58 /* libPods-HealthyAppTests.a */; };
+		B42B262023C0E62000451D5E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B42B261F23C0E62000451D5E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		60A8FA5B59724142CE26DA58 /* libPods-HealthyAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HealthyAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4B62DBCDF93DCE7932A9E3 /* libPods-HealthyApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HealthyApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A36624A7B7EE59C2767AAE1A /* libPods-HealthyApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HealthyApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42B261F23C0E62000451D5E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA00B9466958D20348005FBD /* Pods-HealthyApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthyApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-HealthyApp-tvOSTests/Pods-HealthyApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE2A855200391EDAC24B3C5E /* Pods-HealthyAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HealthyAppTests.release.xcconfig"; path = "Target Support Files/Pods-HealthyAppTests/Pods-HealthyAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B42B261F23C0E62000451D5E /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* HealthyApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* HealthyAppTests */,
@@ -194,7 +197,6 @@
 				1BDE6787A73F31B96F6F012B /* Pods-HealthyAppTests.debug.xcconfig */,
 				DE2A855200391EDAC24B3C5E /* Pods-HealthyAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -309,6 +311,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -339,6 +342,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				B42B262023C0E62000451D5E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
