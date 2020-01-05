@@ -25,7 +25,7 @@ const labels = {
   API_TEST: 'Test APIs',
 };
 
-class HomeScreen extends React.Component<HomeScreenProps> {
+export class HomeScreen extends React.Component<HomeScreenProps> {
   constructor(props: any) {
     super(props);
   }
@@ -75,21 +75,21 @@ class HomeScreen extends React.Component<HomeScreenProps> {
   }
 }
 
-const AppNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Carb: CarbScreen,
-    LogAct: LogActScreen,
-    ViewAct: ViewActScreen,
-    Train: TrainScreen,
-    ApiTest: APITestScreen,
-    Mod: ModuleScreen,
-    Reg: RegisterScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  },
-);
+// const AppNavigator = createStackNavigator(
+//   {
+//     Home: HomeScreen,
+//     Login: LoginScreen,
+//     Carb: CarbScreen,
+//     LogAct: LogActScreen,
+//     ViewAct: ViewActScreen,
+//     Train: TrainScreen,
+//     ApiTest: APITestScreen,
+//     Mod: ModuleScreen,
+//     Reg: RegisterScreen,
+//   },
+//   {
+//     initialRouteName: 'Home',
+//   },
+// );
 
-export default createAppContainer(AppNavigator);
+// export default createAppContainer(AppNavigator);
