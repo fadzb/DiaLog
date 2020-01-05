@@ -3,11 +3,18 @@ import { Text, View, TextInput } from 'react-native';
 import Button from '../components/Button';
 import { styles } from '../styles/LoginScreen';
 import { connect } from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/auth';
 const EMAIL_PLACEHOLDER = 'Email';
 const PASSWORD_PLACEHOLDER = 'Password';
 const LOGIN_LABEL = 'Login';
+const SIGNUP_LABEL = 'Sign Up';
 
-export class LoginScreen extends React.Component {
+interface LoginScreenProps {
+  navigation: any;
+}
+
+export class LoginScreen extends React.Component<LoginScreenProps> {
   state: any = {
     email: '',
     password: '',
@@ -24,6 +31,10 @@ export class LoginScreen extends React.Component {
   handleLoginPress = () => {
     // should verify account
     // for now will just advance to next screen
+  };
+
+  handleSwitchToSignUp = () => {
+    this.props.navigation.navigate('Reg', {});
   };
 
   render() {
@@ -43,21 +54,9 @@ export class LoginScreen extends React.Component {
             onChangeText={this.handlePasswordChange}
           />
           <Button label={LOGIN_LABEL} onPress={this.handleLoginPress} />
+          <Button label={SIGNUP_LABEL} onPress={this.handleSwitchToSignUp} />
         </View>
       </View>
     );
   }
 }
-
-const mapStateToProps = (state: any) => {
-  return {
-    name: state.name,
-  };
-};
-
-const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginScreen);

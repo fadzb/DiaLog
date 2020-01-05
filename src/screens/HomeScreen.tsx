@@ -10,6 +10,7 @@ import { APITestScreen } from './APITestScreen';
 import { ViewActScreen } from './ViewActScreen';
 import Button from '../components/Button';
 import { ModuleScreen } from './ModuleScreen';
+import { RegisterScreen } from './RegisterScreen';
 
 interface HomeScreenProps {
   navigation: any;
@@ -84,6 +85,7 @@ const AppNavigator = createStackNavigator(
     Train: TrainScreen,
     ApiTest: APITestScreen,
     Mod: ModuleScreen,
+    Reg: RegisterScreen,
   },
   {
     initialRouteName: 'Home',

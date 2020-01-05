@@ -19,7 +19,19 @@ const AppNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'none',
+    headerMode: 'screen',
+
+    //style the header if decide to render in future
+    defaultNavigationOptions: {
+      headerShown: false,
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
   },
 );
 
