@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  View,
   Container,
   Header,
   Content,
@@ -16,7 +15,6 @@ import {
   Button,
 } from 'native-base';
 import auth from '@react-native-firebase/auth';
-import { firebase } from '@react-native-firebase/auth';
 import { styles } from '../styles/RegisterScreen';
 
 interface RegisterScreenProps {
@@ -46,7 +44,8 @@ export class RegisterScreen extends React.Component<RegisterScreenProps> {
 
   // Redirect to home page and display alert (Account registered, now logged in)
   onSuccessfulRegister = (userCredential: any) => {
-    console.log();
+    // for now just log the display name
+    console.log(userCredential.user.displayName);
   };
 
   handleEmailChange = (email: string) => {
