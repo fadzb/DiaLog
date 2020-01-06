@@ -58,26 +58,25 @@ const AppContainer = (props: any) => {
 
   // Handle user state changes
   function onAuthStateChanged(user: any) {
+    console.log('onAuthStateChanged fired.');
     setUser(user);
     if (initializing) setInitializing(false);
   }
 
   useEffect(() => {
+    console.log('useEffect fired.');
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
 
   if (initializing) return null;
-  const initialRoute = 'Reg';
 
-  if (true) {
-    return <NavContainer initialRoute={initialRoute} />;
+  if (user) {
+    console.log('user email: ' + user.email);
+    return <NavContainer initialRoute={'Home'} />;
   }
-  return (
-    <AppContainer initialRoute={initialRoute}>
-      <View style={{ flex: 1 }}>{props.children}</View>
-    </AppContainer>
-  );
+  console.log('no user');
+  return <NavContainer initialRoute={'Reg'} />;
 };
 
 const App = () => (
