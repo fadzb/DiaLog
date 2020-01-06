@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './screens/HomeScreen';
@@ -9,43 +9,81 @@ import { ViewActScreen } from './screens/ViewActScreen';
 import { TrainScreen } from './screens/TrainScreen';
 import { APITestScreen } from './screens/APITestScreen';
 import { ModuleScreen } from './screens/ModuleScreen';
-import { RegisterScreen } from './screens/RegisterScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import { View } from 'native-base';
+import { firebase } from '@react-native-firebase/auth';
 
 // TODO: May need to add async functions to wait for fonts for Native Base: https://github.com/GeekyAnts/NativeBase
 
 // Todo: Tidy up
-const AppNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Carb: CarbScreen,
-    LogAct: LogActScreen,
-    ViewAct: ViewActScreen,
-    Train: TrainScreen,
-    ApiTest: APITestScreen,
-    Mod: ModuleScreen,
-    Reg: RegisterScreen,
-  },
-  {
-    initialRouteName: 'Home',
-    headerMode: 'screen',
+const AppNavigator = (initialRoute: any) =>
+  createStackNavigator(
+    {
+      Home: HomeScreen,
+      Login: LoginScreen,
+      Carb: CarbScreen,
+      LogAct: LogActScreen,
+      ViewAct: ViewActScreen,
+      Train: TrainScreen,
+      ApiTest: APITestScreen,
+      Mod: ModuleScreen,
+      Reg: RegisterScreen,
+    },
+    {
+      initialRouteName: `${initialRoute}`,
+      headerMode: 'screen',
 
-    //style the header if decide to render in future
-    defaultNavigationOptions: {
-      headerShown: false,
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
+      //style the header if decide to render in future
+      defaultNavigationOptions: {
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
       },
     },
-  },
+  );
+
+const NavContainer = ({ initialRoute }: any) => {
+  return React.createElement(createAppContainer(AppNavigator(initialRoute)));
+};
+
+const AppContainer = (props: any) => {
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user: any) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+  const initialRoute = 'Reg';
+
+  if (true) {
+    return <NavContainer initialRoute={initialRoute} />;
+  }
+  return (
+    <AppContainer initialRoute={initialRoute}>
+      <View style={{ flex: 1 }}>{props.children}</View>
+    </AppContainer>
+  );
+};
+
+const App = () => (
+  <View style={{ flex: 1 }}>
+    <AppContainer />
+  </View>
 );
-
-const AppContainer = createAppContainer(AppNavigator);
-
-const App = () => <AppContainer />;
 
 export default App;

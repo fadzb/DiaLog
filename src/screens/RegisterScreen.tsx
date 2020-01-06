@@ -16,12 +16,13 @@ import {
 } from 'native-base';
 import auth from '@react-native-firebase/auth';
 import { styles } from '../styles/RegisterScreen';
+import { connect } from 'react-redux';
 
 interface RegisterScreenProps {
   navigation: any;
 }
 
-export class RegisterScreen extends React.Component<RegisterScreenProps> {
+class RegisterScreen extends React.Component<RegisterScreenProps> {
   constructor(props: any) {
     super(props);
   }
@@ -36,7 +37,7 @@ export class RegisterScreen extends React.Component<RegisterScreenProps> {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        console.log('success...' + userCredential);
+        console.log('success...');
         this.onSuccessfulRegister(userCredential);
       })
       .catch(error => console.log(error));
@@ -45,7 +46,7 @@ export class RegisterScreen extends React.Component<RegisterScreenProps> {
   // Redirect to home page and display alert (Account registered, now logged in)
   onSuccessfulRegister = (userCredential: any) => {
     // for now just log the display name
-    console.log(userCredential.user.displayName);
+    console.log(userCredential.user.email);
   };
 
   handleEmailChange = (email: string) => {
@@ -93,3 +94,16 @@ export class RegisterScreen extends React.Component<RegisterScreenProps> {
     );
   }
 }
+
+const mapStateToProps = () => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RegisterScreen);
