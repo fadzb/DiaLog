@@ -63,6 +63,10 @@ class RegisterScreen extends React.Component<RegisterScreenProps> {
     this.register(email, password);
   };
 
+  handleSwitchToLogin = () => {
+    this.props.navigation.navigate('Login', {});
+  };
+
   //TODO: Add event handler for return (enter key) submission
 
   render() {
@@ -89,6 +93,9 @@ class RegisterScreen extends React.Component<RegisterScreenProps> {
               <Text>Register</Text>
             </Button>
           </Form>
+          <Button primary style={styles.registerButton} onPress={this.handleSwitchToLogin}>
+            <Text>Switch to Login</Text>
+          </Button>
         </Content>
       </Container>
     );

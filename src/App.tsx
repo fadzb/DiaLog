@@ -63,6 +63,7 @@ const AppContainer = (props: any) => {
     if (initializing) setInitializing(false);
   }
 
+  //TODO: Need to unsubscribe when auth state changes
   useEffect(() => {
     console.log('useEffect fired.');
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
