@@ -67,7 +67,7 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
 
   getCurrentUser = () => {
     const user = firebase.auth().currentUser;
-    user && console.log(user.email);
+    (user && console.log(user.email)) || (!user && console.log('no user'));
     return user;
   };
 
@@ -86,7 +86,7 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
   };
 
   signOut = async () => {
-    const currentUser = this.getCurrentUser();
+    // const currentUser = this.getCurrentUser();
     try {
       await firebase.auth().signOut();
     } catch (error) {

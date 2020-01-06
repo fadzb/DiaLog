@@ -59,11 +59,17 @@ const AppContainer = (props: any) => {
   // Handle user state changes
   function onAuthStateChanged(user: any) {
     console.log('onAuthStateChanged fired.');
-    setUser(user);
+    if (user) {
+      //Signed in
+      setUser(user);
+    } else {
+      //Signed Out or switched accounts
+      setUser(user);
+    }
     if (initializing) setInitializing(false);
   }
 
-  //TODO: Need to unsubscribe when auth state changes
+  //React runs function returned by useEffect when component unmounts
   useEffect(() => {
     console.log('useEffect fired.');
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
@@ -77,7 +83,7 @@ const AppContainer = (props: any) => {
     return <NavContainer initialRoute={'Home'} />;
   }
   console.log('no user');
-  return <NavContainer initialRoute={'Reg'} />;
+  return <NavContainer initialRoute={'Login'} />;
 };
 
 const App = () => (
