@@ -79,10 +79,8 @@ const AppContainer = (props: any) => {
   if (initializing) return null;
 
   if (user) {
-    console.log('user email: ' + user.email);
     return <NavContainer initialRoute={'Home'} />;
   }
-  console.log('no user');
   return <NavContainer initialRoute={'Login'} />;
 };
 

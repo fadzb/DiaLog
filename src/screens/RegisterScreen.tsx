@@ -17,6 +17,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import { styles } from '../styles/RegisterScreen';
 import { connect } from 'react-redux';
+import { register } from '../utils/FirebaseAuth/AuthUtils';
 
 interface RegisterScreenProps {
   navigation: any;
@@ -32,20 +33,9 @@ class RegisterScreen extends React.Component<RegisterScreenProps> {
     password: '',
   };
 
-  // Registers user then signs them in and returns user credential promise
-  async register(email: string, password: any) {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        console.log('success...');
-        this.onSuccessfulRegister(userCredential);
-      })
-      .catch(error => console.log(error));
-  }
-
-  // Redirect to home page and display alert (Account registered, now logged in)
+  // Currently the onAuthStateChanged which wraps around the App will render the Home Page when a user is logged in
   onSuccessfulRegister = (userCredential: any) => {
-    // for now just log the display name
+    //TODO: Show an alert box or maybe send an email
     console.log(userCredential.user.email);
   };
 
@@ -60,7 +50,10 @@ class RegisterScreen extends React.Component<RegisterScreenProps> {
   handleRegister = () => {
     const { email, password } = this.state;
 
-    this.register(email, password);
+    //Register then call onSuccessfulRegister to handle what happens next
+    register(email, password).then(
+      userCredential => userCredential && this.onSuccessfulRegister(userCredential),
+    );
   };
 
   handleSwitchToLogin = () => {

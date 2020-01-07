@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, TextInput } from 'react-native';
 import Button from '../components/Button';
 import { styles } from '../styles/LoginScreen';
+import { login } from '../utils/FirebaseAuth/AuthUtils';
 const EMAIL_PLACEHOLDER = 'Email';
 const PASSWORD_PLACEHOLDER = 'Password';
 const LOGIN_LABEL = 'Login';
@@ -25,9 +26,17 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.setState({ password });
   };
 
+  //TODO: Alert user
+  handleOnSuccessfulLogin = (userCredential: any) => {
+    // console.log(`${userCredential.user.email} logged in`);
+  };
+
   handleLoginPress = () => {
-    // should verify account
-    // for now will just advance to next screen
+    const { email, password } = this.state;
+
+    login(email, password).then(
+      userCredential => userCredential && this.handleOnSuccessfulLogin(userCredential),
+    );
   };
 
   handleSwitchToSignUp = () => {

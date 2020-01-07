@@ -5,8 +5,8 @@ import { getLogsForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
 import { aysncStoreItem, asyncGetAllKeys, asyncMultiRemove } from '../storage/AsyncStorage';
-import { firebase } from '@react-native-firebase/auth';
-import { ErrorCodes } from '../utils/FirebaseAuth/ErrorCodes';
+
+import { login, signOut, getCurrentUser, register } from '../utils/FirebaseAuth/AuthUtils';
 
 const TEST_EMAIL = 'test@gmail.com';
 const TEST_PASSWORD = '123456';
@@ -53,45 +53,23 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
   // Firebase Auth Tests
 
   register = async () => {
-    try {
-      const userCredential = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD);
-      console.log('success.');
-    } catch (error) {
-      if (error.code == ErrorCodes.emailAlreadyInUse) {
-        console.log('Test account already registered...');
-      }
-    }
+    //Will register the test account if not already registered
+    register(TEST_EMAIL, TEST_PASSWORD);
   };
 
   getCurrentUser = () => {
-    const user = firebase.auth().currentUser;
-    (user && console.log(user.email)) || (!user && console.log('no user'));
-    return user;
+    //Gets current user
+    getCurrentUser();
   };
 
-  login = async () => {
+  login = () => {
     //Login a test user
-    console.log('before');
-    try {
-      const userCredential = await firebase
-        .auth()
-        .signInWithEmailAndPassword(TEST_EMAIL, TEST_PASSWORD);
-      console.log(userCredential.user.email + ' logged in.');
-    } catch (error) {
-      console.log(error);
-    }
-    console.log('after');
+    login(TEST_EMAIL, TEST_PASSWORD);
   };
 
-  signOut = async () => {
-    // const currentUser = this.getCurrentUser();
-    try {
-      await firebase.auth().signOut();
-    } catch (error) {
-      console.log(error);
-    }
+  signOut = () => {
+    //Sign out
+    signOut();
   };
 
   render() {
