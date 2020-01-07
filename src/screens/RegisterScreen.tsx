@@ -14,7 +14,6 @@ import {
   Right,
   Button,
 } from 'native-base';
-import auth from '@react-native-firebase/auth';
 import { styles } from '../styles/RegisterScreen';
 import { connect } from 'react-redux';
 import { register } from '../utils/FirebaseAuth/AuthUtils';

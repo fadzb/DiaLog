@@ -1,8 +1,21 @@
 import * as React from 'react';
 import { Text, View, TextInput } from 'react-native';
-import Button from '../components/Button';
 import { styles } from '../styles/LoginScreen';
 import { login } from '../utils/FirebaseAuth/AuthUtils';
+import {
+  Container,
+  Left,
+  Title,
+  Body,
+  Right,
+  Content,
+  Form,
+  Item,
+  Label,
+  Input,
+  Button,
+  Header,
+} from 'native-base';
 const EMAIL_PLACEHOLDER = 'Email';
 const PASSWORD_PLACEHOLDER = 'Password';
 const LOGIN_LABEL = 'Login';
@@ -28,10 +41,10 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
 
   //TODO: Alert user
   handleOnSuccessfulLogin = (userCredential: any) => {
-    // console.log(`${userCredential.user.email} logged in`);
+    console.log(`${userCredential.user.email} logged in`);
   };
 
-  handleLoginPress = () => {
+  handleLogin = () => {
     const { email, password } = this.state;
 
     login(email, password).then(
@@ -45,24 +58,33 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Welcome to HealthyApp</Text>
-
-        <View style={styles.form}>
-          <TextInput
-            style={styles.text}
-            placeholder={EMAIL_PLACEHOLDER}
-            onChangeText={this.handleEmailChange}
-          />
-          <TextInput
-            style={styles.text}
-            placeholder={PASSWORD_PLACEHOLDER}
-            onChangeText={this.handlePasswordChange}
-          />
-          <Button label={LOGIN_LABEL} onPress={this.handleLoginPress} />
-          <Button label={SIGNUP_LABEL} onPress={this.handleSwitchToSignUp} />
-        </View>
-      </View>
+      <Container>
+        <Header>
+          <Left />
+          <Body>
+            <Title>Login</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input onChangeText={this.handleEmailChange} />
+            </Item>
+            <Item floatingLabel last>
+              <Label>Password</Label>
+              <Input secureTextEntry onChangeText={this.handlePasswordChange} />
+            </Item>
+            <Button primary style={styles.registerButton} onPress={this.handleLogin}>
+              <Text>Login</Text>
+            </Button>
+          </Form>
+          <Button primary style={styles.registerButton} onPress={this.handleSwitchToSignUp}>
+            <Text>Sign Up</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }

@@ -51,7 +51,7 @@ const NavContainer = ({ initialRoute }: any) => {
   return React.createElement(createAppContainer(AppNavigator(initialRoute)));
 };
 
-const AppContainer = (props: any) => {
+const AppContainer = () => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -66,7 +66,9 @@ const AppContainer = (props: any) => {
       //Signed Out or switched accounts
       setUser(user);
     }
-    if (initializing) setInitializing(false);
+    if (initializing) {
+      setInitializing(false);
+    }
   }
 
   //React runs function returned by useEffect when component unmounts
@@ -76,7 +78,9 @@ const AppContainer = (props: any) => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  if (initializing) return null;
+  if (initializing) {
+    return null;
+  }
 
   if (user) {
     return <NavContainer initialRoute={'Home'} />;

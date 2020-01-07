@@ -18,7 +18,9 @@ export const getCurrentUser = () => {
   const user = firebase.auth().currentUser;
   if (user) {
     console.log(user.email);
-  } else console.log('no user');
+  } else {
+    console.log('no user');
+  }
   return user;
 };
 
