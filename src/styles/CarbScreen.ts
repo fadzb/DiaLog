@@ -29,7 +29,11 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
   },
   foodListContainer: {
-    alignItems: 'center',
+    // alignSelf: 'center',
+  },
+  scrollViewContainer: {
+    // borderWidth: 1,
+    height: '50%',
   },
   button: {
     alignItems: 'center',

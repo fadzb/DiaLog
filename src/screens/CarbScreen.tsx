@@ -2,7 +2,10 @@ import * as React from 'react';
 import { ScrollView, Text } from 'react-native';
 import { SearchBar } from '../components/SearchBar';
 import { FoodList } from '../components/FoodList';
+import { BarcodeScanner } from '../components/BarcodeScanner';
 import { SafeAreaView } from 'react-navigation';
+import { styles } from '../styles/CarbScreen';
+import { View } from 'native-base';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
@@ -26,11 +29,14 @@ export class CarbScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>
-        <ScrollView>
-          <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
-          <Text>Render List of results for</Text>
-          <FoodList query={this.state.query} />
-        </ScrollView>
+        <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
+        <Text>Render List of results for</Text>
+        <View style={styles.scrollViewContainer}>
+          <ScrollView contentContainerStyle={styles.foodListContainer}>
+            <FoodList query={this.state.query} />
+          </ScrollView>
+        </View>
+        <BarcodeScanner />
       </SafeAreaView>
     );
   }
