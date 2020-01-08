@@ -6,6 +6,11 @@ import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
 import { aysncStoreItem, asyncGetAllKeys, asyncMultiRemove } from '../storage/AsyncStorage';
 
+import { login, signOut, getCurrentUser, register } from '../utils/FirebaseAuth/AuthUtils';
+
+const TEST_EMAIL = 'test@gmail.com';
+const TEST_PASSWORD = '123456';
+
 interface APITestScreenProps {
   navigation: any;
 }
@@ -45,6 +50,28 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
     asyncGetAllKeys().then(keys => asyncMultiRemove(keys));
   };
 
+  // Firebase Auth Tests
+
+  register = async () => {
+    //Will register the test account if not already registered
+    register(TEST_EMAIL, TEST_PASSWORD);
+  };
+
+  getCurrentUser = () => {
+    //Gets current user
+    getCurrentUser();
+  };
+
+  login = () => {
+    //Login a test user
+    login(TEST_EMAIL, TEST_PASSWORD);
+  };
+
+  signOut = () => {
+    //Sign out
+    signOut();
+  };
+
   render() {
     return (
       <Container style={styles.container}>
@@ -61,6 +88,21 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
           </Button>
           <Button style={styles.testButtons} onPress={this.clearAllLogs}>
             <Text>Clear All Logs</Text>
+          </Button>
+        </Content>
+        <Content style={styles.contentContainer}>
+          <Title>Test Firebase Auth</Title>
+          <Button style={styles.testButtons} onPress={this.register}>
+            <Text>Register</Text>
+          </Button>
+          <Button style={styles.testButtons} onPress={this.getCurrentUser}>
+            <Text>Get Current User</Text>
+          </Button>
+          <Button style={styles.testButtons} onPress={this.login}>
+            <Text>Login</Text>
+          </Button>
+          <Button style={styles.testButtons} onPress={this.signOut}>
+            <Text>Sign out</Text>
           </Button>
         </Content>
       </Container>

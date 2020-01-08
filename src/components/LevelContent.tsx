@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Title, Text } from 'native-base';
+import { View, Text } from 'native-base';
 import { TrainLevel } from '../typings/TrainLevel';
 
 interface LevelContentProps {

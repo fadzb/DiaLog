@@ -1,1 +1,1 @@
-export const ADD_NAME = 'ADD_PLACE';
+export const ADD_NAME = 'ADD_NAME';

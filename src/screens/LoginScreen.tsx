@@ -1,13 +1,27 @@
 import * as React from 'react';
-import { Text, View, TextInput } from 'react-native';
-import Button from '../components/Button';
 import { styles } from '../styles/LoginScreen';
-import { connect } from 'react-redux';
-const EMAIL_PLACEHOLDER = 'Email';
-const PASSWORD_PLACEHOLDER = 'Password';
-const LOGIN_LABEL = 'Login';
+import { login } from '../utils/FirebaseAuth/AuthUtils';
+import {
+  Container,
+  Left,
+  Title,
+  Body,
+  Right,
+  Content,
+  Form,
+  Item,
+  Label,
+  Input,
+  Button,
+  Header,
+  Text,
+} from 'native-base';
 
-export class LoginScreen extends React.Component {
+interface LoginScreenProps {
+  navigation: any;
+}
+
+export class LoginScreen extends React.Component<LoginScreenProps> {
   state: any = {
     email: '',
     password: '',
@@ -21,43 +35,52 @@ export class LoginScreen extends React.Component {
     this.setState({ password });
   };
 
-  handleLoginPress = () => {
-    // should verify account
-    // for now will just advance to next screen
+  //TODO: Alert user
+  handleOnSuccessfulLogin = (userCredential: any) => {
+    console.log(`${userCredential.user.email} logged in`);
+  };
+
+  handleLogin = () => {
+    const { email, password } = this.state;
+
+    login(email, password).then(
+      userCredential => userCredential && this.handleOnSuccessfulLogin(userCredential),
+    );
+  };
+
+  handleSwitchToSignUp = () => {
+    this.props.navigation.navigate('Reg', {});
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Welcome to HealthyApp</Text>
-
-        <View style={styles.form}>
-          <TextInput
-            style={styles.text}
-            placeholder={EMAIL_PLACEHOLDER}
-            onChangeText={this.handleEmailChange}
-          />
-          <TextInput
-            style={styles.text}
-            placeholder={PASSWORD_PLACEHOLDER}
-            onChangeText={this.handlePasswordChange}
-          />
-          <Button label={LOGIN_LABEL} onPress={this.handleLoginPress} />
-        </View>
-      </View>
+      <Container>
+        <Header>
+          <Left />
+          <Body>
+            <Title>Login</Title>
+          </Body>
+          <Right />
+        </Header>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input onChangeText={this.handleEmailChange} />
+            </Item>
+            <Item floatingLabel last>
+              <Label>Password</Label>
+              <Input secureTextEntry onChangeText={this.handlePasswordChange} />
+            </Item>
+            <Button primary style={styles.registerButton} onPress={this.handleLogin}>
+              <Text>Login</Text>
+            </Button>
+          </Form>
+          <Button primary style={styles.registerButton} onPress={this.handleSwitchToSignUp}>
+            <Text>Sign Up</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }
-
-const mapStateToProps = (state: any) => {
-  return {
-    name: state.name,
-  };
-};
-
-const mapDispatchToProps = (dispatch: (dispatch: any) => void) => {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginScreen);

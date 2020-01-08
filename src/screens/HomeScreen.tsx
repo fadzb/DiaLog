@@ -1,18 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { LoginScreen } from './LoginScreen';
-import { CarbScreen } from './CarbScreen';
-import { LogActScreen } from './LogActScreen';
-import { TrainScreen } from './TrainScreen';
-import { APITestScreen } from './APITestScreen';
-import { ViewActScreen } from './ViewActScreen';
 import Button from '../components/Button';
-import { ModuleScreen } from './ModuleScreen';
+import { connect } from 'react-redux';
+import { addName } from '../actions/actions';
 
 interface HomeScreenProps {
   navigation: any;
+
+  //Redux dispatch actions
+  addName: (name: any) => void;
 }
 
 const labels = {
@@ -22,6 +18,7 @@ const labels = {
   VIEW_ACT: 'View Activity',
   TRAIN: 'Training Modules',
   API_TEST: 'Test APIs',
+  REDUX_TEST: 'Test Redux',
 };
 
 class HomeScreen extends React.Component<HomeScreenProps> {
@@ -53,6 +50,11 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('ApiTest', {});
   };
 
+  handleReduxTest = () => {
+    console.log('testing addName reducer');
+    this.props.addName('Faddle');
+  };
+
   render() {
     return (
       <View
@@ -69,25 +71,27 @@ class HomeScreen extends React.Component<HomeScreenProps> {
         <Button label={labels.VIEW_ACT} onPress={this.handleViewActNav} />
         <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
         <Button label={labels.API_TEST} onPress={this.handleApiTestNav} />
+        <Button label={labels.REDUX_TEST} onPress={this.handleReduxTest} />
       </View>
     );
   }
 }
 
-const AppNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Carb: CarbScreen,
-    LogAct: LogActScreen,
-    ViewAct: ViewActScreen,
-    Train: TrainScreen,
-    ApiTest: APITestScreen,
-    Mod: ModuleScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  },
-);
+const mapStateToProps = () => {
+  return {
+    name: 'state.name for now is faddle',
+  };
+};
 
-export default createAppContainer(AppNavigator);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    addName: (name: any) => {
+      dispatch(addName(name));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeScreen);
