@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text, View, TextInput } from 'react-native';
 import { styles } from '../styles/LoginScreen';
 import { login } from '../utils/FirebaseAuth/AuthUtils';
 import {
@@ -15,11 +14,8 @@ import {
   Input,
   Button,
   Header,
+  Text,
 } from 'native-base';
-const EMAIL_PLACEHOLDER = 'Email';
-const PASSWORD_PLACEHOLDER = 'Password';
-const LOGIN_LABEL = 'Login';
-const SIGNUP_LABEL = 'Sign Up';
 
 interface LoginScreenProps {
   navigation: any;
