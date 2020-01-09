@@ -30,11 +30,11 @@ export const styles = StyleSheet.create({
   },
   foodListContainer: {
     // alignSelf: 'center',
+    flex: 1,
   },
   scrollViewContainer: {
-    // borderWidth: 1,
-    // height: '50%',
-    flex: 1,
+    borderWidth: 1,
+    height: '50%',
   },
   button: {
     alignItems: 'center',
@@ -42,34 +42,29 @@ export const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
   },
+  bottom: {
+    flex: 0,
+    justifyContent: 'flex-end',
+    marginBottom: 0,
+  },
 
   //Camera styles
-  preview: {
+  scannerContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    marginBottom: 40,
+  },
+  cameraContainer: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  cameraIcon: {
-    margin: 5,
-    height: 40,
-    width: 40,
-  },
-  bottomOverlay: {
-    position: 'absolute',
-    width: '100%',
-    flex: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  captureContainer: {},
   capture: {
     flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+
+    bottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconCamera: {},
 });

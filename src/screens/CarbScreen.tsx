@@ -28,17 +28,17 @@ export class CarbScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <SafeAreaView>
+      <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
           <Text>Render List of results for</Text>
-          <View style={styles.scrollViewContainer}>
-            <ScrollView contentContainerStyle={styles.foodListContainer}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={styles.foodListContainer}>
               <FoodList query={this.state.query} />
-            </ScrollView>
-          </View>
-          <Scanner />
+            </View>
+          </ScrollView>
         </SafeAreaView>
+        <Scanner />
       </View>
     );
   }

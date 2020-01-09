@@ -4,7 +4,6 @@ import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
-import { red100 } from 'react-native-paper/lib/typescript/src/styles/colors';
 
 interface ScannerProps {}
 
@@ -61,54 +60,51 @@ export class Scanner extends React.Component<ScannerProps> {
   render() {
     if (this.state.show) {
       return (
-        <View style={{ borderColor: 'yellow', borderWidth: 5, height: 400 }}>
-          <Container style={{ borderWidth: 5, borderColor: 'red' }}>
-            <View style={{ backgroundColor: 'black' }}>
-              <RNCamera
-                ref={cam => {
-                  this.camera = cam;
-                }}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                androidCameraPermissionOptions={{
-                  title: 'Permission to use camera',
-                  message: 'We need your permission to use your camera',
-                  buttonPositive: 'Ok',
-                  buttonNegative: 'Cancel',
-                }}
-                androidRecordAudioPermissionOptions={{
-                  title: 'Permission to use audio recording',
-                  message: 'We need your permission to use your audio',
-                  buttonPositive: 'Ok',
-                  buttonNegative: 'Cancel',
-                }}
-                onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                  console.log(barcodes);
-                }}
-                onBarCodeRead={this.onBarCodeRead}
-              />
-              <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                  <Text style={{ fontSize: 14 }}> SNAP </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.bottomOverlay}>
-                <TouchableOpacity onPress={() => this.handleTourch(this.state.torchOn)}>
-                  <Text>Torch</Text>
-                </TouchableOpacity>
-              </View>
+        <View style={styles.scannerContainer}>
+          <View style={styles.cameraContainer}>
+            <RNCamera
+              ref={cam => {
+                this.camera = cam;
+              }}
+              type={RNCamera.Constants.Type.back}
+              flashMode={RNCamera.Constants.FlashMode.on}
+              androidCameraPermissionOptions={{
+                title: 'Permission to use camera',
+                message: 'We need your permission to use your camera',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+              androidRecordAudioPermissionOptions={{
+                title: 'Permission to use audio recording',
+                message: 'We need your permission to use your audio',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+              onGoogleVisionBarcodesDetected={({ barcodes }) => {
+                console.log(barcodes);
+              }}
+              onBarCodeRead={this.onBarCodeRead}
+            />
+            <View style={styles.capture}>
+              <Button light onPress={this.takePicture.bind(this)}>
+                <Icon name="camera" />
+              </Button>
             </View>
-          </Container>
-          {/* <Button style={{ marginTop: 100 }} vertical onPress={this.closeCamera}>
+            {/* <View style={{}}>
+              <TouchableOpacity onPress={() => this.handleTourch(this.state.torchOn)}>
+                <Text>Torch</Text>
+              </TouchableOpacity>
+            </View> */}
+          </View>
+          <Button style={styles.bottom} vertical onPress={this.closeCamera}>
             <Icon name="camera" />
             <Text>Close Camera</Text>
-          </Button> */}
+          </Button>
         </View>
       );
     } else {
       return (
-        <View>
+        <View style={{ flex: 0, marginBottom: 40 }}>
           <Button vertical onPress={this.openCamera}>
             <Icon name="camera" />
             <Text>Camera</Text>
