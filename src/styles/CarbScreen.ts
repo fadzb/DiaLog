@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     // borderWidth: 1,
-    height: '50%',
+    // height: '50%',
+    flex: 1,
   },
   button: {
     alignItems: 'center',

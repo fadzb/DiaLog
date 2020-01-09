@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView, Text } from 'react-native';
 import { SearchBar } from '../components/SearchBar';
 import { FoodList } from '../components/FoodList';
-import { BarcodeScanner } from '../components/BarcodeScanner';
+import { Scanner } from '../components/Scanner';
 import { SafeAreaView } from 'react-navigation';
 import { styles } from '../styles/CarbScreen';
 import { View } from 'native-base';
@@ -28,16 +28,18 @@ export class CarbScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView>
-        <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
-        <Text>Render List of results for</Text>
-        <View style={styles.scrollViewContainer}>
-          <ScrollView contentContainerStyle={styles.foodListContainer}>
-            <FoodList query={this.state.query} />
-          </ScrollView>
-        </View>
-        <BarcodeScanner />
-      </SafeAreaView>
+      <View>
+        <SafeAreaView>
+          <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
+          <Text>Render List of results for</Text>
+          <View style={styles.scrollViewContainer}>
+            <ScrollView contentContainerStyle={styles.foodListContainer}>
+              <FoodList query={this.state.query} />
+            </ScrollView>
+          </View>
+          <Scanner />
+        </SafeAreaView>
+      </View>
     );
   }
 }
