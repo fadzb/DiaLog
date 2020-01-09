@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { View, Text, Image, Icon, Container, Button } from 'native-base';
+import { View, Text, Icon, Button } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
 import { Alert } from 'react-native';
+import {
+  ANDROID_CAMERA_PERMISSION_OPTIONS,
+  ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS,
+} from '../utils/CameraUtils';
+import { IconNames } from '../utils/IconUtils';
 
 interface ScannerProps {}
 
@@ -19,11 +24,13 @@ export class Scanner extends React.Component<ScannerProps> {
     torchOn: false,
   };
 
+  // TODO: Need to move to new screen issuieing nutrional info about item
   onBarCodeRead = (e: any) => {
     console.log('should read barcode');
     Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
   };
 
+  // TODO: Sets state but doesn't actually change torch
   handleTorch(value: any) {
     if (value === true) {
       this.setState({ torchOn: false });
@@ -32,6 +39,7 @@ export class Scanner extends React.Component<ScannerProps> {
     }
   }
 
+  // TODO: Need to store the image correctly and procees (Image Recognition Feature)
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
@@ -62,7 +70,7 @@ export class Scanner extends React.Component<ScannerProps> {
         <View style={styles.scannerContainer}>
           <View style={styles.torch}>
             <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
-              <Icon name="flashlight" />
+              <Icon name={IconNames.flashlight} />
             </Button>
           </View>
           <View style={styles.cameraContainer}>
@@ -70,43 +78,33 @@ export class Scanner extends React.Component<ScannerProps> {
               ref={cam => {
                 this.camera = cam;
               }}
+              onBarCodeRead={this.onBarCodeRead}
               captureAudio={false}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
-              androidCameraPermissionOptions={{
-                title: 'Permission to use camera',
-                message: 'We need your permission to use your camera',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
-              androidRecordAudioPermissionOptions={{
-                title: 'Permission to use audio recording',
-                message: 'We need your permission to use your audio',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
+              androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
+              androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
                 console.log(barcodes);
               }}
-              onBarCodeRead={this.onBarCodeRead}
             />
             <View style={styles.capture}>
               <Button light onPress={this.takePicture.bind(this)}>
-                <Icon name="camera" />
+                <Icon name={IconNames.camera} />
               </Button>
             </View>
           </View>
           <Button style={styles.bottom} vertical onPress={this.closeCamera}>
-            <Icon name="camera" />
+            <Icon name={IconNames.camera} />
             <Text>Close Camera</Text>
           </Button>
         </View>
       );
     } else {
       return (
-        <View style={{ flex: 0, marginBottom: 40 }}>
+        <View style={[styles.bottom, { marginBottom: 40 }]}>
           <Button vertical onPress={this.openCamera}>
-            <Icon name="camera" />
+            <Icon name={IconNames.camera} />
             <Text>Camera</Text>
           </Button>
         </View>

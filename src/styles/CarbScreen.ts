@@ -29,8 +29,7 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
   },
   foodListContainer: {
-    // alignSelf: 'center',
-    flex: 1,
+    flex: 0,
   },
   scrollViewContainer: {
     borderWidth: 1,
