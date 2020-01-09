@@ -66,6 +66,7 @@ export class Scanner extends React.Component<ScannerProps> {
               ref={cam => {
                 this.camera = cam;
               }}
+              captureAudio={false}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
               androidCameraPermissionOptions={{
