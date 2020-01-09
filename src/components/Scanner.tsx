@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text, Image, Icon, Container, Button } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
 
 interface ScannerProps {}
@@ -25,7 +24,7 @@ export class Scanner extends React.Component<ScannerProps> {
     Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
   };
 
-  handleTourch(value: any) {
+  handleTorch(value: any) {
     if (value === true) {
       this.setState({ torchOn: false });
     } else {
@@ -61,6 +60,11 @@ export class Scanner extends React.Component<ScannerProps> {
     if (this.state.show) {
       return (
         <View style={styles.scannerContainer}>
+          <View style={styles.torch}>
+            <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
+              <Icon name="flashlight" />
+            </Button>
+          </View>
           <View style={styles.cameraContainer}>
             <RNCamera
               ref={cam => {
@@ -91,11 +95,6 @@ export class Scanner extends React.Component<ScannerProps> {
                 <Icon name="camera" />
               </Button>
             </View>
-            {/* <View style={{}}>
-              <TouchableOpacity onPress={() => this.handleTourch(this.state.torchOn)}>
-                <Text>Torch</Text>
-              </TouchableOpacity>
-            </View> */}
           </View>
           <Button style={styles.bottom} vertical onPress={this.closeCamera}>
             <Icon name="camera" />

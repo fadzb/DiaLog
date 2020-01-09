@@ -61,10 +61,13 @@ export const styles = StyleSheet.create({
   },
   capture: {
     flex: 0,
-
     bottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconCamera: {},
+  torch: {
+    flex: 0,
+    alignSelf: 'flex-start',
+    margin: 20,
+  },
 });
