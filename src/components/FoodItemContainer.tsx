@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { View, Text, Image, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
+import { FoodItemModal } from './FoodItemModal';
+import Modal from 'react-native-modal';
 
 interface FoodItemContainerProps {
   item: FoodItem;
@@ -43,29 +45,9 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
   render() {
     return (
       <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={this.handleModalClose}
-        >
-          <View style={{ marginTop: 52 }}>
-            <View>
-              <TouchableOpacity style={styles.button} onPress={this.handleModalClose}>
-                <Text>Back to Search</Text>
-              </TouchableOpacity>
-            </View>
-
-            <Text style={styles.text}>
-              {this.props.item.name}
-              <Image
-                source={{ uri: this.props.item.photo_url }}
-                style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
-              />
-              {this.props.item.cho}
-            </Text>
-          </View>
-        </Modal>
+        <View style={{ marginTop: 52 }}>
+          <FoodItemModal item={this.props.item} handleModalClose={this.handleModalClose} />
+        </View>
         <Text style={styles.text}>
           {this.props.item.name}{' '}
           <Image
