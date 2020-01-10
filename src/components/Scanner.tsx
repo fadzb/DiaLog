@@ -44,10 +44,11 @@ export class Scanner extends React.Component<ScannerProps> {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
+        this.camera.resumePreview();
         const data = await this.camera.takePictureAsync(options);
         console.log(data.uri);
       } catch (error) {
-        console.log(`Error Taking pic: ${error}`);
+        console.log(JSON.stringify(error, null, 2));
       }
     }
   };
@@ -75,18 +76,28 @@ export class Scanner extends React.Component<ScannerProps> {
           </View>
           <View style={styles.cameraContainer}>
             <RNCamera
-              ref={cam => {
-                this.camera = cam;
+              ref={ref => {
+                this.camera = ref;
               }}
-              onBarCodeRead={this.onBarCodeRead}
-              captureAudio={false}
+              style={styles.preview}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
-              androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
-              androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
+              androidCameraPermissionOptions={{
+                title: 'Permission to use camera',
+                message: 'We need your permission to use your camera',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+              androidRecordAudioPermissionOptions={{
+                title: 'Permission to use audio recording',
+                message: 'We need your permission to use your audio',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
                 console.log(barcodes);
               }}
+              captureAudio={false}
             />
             <View style={styles.capture}>
               <Button light onPress={this.takePicture.bind(this)}>

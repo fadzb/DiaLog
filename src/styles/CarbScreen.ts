@@ -48,6 +48,11 @@ export const styles = StyleSheet.create({
   },
 
   //Camera styles
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
   scannerContainer: {
     flex: 1,
     backgroundColor: 'black',
