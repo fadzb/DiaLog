@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { FoodItemContainer } from './FoodItemContainer';
 import { FoodItem } from '../typings/FoodItem';
 import { requestFoods, parseFoodItems } from '../api/FoodAPI';
-import { styles } from '../styles/CarbScreen';
 
 interface FoodListProps {
   query: string;

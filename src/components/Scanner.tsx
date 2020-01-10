@@ -40,11 +40,11 @@ export class Scanner extends React.Component<ScannerProps> {
   }
 
   // TODO: Need to store the image correctly and procees (Image Recognition Feature)
+  // TODO: Currently not working for android
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
-        this.camera.resumePreview();
         const data = await this.camera.takePictureAsync(options);
         console.log(data.uri);
       } catch (error) {
@@ -82,22 +82,13 @@ export class Scanner extends React.Component<ScannerProps> {
               style={styles.preview}
               type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
-              androidCameraPermissionOptions={{
-                title: 'Permission to use camera',
-                message: 'We need your permission to use your camera',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
-              androidRecordAudioPermissionOptions={{
-                title: 'Permission to use audio recording',
-                message: 'We need your permission to use your audio',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
+              androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
+              androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
                 console.log(barcodes);
               }}
               captureAudio={false}
+              onBarCodeRead={this.onBarCodeRead.bind(this)}
             />
             <View style={styles.capture}>
               <Button light onPress={this.takePicture.bind(this)}>
@@ -111,15 +102,14 @@ export class Scanner extends React.Component<ScannerProps> {
           </Button>
         </View>
       );
-    } else {
-      return (
-        <View style={[styles.bottom, { marginBottom: 40 }]}>
-          <Button vertical onPress={this.openCamera}>
-            <Icon name={IconNames.camera} />
-            <Text>Camera</Text>
-          </Button>
-        </View>
-      );
     }
+    return (
+      <View style={[styles.bottom, { marginBottom: 40 }]}>
+        <Button vertical onPress={this.openCamera}>
+          <Icon name={IconNames.camera} />
+          <Text>Camera</Text>
+        </Button>
+      </View>
+    );
   }
 }
