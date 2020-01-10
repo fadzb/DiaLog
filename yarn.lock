@@ -5933,6 +5933,12 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+"react-native-camera@git+https://git@github.com/react-native-community/react-native-camera.git":
+  version "3.15.1"
+  resolved "git+https://git@github.com/react-native-community/react-native-camera.git#b57538827c345496db5cd404d95e7bd21312315b"
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-chart-kit@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-4.3.0.tgz#9cf21ff497f3bb8f9d093d71ed555a822b4054a8"

@@ -29,12 +29,49 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
   },
   foodListContainer: {
-    alignItems: 'center',
+    flex: 0,
+  },
+  scrollViewContainer: {
+    borderWidth: 1,
+    height: '50%',
   },
   button: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
     width: '100%',
+  },
+  bottom: {
+    flex: 0,
+    justifyContent: 'flex-end',
+    marginBottom: 0,
+  },
+
+  //Camera styles
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  scannerContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    marginBottom: 40,
+  },
+  cameraContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    flex: 0,
+    bottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  torch: {
+    flex: 0,
+    alignSelf: 'flex-start',
+    margin: 20,
   },
 });
