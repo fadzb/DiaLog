@@ -12,6 +12,8 @@ interface FoodItemContainerProps {
 }
 
 export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
+  modalRef: FoodItemModal | null | undefined;
+
   constructor(props: any) {
     super(props);
   }
@@ -19,10 +21,6 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
   state = {
     modalVisible: false,
   };
-
-  setModalVisible(visible: boolean) {
-    this.setState({ modalVisible: visible });
-  }
 
   //send post request and show new screen
   handleClick = () => {
@@ -33,21 +31,34 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     promise
       .then(responseJson => {
         item.cho = parseFoodItemCHO(responseJson);
-        this.setState({ modalVisible: true });
+        this.openModal();
       })
       .catch(error => console.log('error', error));
   };
 
+  openModal = () => {
+    //If modal has already been opened before, update its state
+    if (this.modalRef) {
+      this.modalRef.setState({ modalVisible: true });
+    }
+
+    this.setState({ modalVisible: true });
+  };
+
   handleModalClose = () => {
-    this.setModalVisible(false);
+    this.setState({ modalVisible: false });
   };
 
   render() {
     return (
       <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
-        <View style={{ marginTop: 52 }}>
-          <FoodItemModal item={this.props.item} handleModalClose={this.handleModalClose} />
-        </View>
+        {this.state.modalVisible && (
+          <FoodItemModal
+            item={this.props.item}
+            handleModalClose={this.handleModalClose}
+            ref={ref => (this.modalRef = ref)}
+          />
+        )}
         <Text style={styles.text}>
           {this.props.item.name}{' '}
           <Image

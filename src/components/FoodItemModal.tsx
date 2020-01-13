@@ -15,6 +15,17 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
     super(props);
   }
 
+  state = {
+    modalVisible: true,
+  };
+
+  //When component is first mounted, it remains mounted even after closed to allow for slideOut animation
+  handleClose = () => {
+    this.setState({
+      modalVisible: false,
+    });
+  };
+
   render() {
     return (
       <Modal
@@ -33,7 +44,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           </Text>
           <Text>CHO: {this.props.item.cho}</Text>
           <View>
-            <TouchableOpacity style={styles.button} onPress={this.props.handleModalClose}>
+            <TouchableOpacity style={styles.button} onPress={this.handleClose}>
               <Text>Back to Search</Text>
             </TouchableOpacity>
           </View>
