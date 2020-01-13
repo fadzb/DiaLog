@@ -9,7 +9,11 @@ import { View } from 'native-base';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
-export class CarbScreen extends React.Component {
+interface CarbScreenProps {
+  navigation: any;
+}
+
+export class CarbScreen extends React.Component<CarbScreenProps> {
   constructor(props: any) {
     super(props);
   }
@@ -34,7 +38,7 @@ export class CarbScreen extends React.Component {
           <Text>Render List of results for</Text>
           <ScrollView style={{ flex: 1 }}>
             <View style={styles.foodListContainer}>
-              <FoodList query={this.state.query} />
+              <FoodList navigation={this.props.navigation} query={this.state.query} />
             </View>
           </ScrollView>
         </SafeAreaView>

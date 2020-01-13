@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { Text, Image, TouchableOpacity } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
-import Modal from 'react-native-modal';
 
 interface FoodItemContainerProps {
+  navigation: any;
   item: FoodItem;
   key: string;
 }
@@ -54,6 +54,7 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
       <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
         {this.state.modalVisible && (
           <FoodItemModal
+            navigation={this.props.navigation}
             item={this.props.item}
             handleModalClose={this.handleModalClose}
             ref={ref => (this.modalRef = ref)}

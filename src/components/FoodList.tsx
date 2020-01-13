@@ -5,6 +5,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { requestFoods, parseFoodItems } from '../api/FoodAPI';
 
 interface FoodListProps {
+  navigation: any;
   query: string;
 }
 
@@ -41,7 +42,7 @@ export class FoodList extends React.Component<FoodListProps> {
       <View>
         <Text style={{ alignSelf: 'flex-start' }}>{query}</Text>
         {this.state.foodItems.map((item: FoodItem, index: any) => {
-          return <FoodItemContainer item={item} key={index} />;
+          return <FoodItemContainer navigation={this.props.navigation} item={item} key={index} />;
         })}
       </View>
     );

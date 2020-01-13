@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Image, Alert, TouchableOpacity } from 'react-native';
-import { View, Text, Container, Header, Content, Card, CardItem, Body } from 'native-base';
+import { View, Text, Container, Header, Content, Card, CardItem, Body, Button } from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
 import Modal from 'react-native-modal';
+import { Log } from '../typings/Log';
+import { DateUtils } from '../utils/DateUtils';
 
 interface FoodItemModalProps {
+  navigation: any;
   item: FoodItem;
   handleModalClose: () => void;
 }
@@ -26,6 +29,15 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
     });
   };
 
+  addLog = () => {
+    // Navigate to Log Act Screen with props (Food Item)
+    this.props.navigation.navigate('LogAct', this.props.item);
+    // Unfortunately, this does not unmount previously mounted components so some memory leak here
+    // TODO: Should be handling navigation using redux ( instead of passing callback down through props )
+    // TODO: Should be subscribing to navigation events and unmounting appropriately
+    this.handleClose();
+  };
+
   render() {
     return (
       <Modal
@@ -44,6 +56,9 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           </Text>
           <Text>CHO: {this.props.item.cho}</Text>
           <View>
+            <Button primary style={{ margin: 10 }} onPress={this.addLog}>
+              <Text>Add Log</Text>
+            </Button>
             <TouchableOpacity style={styles.button} onPress={this.handleClose}>
               <Text>Back to Search</Text>
             </TouchableOpacity>
