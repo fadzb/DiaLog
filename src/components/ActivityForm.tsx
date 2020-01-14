@@ -4,12 +4,17 @@ import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { aysncStoreItem } from '../storage/AsyncStorage';
+import { FoodItem } from '../typings/FoodItem';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
+  item: FoodItem;
 }
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
+  // If coming from Estimate CHO screen, set initial state for CHO
+  cho: number = (this.props.item && Number(this.props.item.cho)) || 0;
+
   constructor(props: any) {
     super(props);
   }
@@ -18,7 +23,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     dateTimeInput: new Date(),
     glucoseInput: 0,
     insulinInput: 0,
-    choInput: 0,
+    choInput: this.cho,
   };
 
   handleUpdateDateTime = (dateTimeInput: any) => {
@@ -62,6 +67,8 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     this.props.handleSubmit();
   };
 
+  //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
+
   render() {
     return (
       <Form style={styles.form}>
@@ -88,7 +95,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
-            placeholder="Enter CHO"
+            placeholder={String(this.props.item.name) || 'Enter CHO'}
             onChangeText={this.handleChoChange}
             keyboardType={'numeric'}
           />
