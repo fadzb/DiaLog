@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { View, Text, Image, Modal, TouchableOpacity } from 'react-native';
+import { Text, Image, TouchableOpacity } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
 import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
+import { FoodItemModal } from './FoodItemModal';
 
 interface FoodItemContainerProps {
+  navigation: any;
   item: FoodItem;
   key: string;
 }
 
 export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
+  modalRef: FoodItemModal | null | undefined;
+
   constructor(props: any) {
     super(props);
   }
@@ -17,10 +21,6 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
   state = {
     modalVisible: false,
   };
-
-  setModalVisible(visible: boolean) {
-    this.setState({ modalVisible: visible });
-  }
 
   //send post request and show new screen
   handleClick = () => {
@@ -31,41 +31,35 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     promise
       .then(responseJson => {
         item.cho = parseFoodItemCHO(responseJson);
-        this.setState({ modalVisible: true });
+        this.openModal();
       })
       .catch(error => console.log('error', error));
   };
 
+  openModal = () => {
+    //If modal has already been opened before, update its state
+    if (this.modalRef) {
+      this.modalRef.setState({ modalVisible: true });
+    }
+
+    this.setState({ modalVisible: true });
+  };
+
   handleModalClose = () => {
-    this.setModalVisible(false);
+    this.setState({ modalVisible: false });
   };
 
   render() {
     return (
       <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={this.handleModalClose}
-        >
-          <View style={{ marginTop: 52 }}>
-            <View>
-              <TouchableOpacity style={styles.button} onPress={this.handleModalClose}>
-                <Text>Back to Search</Text>
-              </TouchableOpacity>
-            </View>
-
-            <Text style={styles.text}>
-              {this.props.item.name}
-              <Image
-                source={{ uri: this.props.item.photo_url }}
-                style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
-              />
-              {this.props.item.cho}
-            </Text>
-          </View>
-        </Modal>
+        {this.state.modalVisible && (
+          <FoodItemModal
+            navigation={this.props.navigation}
+            item={this.props.item}
+            handleModalClose={this.handleModalClose}
+            ref={ref => (this.modalRef = ref)}
+          />
+        )}
         <Text style={styles.text}>
           {this.props.item.name}{' '}
           <Image

@@ -47,6 +47,18 @@ export const styles = StyleSheet.create({
     marginBottom: 0,
   },
 
+  //Modals
+  modalContent: {
+    flex: 0,
+    top: 100,
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+
   //Camera styles
   preview: {
     flex: 1,

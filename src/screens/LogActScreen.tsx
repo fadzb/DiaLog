@@ -12,7 +12,10 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
     super(props);
   }
 
-  state = {};
+  // get food item from navigation prop state
+  state = {
+    item: this.props.navigation.getParam('item'),
+  };
 
   handleFormSubmit = () => {
     this.props.navigation.navigate('ViewAct');
@@ -25,7 +28,7 @@ export class LogActScreen extends React.Component<LogActScreenProps> {
           <Title>Log Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <ActivityForm handleSubmit={this.handleFormSubmit} />
+          <ActivityForm item={this.state.item} handleSubmit={this.handleFormSubmit} />
         </Content>
       </Container>
     );
