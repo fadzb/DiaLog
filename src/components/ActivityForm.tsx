@@ -67,7 +67,16 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     this.props.handleSubmit();
   };
 
+  getName = () => {
+    if (this.props.item) {
+      return this.props.item.name;
+    }
+  };
+
   //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
+  //TODO: Add a Clear button
+  //TODO: Allow user to add a note
+  //TODO: Format time more appropriately
 
   render() {
     return (
@@ -95,7 +104,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
-            placeholder={String(this.props.item.name) || 'Enter CHO'}
+            placeholder={this.getName() || 'Enter CHO'}
             onChangeText={this.handleChoChange}
             keyboardType={'numeric'}
           />
