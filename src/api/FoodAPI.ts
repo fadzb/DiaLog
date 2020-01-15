@@ -1,6 +1,8 @@
 import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
+import { FoodItemContainer } from '../components/FoodItemContainer';
+import { fakeBarcodeJson } from './FakeBarcodeJson';
 const API_ENABLED = false;
 
 const headers = {
@@ -56,6 +58,16 @@ export function requestFoodDetails(query: string) {
   return fetch('http://localhost:8081/');
 }
 
+//GET (food nutrient information from barcode)
+export function requestFoodDetailsFromBarcode(upc: string) {
+  if (API_ENABLED) {
+    return fetch('https://trackapi.nutritionix.com/v2/search/item?upc=' + upc, makeGetRequest())
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+  }
+  return fetch('http://localhost:8081/');
+}
+
 export function parseFoodItems(responseJSON: any) {
   const foodItems: FoodItem[] = [];
   let parsedJson: any;
@@ -72,7 +84,6 @@ export function parseFoodItems(responseJSON: any) {
   for (let i = 0; i < parsedJson.common.length; i++) {
     const foodItem: FoodItem = {
       name: parsedJson.common[i].food_name,
-      tag: parsedJson.common[i].tag_id,
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
     };
@@ -97,4 +108,24 @@ export function parseFoodItemCHO(responseJSON: any) {
   cho = parsedJson.foods[0].nf_total_carbohydrate;
 
   return cho;
+}
+
+export function parseFoodItemFromBarcode(responseJSON: any) {
+  let parsedJson: any;
+
+  if (API_ENABLED) {
+    //JSON already parsed using response.json()
+    parsedJson = responseJSON;
+  } else {
+    const stringyFakeBarcodeJson = JSON.stringify(fakeBarcodeJson);
+    parsedJson = JSON.parse(stringyFakeBarcodeJson);
+  }
+
+  const foodItem: FoodItem = {
+    name: parsedJson.foods[0].food_name,
+    photo_url: parsedJson.foods[0].photo.thumb,
+    cho: parsedJson.foods[0].nf_total_carbohydrate,
+  };
+
+  return foodItem;
 }

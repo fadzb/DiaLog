@@ -8,8 +8,12 @@ import {
   ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS,
 } from '../utils/CameraUtils';
 import { IconNames } from '../utils/IconUtils';
+import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
+import { FoodItemModal } from './FoodItemModal';
 
-interface ScannerProps {}
+interface ScannerProps {
+  navigation: any;
+}
 
 export class Scanner extends React.Component<ScannerProps> {
   camera: RNCamera | null;
@@ -22,12 +26,22 @@ export class Scanner extends React.Component<ScannerProps> {
   state = {
     show: false,
     torchOn: false,
+    item: null,
+    modalVisible: false,
   };
 
-  // TODO: Need to move to new screen issuieing nutrional info about item
   onBarCodeRead = (e: any) => {
     console.log('should read barcode');
-    Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
+    // Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
+    const upc = '038000000102';
+    const promise = requestFoodDetailsFromBarcode(upc);
+
+    promise
+      .then(responseJson => {
+        const foodItem = parseFoodItemFromBarcode(responseJson);
+        this.setState({ item: foodItem, modalVisible: true });
+      })
+      .catch(error => console.log('error', error));
   };
 
   // TODO: Sets state but doesn't actually change torch
@@ -104,11 +118,18 @@ export class Scanner extends React.Component<ScannerProps> {
       );
     }
     return (
-      <View style={[styles.bottom, { marginBottom: 40 }]}>
-        <Button vertical onPress={this.openCamera}>
-          <Icon name={IconNames.camera} />
-          <Text>Camera</Text>
-        </Button>
+      <View>
+        <FoodItemModal
+          navigation={this.props.navigation}
+          item={this.state.item}
+          handleModalClose={() => {}}
+        />
+        <View style={[styles.bottom, { marginBottom: 40 }]}>
+          <Button vertical onPress={this.openCamera}>
+            <Icon name={IconNames.camera} />
+            <Text>Camera</Text>
+          </Button>
+        </View>
       </View>
     );
   }
