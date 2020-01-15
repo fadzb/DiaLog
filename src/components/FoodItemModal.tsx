@@ -52,7 +52,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
               style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
             />
           </Text>
-          <Text>CHO: {this.props.item.cho}</Text>
+          <Text>CHO: {this.props.item.cho}g</Text>
           <View>
             <Button primary style={{ margin: 10 }} onPress={this.addLog}>
               <Text>Add Log</Text>
