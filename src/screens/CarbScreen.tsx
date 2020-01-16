@@ -14,6 +14,8 @@ interface CarbScreenProps {
 }
 
 export class CarbScreen extends React.Component<CarbScreenProps> {
+  foodListRef: any;
+
   constructor(props: any) {
     super(props);
   }
@@ -30,15 +32,27 @@ export class CarbScreen extends React.Component<CarbScreenProps> {
     this.setState({ query: search });
   };
 
+  clearFoodList = () => {
+    this.setState({ query: '' });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
-          <SearchBar placeholder={SEARCH_PLACEHOLDER} handleSubmit={this.handleSubmit} />
+          <SearchBar
+            placeholder={SEARCH_PLACEHOLDER}
+            handleSubmit={this.handleSubmit}
+            handleClear={this.clearFoodList}
+          />
           <Text>Render List of results for</Text>
           <ScrollView style={{ flex: 1 }}>
             <View style={styles.foodListContainer}>
-              <FoodList navigation={this.props.navigation} query={this.state.query} />
+              <FoodList
+                ref={ref => (this.foodListRef = ref)}
+                navigation={this.props.navigation}
+                query={this.state.query}
+              />
             </View>
           </ScrollView>
         </SafeAreaView>

@@ -1,10 +1,8 @@
 import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
+import { fakeBarcodeJson } from './FakeBarcodeJson';
 const API_ENABLED = false;
-
-// let responseJSON: any;
-// let detailedResponseJSON: any;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -52,7 +50,17 @@ export function requestFoods(query: string) {
 //POST (food nutrient information (eg. CHO content))
 export function requestFoodDetails(query: string) {
   if (API_ENABLED) {
-    return fetch('https://trackapi.nutritionix.com/v2/search/instant', makePostRequest(query))
+    return fetch('https://trackapi.nutritionix.com/v2/natural/nutrients', makePostRequest(query))
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+  }
+  return fetch('http://localhost:8081/');
+}
+
+//GET (food nutrient information from barcode)
+export function requestFoodDetailsFromBarcode(upc: string) {
+  if (API_ENABLED) {
+    return fetch('https://trackapi.nutritionix.com/v2/search/item?upc=' + upc, makeGetRequest())
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
@@ -61,17 +69,20 @@ export function requestFoodDetails(query: string) {
 
 export function parseFoodItems(responseJSON: any) {
   const foodItems: FoodItem[] = [];
-  //parse response json
-  // const parsedJson = JSON.parse(responseJSON);
-  // const parsedJson = responseJSON;
+  let parsedJson: any;
 
-  const _fakeJson = JSON.stringify(fakeJson);
-  const parsedJson = JSON.parse(_fakeJson);
+  if (API_ENABLED) {
+    //We are using response.json() upon the request, no need to parse
+    parsedJson = responseJSON;
+  } else {
+    //Mimic the actual request by converting to JSON then parsing
+    const stringyFakeJson = JSON.stringify(fakeJson);
+    parsedJson = JSON.parse(stringyFakeJson);
+  }
 
   for (let i = 0; i < parsedJson.common.length; i++) {
     const foodItem: FoodItem = {
       name: parsedJson.common[i].food_name,
-      tag: parsedJson.common[i].tag_id,
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
     };
@@ -83,14 +94,37 @@ export function parseFoodItems(responseJSON: any) {
 
 export function parseFoodItemCHO(responseJSON: any) {
   let cho = '0';
+  let parsedJson: any;
 
-  //parse response json
-  // const parsedJson = JSON.parse(responseJSON);
-
-  const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
-  const parsedJson = JSON.parse(_fakeDetailedJson);
+  if (API_ENABLED) {
+    //JSON already parsed using response.json()
+    parsedJson = responseJSON;
+  } else {
+    const _fakeDetailedJson = JSON.stringify(fakeDetailedJson);
+    parsedJson = JSON.parse(_fakeDetailedJson);
+  }
 
   cho = parsedJson.foods[0].nf_total_carbohydrate;
 
   return cho;
+}
+
+export function parseFoodItemFromBarcode(responseJSON: any) {
+  let parsedJson: any;
+
+  if (API_ENABLED) {
+    //JSON already parsed using response.json()
+    parsedJson = responseJSON;
+  } else {
+    const stringyFakeBarcodeJson = JSON.stringify(fakeBarcodeJson);
+    parsedJson = JSON.parse(stringyFakeBarcodeJson);
+  }
+
+  const foodItem: FoodItem = {
+    name: parsedJson.foods[0].food_name,
+    photo_url: parsedJson.foods[0].photo.thumb,
+    cho: parsedJson.foods[0].nf_total_carbohydrate,
+  };
+
+  return foodItem;
 }

@@ -4,6 +4,7 @@ import { Searchbar } from 'react-native-paper';
 interface SearchBarProps {
   handleSubmit: (search: string) => void;
   placeholder: string;
+  handleClear: () => void;
 }
 
 export class SearchBar extends React.Component<SearchBarProps> {
@@ -16,6 +17,10 @@ export class SearchBar extends React.Component<SearchBarProps> {
   };
 
   handleSearchBar = (search: string) => {
+    if (!search) {
+      // No search (Or search cleared) clear the food list
+      this.props.handleClear();
+    }
     this.setState({ search });
   };
 

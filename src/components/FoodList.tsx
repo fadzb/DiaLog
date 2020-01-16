@@ -32,16 +32,22 @@ export class FoodList extends React.Component<FoodListProps> {
 
   render() {
     const { query } = this.props;
+    let foodItems: FoodItem[] = this.state.foodItems;
+
+    if (!query) {
+      // No query, or search cleared
+      foodItems = [];
+    }
 
     // populate foodItems... only if the current query is different to last query
-    if (this.props.query && this.props.query !== this.state.lastQuery) {
+    if (query && query !== this.state.lastQuery) {
       this.populateFoodItems(this.props.query);
     }
 
     return (
       <View>
         <Text style={{ alignSelf: 'flex-start' }}>{query}</Text>
-        {this.state.foodItems.map((item: FoodItem, index: any) => {
+        {foodItems.map((item: FoodItem, index: any) => {
           return <FoodItemContainer navigation={this.props.navigation} item={item} key={index} />;
         })}
       </View>
