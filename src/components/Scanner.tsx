@@ -31,9 +31,11 @@ export class Scanner extends React.Component<ScannerProps> {
   };
 
   onBarCodeRead = (e: any) => {
-    console.log('should read barcode');
     // Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
-    const upc = '038000000102';
+    // const upc = '038000000102';
+    const upc = e.data;
+    console.log(e.data + '    ' + e.type);
+    return;
     const promise = requestFoodDetailsFromBarcode(upc);
 
     promise
