@@ -9,6 +9,7 @@ import {
 import { IconNames } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
+import { FoodItemInstance } from '../typings/FoodItem';
 
 interface ScannerProps {
   navigation: any;
@@ -16,6 +17,7 @@ interface ScannerProps {
 
 export class Scanner extends React.Component<ScannerProps> {
   camera: RNCamera | null;
+  modalRef: FoodItemModal | null | undefined;
 
   constructor(props: any) {
     super(props);
@@ -25,7 +27,7 @@ export class Scanner extends React.Component<ScannerProps> {
   state = {
     show: false,
     torchOn: false,
-    item: null,
+    item: FoodItemInstance,
     modalVisible: false,
   };
 
@@ -120,11 +122,14 @@ export class Scanner extends React.Component<ScannerProps> {
     }
     return (
       <View>
-        <FoodItemModal
-          navigation={this.props.navigation}
-          item={this.state.item}
-          handleModalClose={() => {}}
-        />
+        {this.state.modalVisible && (
+          <FoodItemModal
+            navigation={this.props.navigation}
+            item={this.state.item}
+            handleModalClose={() => {}}
+            ref={ref => (this.modalRef = ref)}
+          />
+        )}
         <View style={[styles.bottom, { marginBottom: 40 }]}>
           <Button vertical onPress={this.openCamera}>
             <Icon name={IconNames.camera} />
