@@ -1,7 +1,6 @@
 import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
-import { FoodItemContainer } from '../components/FoodItemContainer';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
 const API_ENABLED = false;
 

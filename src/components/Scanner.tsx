@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text, Icon, Button } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
-import { Alert } from 'react-native';
 import {
   ANDROID_CAMERA_PERMISSION_OPTIONS,
   ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS,

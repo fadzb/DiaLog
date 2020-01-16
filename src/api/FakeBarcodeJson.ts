@@ -2,7 +2,7 @@ export const fakeBarcodeJson = {
   foods: [
     {
       food_name: 'Protein Meal Bar, Chocolate Peanut Butter',
-      brand_name: "Kellogg's Special K",
+      brand_name: 'Kelloggs Special K',
       serving_qty: 1,
       serving_unit: 'bar',
       serving_weight_grams: 45,
@@ -75,7 +75,7 @@ export const fakeBarcodeJson = {
           value: 3.5,
         },
       ],
-      nix_brand_name: "Kellogg's Special K",
+      nix_brand_name: 'Kelloggs Special K',
       nix_brand_id: '54bb3c3dedbe62ae724a6253',
       nix_item_name: 'Protein Meal Bar, Chocolate Peanut Butter',
       nix_item_id: '51d2fb80cc9bff111580dd0f',
