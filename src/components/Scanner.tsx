@@ -10,12 +10,13 @@ import { IconNames } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
+import { TouchableOpacity } from 'react-native';
 
 interface ScannerProps {
   navigation: any;
 }
 
-export class Scanner extends React.Component<ScannerProps> {
+export class Scanner extends React.PureComponent<ScannerProps> {
   camera: RNCamera | null;
   modalRef: FoodItemModal | null | undefined;
 
@@ -70,6 +71,13 @@ export class Scanner extends React.Component<ScannerProps> {
     }
   };
 
+  // takePicture = async function(camera: any) {
+  //   const options = { quality: 0.5, base64: true };
+  //   const data = await camera.takePictureAsync(options);
+  //   //  eslint-disable-next-line
+  //   console.log(data.uri);
+  // };
+
   openCamera = () => {
     this.setState({
       show: true,
@@ -86,32 +94,37 @@ export class Scanner extends React.Component<ScannerProps> {
     if (this.state.show) {
       return (
         <View style={styles.scannerContainer}>
-          <View style={styles.torch}>
-            <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
-              <Icon name={IconNames.flashlight} />
-            </Button>
-          </View>
-          <View style={styles.cameraContainer}>
+          <View style={styles.ncontainer}>
             <RNCamera
+              style={styles.npreview}
+              type={RNCamera.Constants.Type.back}
               ref={ref => {
                 this.camera = ref;
               }}
-              style={styles.preview}
-              type={RNCamera.Constants.Type.back}
               flashMode={RNCamera.Constants.FlashMode.on}
               androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
               androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
-              onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                console.log(barcodes);
-              }}
               captureAudio={false}
               onBarCodeRead={this.onBarCodeRead.bind(this)}
-            />
-            <View style={styles.capture}>
-              <Button light onPress={this.takePicture.bind(this)}>
-                <Icon name={IconNames.camera} />
-              </Button>
-            </View>
+            >
+              {({ camera, status, recordAudioPermissionStatus }) => {
+                if (status !== 'READY') return <PendingView />;
+                return (
+                  <View>
+                    <View style={styles.torch}>
+                      <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
+                        <Icon name={IconNames.flashlight} />
+                      </Button>
+                    </View>
+                    <View style={styles.ncapture}>
+                      <Button light onPress={this.takePicture.bind(this)}>
+                        <Icon name={IconNames.camera} />
+                      </Button>
+                    </View>
+                  </View>
+                );
+              }}
+            </RNCamera>
           </View>
           <Button style={styles.bottom} vertical onPress={this.closeCamera}>
             <Icon name={IconNames.camera} />
@@ -140,3 +153,16 @@ export class Scanner extends React.Component<ScannerProps> {
     );
   }
 }
+
+const PendingView = () => (
+  <View
+    style={{
+      flex: 1,
+      backgroundColor: 'lightgreen',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Text>Waiting</Text>
+  </View>
+);

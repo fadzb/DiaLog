@@ -84,6 +84,25 @@ export const styles = StyleSheet.create({
   torch: {
     flex: 0,
     alignSelf: 'flex-start',
+    marginBottom: 100,
+    marginLeft: 10,
+  },
+
+  //New FaCC Camera Styles
+  ncontainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  npreview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  ncapture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    alignSelf: 'center',
     margin: 20,
   },
 });
