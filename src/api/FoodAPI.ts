@@ -120,6 +120,9 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
     parsedJson = JSON.parse(stringyFakeBarcodeJson);
   }
 
+  // TODO: Usage Limits Exceeded, debug from here later
+  console.log(parsedJson);
+
   const foodItem: FoodItem = {
     name: parsedJson.foods[0].food_name,
     photo_url: parsedJson.foods[0].photo.thumb,

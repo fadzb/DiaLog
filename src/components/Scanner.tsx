@@ -10,7 +10,8 @@ import { IconNames } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Alert } from 'react-native';
+const zebra = require('../utils/zebra.js');
 
 interface ScannerProps {
   navigation: any;
@@ -32,12 +33,23 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     modalVisible: false,
   };
 
+  // TODO: Handle EAN-13 Barcodes (need to use different API)
+  // Currently only works for UPC-A barcodes (USA & Canada) UK Barcodes are EAN-13 starting with country code 50 instead of 0
   onBarCodeRead = (e: any) => {
-    // Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
-    // const upc = '038000000102';
-    const upc = e.data;
-    console.log(e.data + '    ' + e.type);
-    return;
+    this.closeCamera();
+    Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
+
+    // Hard-coding a UPC-A
+    let upc = zebra('038000000102');
+
+    try {
+      if (upc.type !== 'UPC-A') {
+        upc = upc.toUPCA();
+      }
+    } catch (e) {
+      console.error('[zebra] error:', e);
+    }
+
     const promise = requestFoodDetailsFromBarcode(upc);
 
     promise

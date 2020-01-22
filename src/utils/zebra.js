@@ -1,5 +1,5 @@
 // Using barcode converting logic from https://gist.github.com/sourcec0de/43a914d38931d6b174c0
-
+// zebra.js
 'use strict';
 
 function EAN8(code) {
