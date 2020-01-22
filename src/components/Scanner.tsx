@@ -37,7 +37,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   // Currently only works for UPC-A barcodes (USA & Canada) UK Barcodes are EAN-13 starting with country code 50 instead of 0
   onBarCodeRead = (e: any) => {
     this.closeCamera();
-    Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
+    // Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
 
     // Hard-coding a UPC-A
     let upc = zebra('038000000102');

@@ -2,7 +2,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
-const API_ENABLED = true;
+const API_ENABLED = false;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export function requestFoods(query: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 //POST (food nutrient information (eg. CHO content))
@@ -54,7 +54,7 @@ export function requestFoodDetails(query: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 //GET (food nutrient information from barcode)
@@ -64,7 +64,7 @@ export function requestFoodDetailsFromBarcode(upc: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 export function parseFoodItems(responseJSON: any) {
@@ -120,8 +120,7 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
     parsedJson = JSON.parse(stringyFakeBarcodeJson);
   }
 
-  // TODO: Usage Limits Exceeded, debug from here later
-  console.log(parsedJson);
+  // console.log(parsedJson);
 
   const foodItem: FoodItem = {
     name: parsedJson.foods[0].food_name,
