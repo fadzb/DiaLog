@@ -10,7 +10,6 @@ import { IconNames } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
-import { TouchableOpacity, Alert } from 'react-native';
 const zebra = require('../utils/zebra.js');
 
 interface ScannerProps {
@@ -35,9 +34,8 @@ export class Scanner extends React.PureComponent<ScannerProps> {
 
   // TODO: Handle EAN-13 Barcodes (need to use different API)
   // Currently only works for UPC-A barcodes (USA & Canada) UK Barcodes are EAN-13 starting with country code 50 instead of 0
-  onBarCodeRead = (e: any) => {
+  onBarCodeRead = () => {
     this.closeCamera();
-    // Alert.alert('Barcode value is' + e.data, 'Barcode type is' + e.type);
 
     // Hard-coding a UPC-A
     let upc = zebra('038000000102');
@@ -70,7 +68,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   }
 
   // TODO: Need to store the image correctly and procees (Image Recognition Feature)
-  // TODO: Currently not working for android
+  // TODO: Test on Android
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
@@ -82,13 +80,6 @@ export class Scanner extends React.PureComponent<ScannerProps> {
       }
     }
   };
-
-  // takePicture = async function(camera: any) {
-  //   const options = { quality: 0.5, base64: true };
-  //   const data = await camera.takePictureAsync(options);
-  //   //  eslint-disable-next-line
-  //   console.log(data.uri);
-  // };
 
   openCamera = () => {
     this.setState({
@@ -119,8 +110,10 @@ export class Scanner extends React.PureComponent<ScannerProps> {
               captureAudio={false}
               onBarCodeRead={this.onBarCodeRead.bind(this)}
             >
-              {({ camera, status, recordAudioPermissionStatus }) => {
-                if (status !== 'READY') return <PendingView />;
+              {({ status }) => {
+                if (status !== 'READY') {
+                  return <PendingView />;
+                }
                 return (
                   <View>
                     <View style={styles.torch}>
