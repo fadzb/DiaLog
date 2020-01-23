@@ -44,7 +44,7 @@ export function requestFoods(query: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 //POST (food nutrient information (eg. CHO content))
@@ -54,7 +54,7 @@ export function requestFoodDetails(query: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 //GET (food nutrient information from barcode)
@@ -64,7 +64,7 @@ export function requestFoodDetailsFromBarcode(upc: string) {
       .then(response => response.json())
       .catch(error => console.log('error', error));
   }
-  return fetch('http://localhost:8081/');
+  return Promise.resolve();
 }
 
 export function parseFoodItems(responseJSON: any) {
@@ -119,6 +119,8 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
     const stringyFakeBarcodeJson = JSON.stringify(fakeBarcodeJson);
     parsedJson = JSON.parse(stringyFakeBarcodeJson);
   }
+
+  // console.log(parsedJson);
 
   const foodItem: FoodItem = {
     name: parsedJson.foods[0].food_name,

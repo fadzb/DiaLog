@@ -45,16 +45,11 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
         animationOut={'slideOutRight'}
       >
         <View style={{}}>
-          <Text style={styles.text}>
-            {this.props.item.name}
-            <Image
-              source={{ uri: this.props.item.photo_url }}
-              style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
-            />
-          </Text>
+          <Text style={styles.text}>{this.props.item.name}</Text>
+          <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
           <Text>CHO: {this.props.item.cho}g</Text>
           <View>
-            <Button primary style={{ margin: 10 }} onPress={this.addLog}>
+            <Button primary style={{ margin: 10, justifyContent: 'center' }} onPress={this.addLog}>
               <Text>Add Log</Text>
             </Button>
             <TouchableOpacity style={styles.button} onPress={this.handleClose}>

@@ -56,7 +56,7 @@ export class CarbScreen extends React.Component<CarbScreenProps> {
             </View>
           </ScrollView>
         </SafeAreaView>
-        <Scanner />
+        <Scanner navigation={this.props.navigation} />
       </View>
     );
   }
