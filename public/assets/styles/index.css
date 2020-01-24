@@ -1,4 +1,12 @@
+body {
+  background: #eceff1;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  margin: 50px;
+  padding: 100px;
+}
 .container {
   background-color: powderblue;
   height: 500px;
+  padding: 20px;
 }
