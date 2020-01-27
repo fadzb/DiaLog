@@ -7,6 +7,16 @@ body {
 }
 .container {
   background-color: powderblue;
-  height: 500px;
   padding: 20px;
+}
+.levelContent {
+  height: 200px;
+  width: 500px;
+  font-size: 14pt;
+}
+.moduleForm form {
+  display: grid;
+}
+.moduleForm label {
+  display: block;
 }

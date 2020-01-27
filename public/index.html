@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HealthApp Web App</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.6.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.6.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-
     <!-- css stylesheets-->
     <link rel="stylesheet" href=".//assets/styles/index.css" />
 
@@ -37,7 +27,7 @@
         <form id="createModuleForm">
           <p>
             <!-- Module Name -->
-            <label>Module Name</label>
+            <label>Select Module Group</label>
             <input type="text" name="moduleName" id="moduleName" />
           </p>
           <p>
@@ -48,7 +38,12 @@
           <p>
             <!-- Level Content (TODO: Embedd Media) -->
             <label>Level Content</label>
-            <input type="text" name="levelContent" id="levelContent" />
+            <textarea
+              class="levelContent"
+              type="text"
+              name="levelContent"
+              id="levelContent"
+            ></textarea>
           </p>
           <p>
             <!-- Add New Level -->
@@ -79,7 +74,7 @@
 
         try {
           let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(
+          let features = ['auth', 'database', 'messaging', 'storage', 'firestore'].filter(
             feature => typeof app[feature] === 'function',
           );
           document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(
@@ -93,7 +88,21 @@
       });
     </script>
 
-    <!-- my scripts-->
+    <!-- my scripts -->
+
+    <!-- firebase scripts -->
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="/__/firebase/7.7.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
     <script src="assets/scripts/index.js"></script>
   </body>
 </html>

@@ -1,18 +1,14 @@
 console.log('index.js loaded');
 
-// Initialize Firebase
-const config = {
-  apiKey: 'xxxxx',
-  authDomain: 'xxxxx',
-  databaseURL: 'xxxxx',
-  projectId: 'xxxxx',
-  storageBucket: 'xxxxx',
-  messagingSenderId: 'xxxxx',
-};
-firebase.initializeApp(config);
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+  apiKey: 'AIzaSyByInVHZ80SHg8Jfy7Tu4Wc9pO0nYLz-Uc',
+  authDomain: 'healthyapp-289a0.firebaseapp.com',
+  projectId: 'healthyapp-289a0',
+});
 
-// Reference firebase collection
-const firebaseRef = firebase.database().ref('modules');
+// reference to firestore db
+const db = firebase.firestore();
 
 // Listen to form submit
 document.getElementById('createModuleForm').addEventListener('submit', submitForm);
@@ -22,19 +18,32 @@ document.getElementById('createModuleForm').addEventListener('submit', submitFor
 function submitForm(e) {
   e.preventDefault();
 
-  console.log('Handling Form Submit....');
+  const inputObject = {
+    moduleName: getInputValue('moduleName'),
+    levelName: getInputValue('levelName'),
+    levelContent: getInputValue('levelContent'),
+  };
 
-  inputIds = ['moduleName', 'levelName', 'levelContent'];
-
-  // map input Ids (keys) to input Values
-  const inputObj = inputIds.map(inputId => {
-    return { key: inputIds, value: getInputValue(inputId) };
-  });
-
-  console.log(inputObj);
+  // Add new module to modules collection
+  addModule(inputObject);
 }
 
 // Get input values
 function getInputValue(elementId) {
   return document.getElementById(elementId).value;
+}
+
+function addModule(moduleObject) {
+  // Adds module with a chosen "docId"
+  // db.collection('modules')
+  //   .doc('docId')
+  //   .set(moduleObject)
+  //   .then(docRef => console.log(docRef))
+  //   .catch(error => console.log(error));
+
+  // Add with random id
+  db.collection('modules')
+    .add(moduleObject)
+    .then(docRef => console.log(docRef))
+    .catch(error => console.log(error));
 }
