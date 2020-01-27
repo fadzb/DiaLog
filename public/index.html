@@ -22,39 +22,62 @@
     </header>
 
     <div class="container">
-      <div class="moduleForm">
-        <h3>Create Module</h3>
-        <form id="createModuleForm">
-          <p>
-            <!-- Module Name -->
-            <label>Select Module Group</label>
-            <input type="text" name="moduleName" id="moduleName" />
-          </p>
-          <p>
-            <!-- Level Name (More detailed name) -->
-            <label>Level Name</label>
-            <input type="text" name="levelName" id="levelName" />
-          </p>
-          <p>
-            <!-- Level Content (TODO: Embedd Media) -->
-            <label>Level Content</label>
-            <textarea
-              class="levelContent"
-              type="text"
-              name="levelContent"
-              id="levelContent"
-            ></textarea>
-          </p>
-          <p>
-            <!-- Add New Level -->
-            <input value="Add New Level" type="button" id="addNewLevel" />
-          </p>
-          <!-- Submit -->
-          <p class="full">
-            <button type="submit">Submit</button>
-          </p>
-        </form>
-      </div>
+      <!-- Main Table -->
+      <table class="tableContainer">
+        <tbody>
+          <!-- Main Row start (1 row) -->
+          <tr>
+            <!-- 1st Column start -->
+            <td>
+              <div class="moduleForm">
+                <h3>Create Module</h3>
+                <form id="createModuleForm">
+                  <p>
+                    <!-- Module Name -->
+                    <label>Select Module Group</label>
+                    <select name="moduleGroup" id="moduleGroup">
+                      <option value="Diabetes Basics">Diabetes Basics</option>
+                      <option value="Carb Counting">Carb Counting</option>
+                      <option value="Maintaining Control">Maintaining Control</option>
+                    </select>
+                  </p>
+                  <p>
+                    <!-- Module Name (More detailed name) -->
+                    <label>Module Name</label>
+                    <input type="text" name="moduleName" id="moduleName" />
+                  </p>
+                  <p>
+                    <!-- Module Content (TODO: Embedd Media) -->
+                    <label>Module Content</label>
+                    <textarea
+                      class="moduleContent"
+                      type="text"
+                      name="moduleContent"
+                      id="moduleContent"
+                    ></textarea>
+                  </p>
+                  <!-- Submit -->
+                  <p class="full">
+                    <button type="submit">Submit</button>
+                  </p>
+                </form>
+              </div>
+            </td>
+            <!-- 1st Column end -->
+            <!-- 2d Column start -->
+            <td>
+              <div class="viewModules">
+                <h3>View Modules</h3>
+                <button id="loadModules">Load Modules</button>
+              </div>
+            </td>
+            <!-- 2nd Column end -->
+          </tr>
+          <!-- Main Row end (1 row) -->
+        </tbody>
+        <!-- Table Body end -->
+      </table>
+      <!-- Main Table end -->
     </div>
 
     <footer>

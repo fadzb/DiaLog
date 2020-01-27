@@ -19,9 +19,9 @@ function submitForm(e) {
   e.preventDefault();
 
   const inputObject = {
+    moduleGroup: getInputValue('moduleGroup'),
     moduleName: getInputValue('moduleName'),
-    levelName: getInputValue('levelName'),
-    levelContent: getInputValue('levelContent'),
+    moduleContent: getInputValue('moduleContent'),
   };
 
   // Add new module to modules collection
