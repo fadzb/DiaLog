@@ -35,4 +35,18 @@ td.moduleGroupTD:focus {
 }
 .viewModules {
   width: 500px;
+  display: block;
+}
+.loadModules {
+  color: blue;
+  cursor: pointer;
+}
+.moduleListTable {
+  background-color: white;
+  border: 2px black;
+  cursor: pointer;
+  margin: 30px 0;
+}
+.moduleListTable:focus {
+  background-color: blue;
 }

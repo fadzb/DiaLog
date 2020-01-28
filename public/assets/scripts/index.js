@@ -40,13 +40,6 @@ function getInputValue(elementId) {
 }
 
 function addModule(moduleObject) {
-  // Adds module with a chosen "docId"
-  // db.collection('modules')
-  //   .doc('docId')
-  //   .set(moduleObject)
-  //   .then(docRef => console.log(docRef))
-  //   .catch(error => console.log(error));
-
   // Add with random id
   db.collection('modules')
     .add(moduleObject)
@@ -59,10 +52,37 @@ function handleBlur(e) {
 
   if (e.relatedTarget == submitButton) {
     const moduleGroup = e.target.innerHTML;
-    fetchModules(moduleGroup);
+    getModules(moduleGroup);
   }
 }
 
-function fetchModules(moduleGroup) {
-  console.log(moduleGroup);
+function getModules(moduleGroup) {
+  db.collection('modules')
+    .where('moduleGroup', '==', moduleGroup)
+    .get()
+    .then(querySnapshot => handleSnapshot(querySnapshot))
+    .catch(error => console.log('Error getting documents: ', error));
+}
+
+function handleSnapshot(querySnapshot) {
+  // ref to the table
+  const table = document.getElementById('moduleListTable');
+
+  // First clear table
+  table.innerHTML = null;
+
+  querySnapshot.forEach(doc => {
+    console.log(doc.id, ' => ', doc.data());
+
+    //parse doc.data()
+    const data = doc.data();
+
+    //Create row and cell element and set inner html
+    const row = document.createElement('tr');
+    const cell = row.insertCell();
+    cell.innerHTML = data.moduleName;
+
+    //Appened row to table
+    table.appendChild(row);
+  });
 }
