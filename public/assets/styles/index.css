@@ -4,10 +4,19 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   margin: 50px;
 }
-table,
 td {
-  border: 1px solid black;
   vertical-align: top;
+}
+td.createModuleForm {
+  /*  */
+}
+.moduleGroupTable {
+  background-color: white;
+  border: 2px black;
+  cursor: pointer;
+}
+td.moduleGroupTD:focus {
+  background-color: blue;
 }
 .container {
   background-color: powderblue;

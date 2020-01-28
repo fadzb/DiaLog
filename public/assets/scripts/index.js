@@ -13,6 +13,12 @@ const db = firebase.firestore();
 // Listen to form submit
 document.getElementById('createModuleForm').addEventListener('submit', submitForm);
 
+// Listen to view module table
+const els = document.getElementsByClassName('moduleGroupTD');
+for (let el of els) {
+  el.addEventListener('blur', handleBlur);
+}
+
 // TODO: Client Side Validation
 // Handle form submit
 function submitForm(e) {
@@ -46,4 +52,17 @@ function addModule(moduleObject) {
     .add(moduleObject)
     .then(docRef => console.log(docRef))
     .catch(error => console.log(error));
+}
+
+function handleBlur(e) {
+  const submitButton = document.getElementById('loadModules');
+
+  if (e.relatedTarget == submitButton) {
+    const moduleGroup = e.target.innerHTML;
+    fetchModules(moduleGroup);
+  }
+}
+
+function fetchModules(moduleGroup) {
+  console.log(moduleGroup);
 }
