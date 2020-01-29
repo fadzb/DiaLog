@@ -96,10 +96,19 @@ function handleSnapshot(querySnapshot) {
     const cell = row.insertCell();
     cell.innerHTML = data.moduleName;
     cell.tabIndex = 0;
+    cell.onclick = event => previewModule(event, data);
 
     //Appened row to table
     table.appendChild(row);
   });
 }
 
-function previewModule() {}
+function previewModule(e, data) {
+  // Subject to how Modules will actually look on phone
+
+  // ref to content container
+  const content = document.getElementById('content');
+
+  // Set inner html
+  content.innerHTML = data.moduleContent;
+}
