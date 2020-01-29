@@ -22,6 +22,7 @@ for (let el of els) {
 // TODO: Client Side Validation
 // Handle form submit
 function submitForm(e) {
+  // Prevent Default
   e.preventDefault();
 
   const inputObject = {
@@ -29,6 +30,9 @@ function submitForm(e) {
     moduleName: getInputValue('moduleName'),
     moduleContent: getInputValue('moduleContent'),
   };
+
+  // Clear Form
+  e.target.reset();
 
   // Add new module to modules collection
   addModule(inputObject);
@@ -43,7 +47,7 @@ function addModule(moduleObject) {
   // Add with random id
   db.collection('modules')
     .add(moduleObject)
-    .then(docRef => console.log(docRef))
+    .then(docRef => alert(`Module Submitted`))
     .catch(error => console.log(error));
 }
 
@@ -57,6 +61,10 @@ function handleBlur(e) {
 }
 
 function getModules(moduleGroup) {
+  // ref to the table
+  const table = document.getElementById('moduleListTable');
+  table.innerHTML = 'Loading Modules...';
+
   db.collection('modules')
     .where('moduleGroup', '==', moduleGroup)
     .get()
@@ -71,10 +79,15 @@ function handleSnapshot(querySnapshot) {
   // First clear table
   table.innerHTML = null;
 
+  if (querySnapshot.size < 1) {
+    table.innerHTML = 'No Modules Found';
+    return;
+  }
+
   querySnapshot.forEach(doc => {
     console.log(doc.id, ' => ', doc.data());
 
-    //parse doc.data()
+    //get data from doc
     const data = doc.data();
 
     //Create row and cell element and set inner html
