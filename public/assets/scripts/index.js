@@ -51,6 +51,7 @@ function addModule(moduleObject) {
     .catch(error => console.log(error));
 }
 
+// Accessibility bug: tabbing from last item in table to Load Modules button fires event
 function handleBlur(e) {
   const submitButton = document.getElementById('loadModules');
 
@@ -94,8 +95,11 @@ function handleSnapshot(querySnapshot) {
     const row = document.createElement('tr');
     const cell = row.insertCell();
     cell.innerHTML = data.moduleName;
+    cell.tabIndex = 0;
 
     //Appened row to table
     table.appendChild(row);
   });
 }
+
+function previewModule() {}
