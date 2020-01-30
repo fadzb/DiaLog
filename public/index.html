@@ -3,96 +3,112 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome to Firebase Hosting</title>
+    <title>HealthApp Web App</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.6.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.6.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.6.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <!-- css stylesheets-->
+    <link rel="stylesheet" href=".//assets/styles/index.css" />
 
     <style media="screen">
-      body {
-        background: #eceff1;
-        color: rgba(0, 0, 0, 0.87);
-        font-family: Roboto, Helvetica, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      #message {
-        background: white;
-        max-width: 360px;
-        margin: 100px auto 16px;
-        padding: 32px 24px;
-        border-radius: 3px;
-      }
-      #message h2 {
-        color: #ffa100;
-        font-weight: bold;
-        font-size: 16px;
-        margin: 0 0 8px;
-      }
-      #message h1 {
-        font-size: 22px;
-        font-weight: 300;
-        color: rgba(0, 0, 0, 0.6);
-        margin: 0 0 16px;
-      }
-      #message p {
-        line-height: 140%;
-        margin: 16px 0 24px;
-        font-size: 14px;
-      }
-      #message a {
-        display: block;
-        text-align: center;
-        background: #039be5;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: white;
-        padding: 16px;
-        border-radius: 4px;
-      }
-      #message,
-      #message a {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      }
       #load {
         color: rgba(0, 0, 0, 0.4);
         text-align: center;
         font-size: 13px;
       }
-      @media (max-width: 600px) {
-        body,
-        #message {
-          margin-top: 0;
-          background: white;
-          box-shadow: none;
-        }
-        body {
-          border-top: 16px solid #ffa100;
-        }
-      }
     </style>
   </head>
   <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>
-        You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go
-        build something extraordinary!
-      </p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/"
-        >Open Hosting Documentation</a
-      >
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <header>
+      <title>HealthyApp Web App</title>
+    </header>
 
+    <div class="container">
+      <!-- Main Table -->
+      <table class="tableContainer" cellspacing="40px">
+        <tbody>
+          <!-- Main Row start (1 row) -->
+          <tr>
+            <!-- 1st Column start -->
+            <td class="createModuleForm">
+              <div class="moduleForm">
+                <h3>Create Module</h3>
+                <form id="createModuleForm">
+                  <p>
+                    <!-- Module Name -->
+                    <label>Select Module Group</label>
+                    <select name="moduleGroup" id="moduleGroup">
+                      <option value="Diabetes Basics">Diabetes Basics</option>
+                      <option value="Carb Counting">Carb Counting</option>
+                      <option value="Maintaining Control">Maintaining Control</option>
+                    </select>
+                  </p>
+                  <p>
+                    <!-- Module Name (More detailed name) -->
+                    <label>Module Name</label>
+                    <input type="text" name="moduleName" id="moduleName" />
+                  </p>
+                  <p>
+                    <!-- Module Content (TODO: Embedd Media) -->
+                    <label>Module Content</label>
+                    <textarea
+                      class="moduleContent"
+                      type="text"
+                      name="moduleContent"
+                      id="moduleContent"
+                    ></textarea>
+                  </p>
+                  <!-- Submit -->
+                  <p class="full">
+                    <button type="submit">Submit</button>
+                  </p>
+                </form>
+              </div>
+            </td>
+            <!-- 1st Column end -->
+            <!-- 2d Column start -->
+            <td>
+              <div class="viewModules">
+                <h3>View Modules</h3>
+                <table class="moduleGroupTable">
+                  <tbody>
+                    <tr>
+                      <td class="moduleGroupTD" tabindex="0">Diabetes Basics</td>
+                    </tr>
+                    <tr>
+                      <td class="moduleGroupTD" tabindex="0">Carb Counting</td>
+                    </tr>
+                    <tr>
+                      <td class="moduleGroupTD" tabindex="0">Maintaining Control</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button id="loadModules" class="loadModules">Load Modules</button>
+                <table class="moduleListTable" id="moduleListTable">
+                  <!-- JS will populate this table -->
+                </table>
+              </div>
+            </td>
+            <!-- 2nd Column end -->
+            <!-- 3rd Colomn Start-->
+            <td>
+              <div class="previewModule">
+                <h3>Preview Module</h3>
+                <div class="smartphone">
+                  <div class="content" id="content"></div>
+                </div>
+              </div>
+            </td>
+            <!-- 3rd Column End-->
+          </tr>
+          <!-- Main Row end (1 row) -->
+        </tbody>
+        <!-- Table Body end -->
+      </table>
+      <!-- Main Table end -->
+    </div>
+
+    <footer>
+      <p id="load" class="load">Firebase SDK Loading&hellip;</p>
+    </footer>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -107,7 +123,7 @@
 
         try {
           let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(
+          let features = ['auth', 'database', 'messaging', 'storage', 'firestore'].filter(
             feature => typeof app[feature] === 'function',
           );
           document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(
@@ -120,5 +136,22 @@
         }
       });
     </script>
+
+    <!-- my scripts -->
+
+    <!-- firebase scripts -->
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="/__/firebase/7.7.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+    <script src="assets/scripts/index.js"></script>
   </body>
 </html>

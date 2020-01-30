@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "deploy:release": "react-native run-ios --device 'Faddle’s iPhone' --configuration Release",
-    "deploy:debug": "react-native run-ios --device 'Faddle’s iPhone' --configuration Debug"
+    "deploy:debug": "react-native run-ios --device 'Faddle’s iPhone' --configuration Debug",
+    "host:local": "cd functions && npm run build && firebase serve --only hosting && cd .."
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.1.0",
