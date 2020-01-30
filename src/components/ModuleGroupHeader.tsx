@@ -4,7 +4,7 @@ import { TrainModule } from '../typings/TrainModule';
 
 interface ModuleGroupHeaderProps {
   navigation: any;
-  module: TrainModule;
+  moduleGroup: any;
 }
 
 export class ModuleGroupHeader extends React.Component<ModuleGroupHeaderProps> {
@@ -12,17 +12,18 @@ export class ModuleGroupHeader extends React.Component<ModuleGroupHeaderProps> {
     super(props);
   }
 
+  getModules = () => {};
+
   // Navigate to ModuleScreen and carry module in navigation prop state
   openModule = () => {
-    this.props.navigation.navigate('Mod', { module: this.props.module });
+    // this.props.navigation.navigate('Mod', { module: this.getModule() });
   };
 
   render() {
-    const { module } = this.props;
     return (
       <View style={{ margin: 5 }}>
         <Button onPress={this.openModule}>
-          <Text>{module.title}</Text>
+          <Text>{this.props.moduleGroup}</Text>
         </Button>
       </View>
     );
