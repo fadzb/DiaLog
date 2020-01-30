@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
 import { TrainLevel } from '../typings/TrainLevel';
-import { TrainLevelHeader } from '../components/TrainLevelHeader';
+import { ModuleHeader } from '../components/ModuleHeader';
 
 interface ModuleScreenProps {
   navigation: any;
@@ -29,7 +29,7 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
         <Title>{module.title}</Title>
         <Content style={styles.contentContainer}>
           {module.levels.map((level: TrainLevel, index: any) => {
-            return <TrainLevelHeader level={level} key={index} />;
+            return <ModuleHeader level={level} key={index} />;
           })}
         </Content>
       </Container>

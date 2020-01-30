@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
-import { TrainModuleHeader } from '../components/TrainModuleHeader';
+import { ModuleGroupHeader } from '../components/ModuleGroupHeader';
 import { getModules } from '../utils/TrainModuleUtils';
 import { TrainModule } from '../typings/TrainModule';
 
@@ -38,7 +38,7 @@ export class TrainScreen extends React.Component<TrainScreenProps> {
         <Content style={styles.contentContainer}>
           {this.state.modules.map((module: TrainModule, index: any) => {
             return (
-              <TrainModuleHeader navigation={this.props.navigation} module={module} key={index} />
+              <ModuleGroupHeader navigation={this.props.navigation} module={module} key={index} />
             );
           })}
         </Content>

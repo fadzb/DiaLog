@@ -2,12 +2,12 @@ import * as React from 'react';
 import { View, Button, Text } from 'native-base';
 import { TrainModule } from '../typings/TrainModule';
 
-interface TrainModuleProps {
+interface ModuleGroupHeaderProps {
   navigation: any;
   module: TrainModule;
 }
 
-export class TrainModuleHeader extends React.Component<TrainModuleProps> {
+export class ModuleGroupHeader extends React.Component<ModuleGroupHeaderProps> {
   constructor(props: any) {
     super(props);
   }

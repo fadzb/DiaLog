@@ -5,11 +5,11 @@ import { Modal, TouchableOpacity } from 'react-native';
 import { LevelContent } from './LevelContent';
 import { Title } from 'react-native-paper';
 
-interface TrainLevelHeaderProps {
+interface ModuleHeaderProps {
   level: TrainLevel;
 }
 
-export class TrainLevelHeader extends React.Component<TrainLevelHeaderProps> {
+export class ModuleHeader extends React.Component<ModuleHeaderProps> {
   constructor(props: any) {
     super(props);
   }
