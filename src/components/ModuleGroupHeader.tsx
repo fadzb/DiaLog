@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Button, Text } from 'native-base';
 import { TrainModule } from '../typings/TrainModule';
+import { test } from '../utils/FirebaseDB/FirestoreUtils';
 
 interface ModuleGroupHeaderProps {
   navigation: any;
@@ -12,10 +13,13 @@ export class ModuleGroupHeader extends React.Component<ModuleGroupHeaderProps> {
     super(props);
   }
 
-  getModules = () => {};
+  getModules = () => {
+    test();
+  };
 
   // Navigate to ModuleScreen and carry module in navigation prop state
   openModule = () => {
+    this.getModules();
     // this.props.navigation.navigate('Mod', { module: this.getModule() });
   };
 
