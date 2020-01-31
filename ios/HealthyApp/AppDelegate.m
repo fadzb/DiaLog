@@ -19,6 +19,7 @@
 {
   if ([FIRApp defaultApp] == nil) {
       [FIRApp configure];
+      FIRFirestore *defaultFirestore = [FIRFirestore firestore];
     }
     
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
