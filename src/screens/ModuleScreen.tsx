@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
-import { TrainLevel } from '../typings/TrainLevel';
 import { ModuleHeader } from '../components/ModuleHeader';
+import { TrainModule } from '../typings/TrainModule';
 
 interface ModuleScreenProps {
   navigation: any;
@@ -28,7 +28,7 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
           <Title>{moduleGroup}</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          {moduleList.map((module: any, index: any) => {
+          {moduleList.map((module: TrainModule, index: any) => {
             return <ModuleHeader module={module} key={index} />;
           })}
         </Content>

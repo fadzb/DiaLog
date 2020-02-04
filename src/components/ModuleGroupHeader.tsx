@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Button, Text } from 'native-base';
-import { TrainModule } from '../typings/TrainModule';
 import { getModules } from '../utils/FirebaseDB/FirestoreUtils';
 
 interface ModuleGroupHeaderProps {

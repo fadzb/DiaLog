@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Button, Text, Header, Body } from 'native-base';
-import { TrainLevel } from '../typings/TrainLevel';
 import { Modal, TouchableOpacity } from 'react-native';
 import { ModuleContent } from './ModuleContent';
 import { Title } from 'react-native-paper';
