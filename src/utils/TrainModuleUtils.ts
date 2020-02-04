@@ -1,7 +1,13 @@
 import { TrainModule } from '../typings/TrainModule';
 import { TrainLevel } from '../typings/TrainLevel';
 
-export function getModules() {
+const moduleGroups = ['Diabetes Basics', 'Carb Counting', 'Maintaining Control'];
+
+export function getModuleGroups() {
+  return moduleGroups;
+}
+
+export function _getModules() {
   const moduleLevels: TrainLevel[] = [
     {
       index: 1,

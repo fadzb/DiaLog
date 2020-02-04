@@ -1,6 +1,6 @@
-import { TrainLevel } from './TrainLevel';
-
 export interface TrainModule {
-  title: string;
-  levels: TrainLevel[];
+  moduleName: string;
+  // levels: TrainLevel[]; : Not using levels atm
+  moduleGroup: string;
+  moduleContent: string;
 }

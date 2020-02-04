@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { View, Button, Text, Header, Body } from 'native-base';
-import { TrainLevel } from '../typings/TrainLevel';
 import { Modal, TouchableOpacity } from 'react-native';
-import { LevelContent } from './LevelContent';
+import { ModuleContent } from './ModuleContent';
 import { Title } from 'react-native-paper';
+import { TrainModule } from '../typings/TrainModule';
 
-interface TrainLevelHeaderProps {
-  level: TrainLevel;
+interface ModuleHeaderProps {
+  module: TrainModule;
 }
 
-export class TrainLevelHeader extends React.Component<TrainLevelHeaderProps> {
+export class ModuleHeader extends React.Component<ModuleHeaderProps> {
   constructor(props: any) {
     super(props);
   }
@@ -27,7 +27,7 @@ export class TrainLevelHeader extends React.Component<TrainLevelHeaderProps> {
   };
 
   render() {
-    const { level } = this.props;
+    const { module } = this.props;
 
     return (
       <View style={{ margin: 5 }}>
@@ -38,20 +38,20 @@ export class TrainLevelHeader extends React.Component<TrainLevelHeaderProps> {
           onRequestClose={this.handleCloseModal}
         >
           <Header>
-            <Title>{level.title}</Title>
+            <Title>{module.moduleName}</Title>
           </Header>
           <Body style={{}}>
-            <LevelContent level={level} />
+            <ModuleContent module={module} />
             <TouchableOpacity
               style={{ position: 'absolute', bottom: 20, borderWidth: 5 }}
               onPress={this.handleCloseModal}
             >
-              <Text>Back to Levels</Text>
+              <Text>Back to Modules</Text>
             </TouchableOpacity>
           </Body>
         </Modal>
         <Button onPress={this.handleOpenModal}>
-          <Text>{level.title}</Text>
+          <Text>{module.moduleName}</Text>
         </Button>
       </View>
     );

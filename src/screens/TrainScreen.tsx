@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
-import { TrainModuleHeader } from '../components/TrainModuleHeader';
-import { getModules } from '../utils/TrainModuleUtils';
-import { TrainModule } from '../typings/TrainModule';
+import { ModuleGroupHeader } from '../components/ModuleGroupHeader';
+import { getModuleGroups } from '../utils/TrainModuleUtils';
 
 interface TrainScreenProps {
   navigation: any;
@@ -15,18 +14,18 @@ export class TrainScreen extends React.Component<TrainScreenProps> {
   }
 
   state = {
-    modules: [],
+    moduleGroups: [],
   };
 
-  // Get all training modules
-  setModules = () => {
-    const modules: TrainModule[] = getModules();
+  // Get the groups
+  setModuleGroups = () => {
+    const moduleGroups: any[] = getModuleGroups();
 
-    this.setState({ modules });
+    this.setState({ moduleGroups });
   };
 
   componentDidMount = () => {
-    this.setModules();
+    this.setModuleGroups();
   };
 
   render() {
@@ -36,9 +35,13 @@ export class TrainScreen extends React.Component<TrainScreenProps> {
           <Title>Training Modules</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          {this.state.modules.map((module: TrainModule, index: any) => {
+          {this.state.moduleGroups.map((moduleGroup: any, index: any) => {
             return (
-              <TrainModuleHeader navigation={this.props.navigation} module={module} key={index} />
+              <ModuleGroupHeader
+                navigation={this.props.navigation}
+                moduleGroup={moduleGroup}
+                key={index}
+              />
             );
           })}
         </Content>
