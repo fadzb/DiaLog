@@ -3,7 +3,6 @@ import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
 import { ModuleGroupHeader } from '../components/ModuleGroupHeader';
 import { getModuleGroups } from '../utils/TrainModuleUtils';
-import { TrainModule } from '../typings/TrainModule';
 
 interface TrainScreenProps {
   navigation: any;

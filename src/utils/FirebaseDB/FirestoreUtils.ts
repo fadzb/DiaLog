@@ -15,7 +15,8 @@ export const getModules = (moduleGroup: string) => {
 const handleSnapshot = (querySnapshot: any) => {
   const dataList: any = [];
   querySnapshot.forEach((doc: any) => {
-    console.log(doc.id, ' => ', doc.data());
+    // Uncomment for testing
+    // console.log(doc.id, ' => ', doc.data());
 
     //doc.data() returns 'module' as a JavaScript Object
     const data = doc.data();

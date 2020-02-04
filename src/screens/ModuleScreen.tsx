@@ -13,23 +13,23 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
     super(props);
   }
 
-  // get module from navigation prop state
+  // get module list from navigation prop state
   state = {
-    module: this.props.navigation.getParam('module'),
+    moduleList: this.props.navigation.getParam('moduleList'),
+    moduleGroup: this.props.navigation.getParam('moduleGroup'),
   };
 
   render() {
-    const { module } = this.state;
+    const { moduleList, moduleGroup } = this.state;
 
     return (
       <Container style={styles.container}>
         <Header>
-          <Title>Module Screen</Title>
+          <Title>{moduleGroup}</Title>
         </Header>
-        <Title>{module.title}</Title>
         <Content style={styles.contentContainer}>
-          {module.levels.map((level: TrainLevel, index: any) => {
-            return <ModuleHeader level={level} key={index} />;
+          {moduleList.map((module: any, index: any) => {
+            return <ModuleHeader module={module} key={index} />;
           })}
         </Content>
       </Container>
