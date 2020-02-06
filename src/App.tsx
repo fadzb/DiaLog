@@ -19,7 +19,12 @@ import { firebase } from '@react-native-firebase/auth';
 const AppNavigator = (initialRoute: any) =>
   createStackNavigator(
     {
-      Home: HomeScreen,
+      Home: {
+        screen: HomeScreen,
+        navigationOptions: {
+          title: 'Home',
+        },
+      },
       Login: LoginScreen,
       Carb: CarbScreen,
       LogAct: LogActScreen,
@@ -35,9 +40,9 @@ const AppNavigator = (initialRoute: any) =>
 
       //style the header if decide to render in future
       defaultNavigationOptions: {
-        headerShown: false,
         headerStyle: {
           backgroundColor: '#f4511e',
+          borderBottomWidth: 0,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

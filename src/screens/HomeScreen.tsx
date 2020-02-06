@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { addName } from '../actions/actions';
 import { styles } from '../styles/HomeScreen';
-
-const DASHBOARD_TOGGLED = true;
 
 interface HomeScreenProps {
   navigation: any;
@@ -28,6 +26,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
   constructor(props: any) {
     super(props);
   }
+
+  state = {
+    DASHBOARD_TOGGLED: true,
+  };
 
   handleLoginNav = () => {
     this.props.navigation.navigate('Login', {});
@@ -53,39 +55,53 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('ApiTest', {});
   };
 
+  handleProfileNav = () => {
+    this.props.navigation.navigate('Profile', {});
+  };
+
   handleReduxTest = () => {
     console.log('testing addName reducer');
     this.props.addName('Faddle');
   };
 
+  toggleDashboard = () => {
+    this.setState({ DASHBOARD_TOGGLED: !this.state.DASHBOARD_TOGGLED });
+  };
+
   render() {
-    if (DASHBOARD_TOGGLED) {
+    if (this.state.DASHBOARD_TOGGLED) {
       return (
         <View style={styles.container}>
           <View style={styles.row}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate({ routeName: 'Charts' })}
-              style={styles.item}
-            >
+            <TouchableOpacity onPress={this.handleEstimateNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
-              <Text style={styles.itemText}>Charts</Text>
+              <Text style={styles.itemText}>Search Foods</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate({ routeName: 'Charts' })}
-              style={styles.item}
-            >
+            <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
-              <Text style={styles.itemText}>Charts</Text>
+              <Text style={styles.itemText}>Training Modules</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate({ routeName: 'Charts' })}
-              style={styles.item}
-            >
+            <TouchableOpacity onPress={this.handleLogActNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
-              <Text style={styles.itemText}>Charts</Text>
+              <Text style={styles.itemText}>Log Activity</Text>
             </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.handleViewActNav} style={styles.item}>
+              {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
+              <Text style={styles.itemText}>View Activity</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
+              {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
+              <Text style={styles.itemText}>Profile</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.item}>
+            <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
           </View>
         </View>
       );
@@ -106,6 +122,8 @@ class HomeScreen extends React.Component<HomeScreenProps> {
           <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
           <Button label={labels.API_TEST} onPress={this.handleApiTestNav} />
           <Button label={labels.REDUX_TEST} onPress={this.handleReduxTest} />
+
+          <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
         </View>
       );
   }
