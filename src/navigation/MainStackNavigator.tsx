@@ -9,30 +9,31 @@ import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import MainTabNavigator from './MainTabNavigator';
 
+//TODO: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
+
 export default (initialRoute: any) =>
   createStackNavigator(
     {
       Home: {
         screen: MainTabNavigator,
         navigationOptions: {
-          title: 'Home',
           headerLeft: null,
         },
       },
-      Login: LoginScreen,
-      Carb: CarbScreen,
-      LogAct: LogActScreen,
-      ViewAct: ViewActScreen,
-      Train: TrainScreen,
-      ApiTest: APITestScreen,
-      Mod: ModuleScreen,
       Reg: RegisterScreen,
+      Login: LoginScreen,
+      ApiTest: APITestScreen,
+
+      // At the moment, these screens will not show tab bar on bottom: we need to define custom componenet
+      Train: TrainScreen,
+      Mod: ModuleScreen,
     },
     {
       initialRouteName: `${initialRoute}`,
       headerMode: 'screen',
 
       defaultNavigationOptions: {
+        title: 'Healthy App',
         headerStyle: {
           backgroundColor: '#f4511e',
           borderBottomWidth: 0,

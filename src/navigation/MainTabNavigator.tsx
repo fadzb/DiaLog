@@ -3,7 +3,16 @@ import { Image, View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import { colors } from '../colors';
+import { CarbScreen } from '../screens/CarbScreen';
+import { LogActScreen } from '../screens/LogActScreen';
+import { ViewActScreen } from '../screens/ViewActScreen';
+import { LoginScreen } from '../screens/LoginScreen';
+import { TrainScreen } from '../screens/TrainScreen';
+import { APITestScreen } from '../screens/APITestScreen';
+import { ModuleScreen } from '../screens/ModuleScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
+// Using similar logic from react-native-starter for Tab Bar Navigation
 export default createBottomTabNavigator(
   {
     Home: {
@@ -12,21 +21,26 @@ export default createBottomTabNavigator(
         header: null,
       },
     },
-    Calendar: {
-      screen: HomeScreen,
-      navigationOptions: {},
-    },
-    Grids: {
-      screen: HomeScreen,
+    Carb: {
+      screen: CarbScreen,
       navigationOptions: {
-        header: null,
+        tabBarLabel: 'Food',
       },
     },
-    Pages: {
-      screen: HomeScreen,
-      navigationOptions: {},
+    LogAct: {
+      screen: LogActScreen,
+      navigationOptions: {
+        header: null,
+        tabBarLabel: 'Add Log',
+      },
     },
-    Components: {
+    ViewAct: {
+      screen: ViewActScreen,
+      navigationOptions: {
+        tabBarLabel: 'Activity',
+      },
+    },
+    Profile: {
       screen: HomeScreen,
       navigationOptions: {},
     },
@@ -41,20 +55,20 @@ export default createBottomTabNavigator(
           case 'Home':
             iconSource = 'iconHome';
             break;
-          case 'Calendar':
-            iconSource = 'iconCalendar';
-            break;
-          case 'Grids':
-            iconSource = 'iconGrids';
-            break;
-          case 'Pages':
-            iconSource = '';
-            break;
-          case 'Components':
-            iconSource = 'iconComponents';
-            break;
-          default:
-            iconSource = 'iconComponents';
+          // case 'Calendar':
+          //   iconSource = 'iconCalendar';
+          //   break;
+          // case 'Grids':
+          //   iconSource = 'iconGrids';
+          //   break;
+          // case 'Pages':
+          //   iconSource = '';
+          //   break;
+          // case 'Components':
+          //   iconSource = 'iconComponents';
+          //   break;
+          // default:
+          //   iconSource = 'iconComponents';
         }
         return (
           <View>
