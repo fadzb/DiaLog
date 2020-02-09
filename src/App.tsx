@@ -12,48 +12,12 @@ import { ModuleScreen } from './screens/ModuleScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import { View } from 'native-base';
 import { firebase } from '@react-native-firebase/auth';
+import MainStackNavigator from './navigation/MainStackNavigator';
 
 // TODO: May need to add async functions to wait for fonts for Native Base: https://github.com/GeekyAnts/NativeBase
 
-// Todo: Tidy up
-const AppNavigator = (initialRoute: any) =>
-  createStackNavigator(
-    {
-      Home: {
-        screen: HomeScreen,
-        navigationOptions: {
-          title: 'Home',
-        },
-      },
-      Login: LoginScreen,
-      Carb: CarbScreen,
-      LogAct: LogActScreen,
-      ViewAct: ViewActScreen,
-      Train: TrainScreen,
-      ApiTest: APITestScreen,
-      Mod: ModuleScreen,
-      Reg: RegisterScreen,
-    },
-    {
-      initialRouteName: `${initialRoute}`,
-      headerMode: 'screen',
-
-      //style the header if decide to render in future
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: '#f4511e',
-          borderBottomWidth: 0,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      },
-    },
-  );
-
 const NavContainer = ({ initialRoute }: any) => {
-  return React.createElement(createAppContainer(AppNavigator(initialRoute)));
+  return React.createElement(createAppContainer(MainStackNavigator(initialRoute)));
 };
 
 const AppContainer = () => {
