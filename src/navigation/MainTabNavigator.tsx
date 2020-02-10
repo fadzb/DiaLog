@@ -11,8 +11,9 @@ import { TrainScreen } from '../screens/TrainScreen';
 import { APITestScreen } from '../screens/APITestScreen';
 import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import { Icon } from 'native-base';
+import { getIcon } from '../utils/IconUtils';
 
-// Using similar logic from react-native-starter for Tab Bar Navigation
 export default createBottomTabNavigator(
   {
     Home: {
@@ -50,46 +51,30 @@ export default createBottomTabNavigator(
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }: any) => {
         const { routeName } = navigation.state;
-        let iconSource;
+        let icon = '';
         switch (routeName) {
           case 'Home':
-            iconSource = 'iconHome';
+            icon = 'home';
             break;
-          // case 'Calendar':
-          //   iconSource = 'iconCalendar';
-          //   break;
-          // case 'Grids':
-          //   iconSource = 'iconGrids';
-          //   break;
-          // case 'Pages':
-          //   iconSource = '';
-          //   break;
-          // case 'Components':
-          //   iconSource = 'iconComponents';
-          //   break;
-          // default:
-          //   iconSource = 'iconComponents';
+          case 'Carb':
+            icon = 'food';
+            break;
+          case 'LogAct':
+            icon = 'addLog';
+            break;
+          case 'ViewAct':
+            icon = 'activity';
+            break;
+          case 'Profile':
+            icon = 'profile';
+            break;
+          default:
+            icon = 'home';
         }
-        return (
-          <View>
-            <Text>Icon Image</Text>
-          </View>
-        );
+
+        return getIcon(icon);
       },
     }),
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
-    tabBarOptions: {
-      showLabel: true,
-      style: {
-        backgroundColor: colors.WHITE,
-        borderTopWidth: 0.5,
-        borderTopColor: '#d6d6d6',
-      },
-      labelStyle: {
-        color: colors.GRAY,
-      },
-    },
+    // tab bar options can go here
   },
 );

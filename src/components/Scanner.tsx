@@ -6,7 +6,7 @@ import {
   ANDROID_CAMERA_PERMISSION_OPTIONS,
   ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS,
 } from '../utils/CameraUtils';
-import { IconNames } from '../utils/IconUtils';
+import { getIcon } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
@@ -118,12 +118,12 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                   <View>
                     <View style={styles.torch}>
                       <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
-                        <Icon name={IconNames.flashlight} />
+                        {getIcon('flashlight')}
                       </Button>
                     </View>
                     <View style={styles.ncapture}>
                       <Button light onPress={this.takePicture.bind(this)}>
-                        <Icon name={IconNames.camera} />
+                        {getIcon('camera')}
                       </Button>
                     </View>
                   </View>
@@ -132,7 +132,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             </RNCamera>
           </View>
           <Button style={styles.bottom} vertical onPress={this.closeCamera}>
-            <Icon name={IconNames.camera} />
+            {getIcon('camera')}
             <Text>Close Camera</Text>
           </Button>
         </View>
@@ -150,7 +150,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
         )}
         <View style={[styles.bottom, { marginBottom: 40 }]}>
           <Button vertical onPress={this.openCamera}>
-            <Icon name={IconNames.camera} />
+            {getIcon('camera')}
             <Text>Camera</Text>
           </Button>
         </View>
