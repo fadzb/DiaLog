@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import { colors } from '../colors';
 import { CarbScreen } from '../screens/CarbScreen';
-import { LogActScreen } from '../screens/LogActScreen';
+import LogActScreen from '../screens/LogActScreen';
 import { ViewActScreen } from '../screens/ViewActScreen';
 import { LoginScreen } from '../screens/LoginScreen';
 import { TrainScreen } from '../screens/TrainScreen';

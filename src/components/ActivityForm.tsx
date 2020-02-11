@@ -9,6 +9,10 @@ import { FoodItem } from '../typings/FoodItem';
 interface ActivityFormProps {
   handleSubmit: () => void;
   item: FoodItem;
+
+  //Redux dispatch actions
+  // addLog: (log: Log) => void;
+  addLog: (log: Log) => void;
 }
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
@@ -62,6 +66,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
 
     // Store this log
     aysncStoreItem(log.time.toString(), log);
+
+    // Dispatch redux action
+    this.props.addLog(log);
 
     // Record Submitted: go to view activity screen
     this.props.handleSubmit();
