@@ -1,5 +1,6 @@
 import { ErrorCodes } from './ErrorCodes';
 import { firebase } from '@react-native-firebase/auth';
+import { createGuestUser } from '../ProfileUtils';
 
 export const register = async (email: string, password: any) => {
   try {
@@ -16,11 +17,11 @@ export const register = async (email: string, password: any) => {
 
 export const getCurrentUser = () => {
   const user = firebase.auth().currentUser;
-  if (user) {
-    console.log(user.email);
-  } else {
-    console.log('no user');
+
+  if (!user) {
+    return createGuestUser();
   }
+
   return user;
 };
 
