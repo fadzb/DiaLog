@@ -13,6 +13,7 @@ import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { Icon } from 'native-base';
 import { getIcon } from '../utils/IconUtils';
+import { ProfileScreen } from '../screens/ProfileScreen';
 
 export default createBottomTabNavigator(
   {
@@ -42,7 +43,7 @@ export default createBottomTabNavigator(
       },
     },
     Profile: {
-      screen: HomeScreen,
+      screen: ProfileScreen,
       navigationOptions: {},
     },
   },
