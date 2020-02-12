@@ -4,12 +4,19 @@ import { DEFAULT_PIC, createGuestUser } from '../utils/ProfileUtils';
 import { Image } from 'react-native';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
+import { Widget } from '../typings/Widget';
 
 interface ProfileScreenProps {
   navigation: any;
 }
 
 const profilePic = DEFAULT_PIC;
+
+const recentLogsWidget: Widget = {
+  widgetId: 'recentLogs',
+  widgetName: 'Recent Logs',
+  enabled: true,
+};
 
 export class ProfileScreen extends React.Component<ProfileScreenProps> {
   constructor(props: any) {
@@ -41,7 +48,10 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
             <Text>Widgets Enabled</Text>
           </CardItem>
           <CardItem>
-            <SwitchButton name={'Recent Logs'} initialValue={true} />
+            <SwitchButton
+              widget={recentLogsWidget}
+              updateWidget={() => console.log('Should update widget')}
+            />
           </CardItem>
         </Card>
       </View>
