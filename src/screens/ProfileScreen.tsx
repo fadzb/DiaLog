@@ -5,6 +5,10 @@ import { Image } from 'react-native';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
 import { Widget } from '../typings/Widget';
+import { createDispatchHook } from 'react-redux';
+import store from '../store';
+import { addName } from '../actions/actions';
+import { dispatchUpdateWidget } from '../utils/WidgetUtils';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -25,6 +29,13 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
 
   state = {
     user: getCurrentUser(),
+  };
+
+  handleRecentLogsChange = (newValue: boolean) => {
+    // Update widget with new value (i.e. enabled/disabled)
+    recentLogsWidget.enabled = newValue;
+    // Dispatch action
+    dispatchUpdateWidget(recentLogsWidget);
   };
 
   render() {
@@ -48,10 +59,7 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
             <Text>Widgets Enabled</Text>
           </CardItem>
           <CardItem>
-            <SwitchButton
-              widget={recentLogsWidget}
-              updateWidget={() => console.log('Should update widget')}
-            />
+            <SwitchButton widget={recentLogsWidget} handleChange={this.handleRecentLogsChange} />
           </CardItem>
         </Card>
       </View>

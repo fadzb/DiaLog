@@ -4,9 +4,7 @@ import { Widget } from '../typings/Widget';
 
 interface SwitchButtonProps {
   widget: Widget;
-
-  // Redux
-  updateWidget: (widget: Widget, value: boolean) => void;
+  handleChange: (newValue: boolean) => void;
 }
 
 export class SwitchButton extends React.Component<SwitchButtonProps> {
@@ -22,8 +20,7 @@ export class SwitchButton extends React.Component<SwitchButtonProps> {
     const newValue = !this.state.value;
     this.setState({ value: newValue });
 
-    // dispatch action: Update widget with new value (i.e. enabled/disabled)
-    this.props.updateWidget(this.props.widget, newValue);
+    this.props.handleChange(newValue);
   };
 
   render() {
