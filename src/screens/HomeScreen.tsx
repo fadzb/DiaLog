@@ -6,7 +6,7 @@ import { addName } from '../actions/actions';
 import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
-import { Card, CardItem, View, Text } from 'native-base';
+import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
 import { Widget } from '../typings/Widget';
 import store from '../store';
 import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
@@ -100,9 +100,17 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               <CardItem header>
                 <Text>Recent Logs</Text>
               </CardItem>
-              <CardItem>
-                <ActivityChart preview={true} />
-              </CardItem>
+              <List>
+                <ListItem>
+                  <Text>Recent Log 1</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>Recent Log 2</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>Recent Log 3</Text>
+                </ListItem>
+              </List>
             </Card>
           )}
 
