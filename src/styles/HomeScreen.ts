@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { blueVersion as colors } from '../colors';
-import fonts from '../fonts';
 
 export const styles = StyleSheet.create({
   container: {
@@ -26,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   itemText: {
     color: colors.primary,
-    fontFamily: fonts.primary,
+    // fontFamily: fonts.regular,
   },
   itemImage: {
     height: 35,

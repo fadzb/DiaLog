@@ -77,30 +77,26 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
               <Text style={styles.itemText}>Search Foods</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
-              {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
-              <Text style={styles.itemText}>Training Modules</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
             <TouchableOpacity onPress={this.handleLogActNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
               <Text style={styles.itemText}>Log Activity</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
             <TouchableOpacity onPress={this.handleViewActNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
               <Text style={styles.itemText}>View Activity</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
+            <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
+              {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
+              <Text style={styles.itemText}>Training Modules</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
               {/* <Image resizeMode="contain" source={chartIcon} style={styles.itemImage} /> */}
               <Text style={styles.itemText}>Profile</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.item}>
+          <View style={{ alignSelf: 'center', width: 150, position: 'absolute', bottom: 0 }}>
             <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
           </View>
         </View>
