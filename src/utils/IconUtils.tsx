@@ -14,6 +14,7 @@ const Icons: any = {
   addLog: { name: 'add-to-list', type: 'Entypo' },
   activity: { name: 'activity', type: 'Feather' },
   profile: { name: 'person-outline', type: 'MaterialIcons' },
+  train: { name: 'open-book', type: 'Entypo' },
 };
 
 const getIconJSX = (icon: icon) => {

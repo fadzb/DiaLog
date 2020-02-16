@@ -21,7 +21,9 @@ const CHART_CONFIG = {
   barPercentage: 0.3,
 };
 
-interface ActivityChartProps {}
+interface ActivityChartProps {
+  preview: boolean; //reduce chart width for preview
+}
 
 export class ActivityChart extends React.Component<ActivityChartProps> {
   constructor(props: any) {
@@ -50,13 +52,14 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   render() {
     const { logs } = this.state;
+    const { preview } = this.props;
 
     return (
       <View style={styles.chartContainer}>
         <StackedBarChart
           style={styles.chart}
           data={getChartData(logs)}
-          width={SCREEN_WIDTH}
+          width={preview ? SCREEN_WIDTH - 40 : SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}
           hideLegend={true}

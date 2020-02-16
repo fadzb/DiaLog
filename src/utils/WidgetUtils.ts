@@ -6,3 +6,15 @@ import { updateWidget } from '../actions/actions';
 export const dispatchUpdateWidget = (widget: Widget) => {
   store.dispatch(updateWidget(widget));
 };
+
+export const getWidgetById = (widgetId: string, widgets: Widget[]) => {
+  const widget = widgets.find((widget: Widget) => widget.widgetId == widgetId);
+
+  return widget;
+};
+
+export const shouldRenderWidget = (widget: Widget) => {
+  const shouldRender = true ? widget && widget.enabled : false;
+
+  return shouldRender;
+};
