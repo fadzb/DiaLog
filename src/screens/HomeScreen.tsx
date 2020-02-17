@@ -1,30 +1,32 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { addName } from '../actions/actions';
+import { styles } from '../styles/HomeScreen';
+import { getIcon } from '../utils/IconUtils';
+import { ActivityChart } from '../components/ActivityChart';
+import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
+import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
 
 interface HomeScreenProps {
   navigation: any;
 
   //Redux dispatch actions
   addName: (name: any) => void;
-}
 
-const labels = {
-  LOGIN: 'Login',
-  CARB: 'Estimate CHO',
-  LOG_ACT: 'Log Activity',
-  VIEW_ACT: 'View Activity',
-  TRAIN: 'Training Modules',
-  API_TEST: 'Test APIs',
-  REDUX_TEST: 'Test Redux',
-};
+  //Redux state
+  widgets: any;
+}
 
 class HomeScreen extends React.Component<HomeScreenProps> {
   constructor(props: any) {
     super(props);
   }
+
+  state = {
+    DASHBOARD_TOGGLED: true,
+  };
 
   handleLoginNav = () => {
     this.props.navigation.navigate('Login', {});
@@ -50,36 +52,109 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('ApiTest', {});
   };
 
+  handleProfileNav = () => {
+    this.props.navigation.navigate('Profile', {});
+  };
+
   handleReduxTest = () => {
     console.log('testing addName reducer');
     this.props.addName('Faddle');
   };
 
+  toggleDashboard = () => {
+    this.setState({ DASHBOARD_TOGGLED: !this.state.DASHBOARD_TOGGLED });
+  };
+
   render() {
+    const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
+    const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
+
+    if (this.state.DASHBOARD_TOGGLED) {
+      return (
+        <ScrollView style={styles.container}>
+          {/* Always render Overview Widget */}
+          <Card>
+            <CardItem header>
+              <Text>Overview</Text>
+            </CardItem>
+            <CardItem>
+              <ActivityChart preview={true} />
+            </CardItem>
+          </Card>
+
+          {/* Conditionally render other widgets: i.e. Recent Logs */}
+          {renderRecentLogs && (
+            <Card>
+              <CardItem header>
+                <Text>Recent Logs</Text>
+              </CardItem>
+              <List>
+                <ListItem>
+                  <Text>Recent Log 1</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>Recent Log 2</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>Recent Log 3</Text>
+                </ListItem>
+              </List>
+            </Card>
+          )}
+
+          {/* Toggle View Button */}
+          <View style={{ alignSelf: 'center', width: 150 }}>
+            <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+          </View>
+        </ScrollView>
+      );
+    } // Else (Simple Views)
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text>Home Screen</Text>
-        <Button label={labels.LOGIN} onPress={this.handleLoginNav} />
-        <Button label={labels.CARB} onPress={this.handleEstimateNav} />
-        <Button label={labels.LOG_ACT} onPress={this.handleLogActNav} />
-        <Button label={labels.VIEW_ACT} onPress={this.handleViewActNav} />
-        <Button label={labels.TRAIN} onPress={this.handleTrainNav} />
-        <Button label={labels.API_TEST} onPress={this.handleApiTestNav} />
-        <Button label={labels.REDUX_TEST} onPress={this.handleReduxTest} />
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleEstimateNav} style={styles.item}>
+            {getIcon('food')}
+            <Text style={styles.itemText}>Search Foods</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleLogActNav} style={styles.item}>
+            {getIcon('addLog')}
+            <Text style={styles.itemText}>Log Activity</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleViewActNav} style={styles.item}>
+            {getIcon('activity')}
+            <Text style={styles.itemText}>View Activity</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
+            {getIcon('train')}
+            <Text style={styles.itemText}>Training Modules</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
+            {getIcon('profile')}
+            <Text style={styles.itemText}>Profile</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleApiTestNav} style={styles.item}>
+            <Text style={styles.itemText}>Test APIs</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleReduxTest} style={styles.item}>
+            <Text style={styles.itemText}>Test Redux</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ alignSelf: 'center', width: 150, position: 'absolute', bottom: 0 }}>
+          <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+        </View>
       </View>
     );
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state: any) => {
   return {
-    name: 'state.name for now is faddle',
+    name: state.name,
+    widgets: state.widgets,
   };
 };
 

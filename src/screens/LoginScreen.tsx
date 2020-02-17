@@ -52,6 +52,10 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.props.navigation.navigate('Reg', {});
   };
 
+  handleLoginGuest = () => {
+    this.props.navigation.navigate('Home', {});
+  };
+
   render() {
     return (
       <Container>
@@ -77,7 +81,10 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             </Button>
           </Form>
           <Button primary style={styles.registerButton} onPress={this.handleSwitchToSignUp}>
-            <Text>Sign Up</Text>
+            <Text>Register</Text>
+          </Button>
+          <Button primary style={styles.registerButton} onPress={this.handleLoginGuest}>
+            <Text>Login as Guest</Text>
           </Button>
         </Content>
       </Container>

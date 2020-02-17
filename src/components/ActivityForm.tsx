@@ -3,12 +3,14 @@ import { styles } from '../styles/LogActScreen';
 import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
-import { aysncStoreItem } from '../storage/AsyncStorage';
 import { FoodItem } from '../typings/FoodItem';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
   item: FoodItem;
+
+  //Redux dispatch actions
+  addLog: (log: Log) => void;
 }
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
@@ -61,7 +63,11 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     };
 
     // Store this log
-    aysncStoreItem(log.time.toString(), log);
+    // aysncStoreItem(log.time.toString(), log);
+
+    // TODO: Persist Redux state (if not uncomment asyncStoreItem)
+    // Dispatch redux action
+    this.props.addLog(log);
 
     // Record Submitted: go to view activity screen
     this.props.handleSubmit();
