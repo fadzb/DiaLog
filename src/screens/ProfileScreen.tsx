@@ -3,7 +3,7 @@ import { View, Card, CardItem, Left, Thumbnail, Text, Body } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
-import { Widget } from '../typings/Widget';
+import { recentLogsWidget } from '../typings/Widget';
 import { dispatchUpdateWidget } from '../utils/WidgetUtils';
 
 interface ProfileScreenProps {
@@ -12,16 +12,13 @@ interface ProfileScreenProps {
 
 const profilePic = DEFAULT_PIC;
 
-const recentLogsWidget: Widget = {
-  widgetId: 'recentLogs',
-  widgetName: 'Recent Logs',
-  enabled: true,
-};
-
 export class ProfileScreen extends React.Component<ProfileScreenProps> {
   constructor(props: any) {
     super(props);
   }
+
+  // Get a ref to widgets
+  recentLogsWidget = recentLogsWidget;
 
   state = {
     user: getCurrentUser(),
@@ -29,9 +26,11 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
 
   handleRecentLogsChange = (newValue: boolean) => {
     // Update widget with new value (i.e. enabled/disabled)
-    recentLogsWidget.enabled = newValue;
+    const widget = this.recentLogsWidget;
+    widget.enabled = newValue;
+
     // Dispatch action
-    dispatchUpdateWidget(recentLogsWidget);
+    dispatchUpdateWidget(widget);
   };
 
   render() {
@@ -55,7 +54,10 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
             <Text>Widgets Enabled</Text>
           </CardItem>
           <CardItem>
-            <SwitchButton widget={recentLogsWidget} handleChange={this.handleRecentLogsChange} />
+            <SwitchButton
+              widget={this.recentLogsWidget}
+              handleChange={this.handleRecentLogsChange}
+            />
           </CardItem>
         </Card>
       </View>

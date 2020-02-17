@@ -10,7 +10,6 @@ interface ActivityFormProps {
   item: FoodItem;
 
   //Redux dispatch actions
-  // addLog: (log: Log) => void;
   addLog: (log: Log) => void;
 }
 

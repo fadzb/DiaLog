@@ -1,18 +1,6 @@
 import reducer from './reducers/reducer';
 import { createStore } from 'redux';
-import { Widget } from './typings/Widget';
-
-const recentLogsWidget: Widget = {
-  widgetId: 'recentLogs',
-  widgetName: 'Recent Logs',
-  enabled: true,
-};
-
-const tempWidget: Widget = {
-  widgetId: 'tempWidget',
-  widgetName: 'Temp Widget',
-  enabled: true,
-};
+import { recentLogsWidget, tempWidget } from './typings/Widget';
 
 const initialState: any = {
   name: '',
