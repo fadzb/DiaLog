@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { addName } from '../actions/actions';
@@ -7,8 +7,6 @@ import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
 import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
-import { Widget } from '../typings/Widget';
-import store from '../store';
 import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
 
 interface HomeScreenProps {
@@ -20,16 +18,6 @@ interface HomeScreenProps {
   //Redux state
   widgets: any;
 }
-
-const labels = {
-  LOGIN: 'Login',
-  CARB: 'Estimate CHO',
-  LOG_ACT: 'Log Activity',
-  VIEW_ACT: 'View Activity',
-  TRAIN: 'Training Modules',
-  API_TEST: 'Test APIs',
-  REDUX_TEST: 'Test Redux',
-};
 
 class HomeScreen extends React.Component<HomeScreenProps> {
   constructor(props: any) {
@@ -120,46 +108,46 @@ class HomeScreen extends React.Component<HomeScreenProps> {
           </View>
         </ScrollView>
       );
-    } else
-      return (
-        <View style={styles.container}>
-          <View style={styles.row}>
-            <TouchableOpacity onPress={this.handleEstimateNav} style={styles.item}>
-              {getIcon('food')}
-              <Text style={styles.itemText}>Search Foods</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleLogActNav} style={styles.item}>
-              {getIcon('addLog')}
-              <Text style={styles.itemText}>Log Activity</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleViewActNav} style={styles.item}>
-              {getIcon('activity')}
-              <Text style={styles.itemText}>View Activity</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
-              {getIcon('train')}
-              <Text style={styles.itemText}>Training Modules</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
-              {getIcon('profile')}
-              <Text style={styles.itemText}>Profile</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity onPress={this.handleApiTestNav} style={styles.item}>
-              <Text style={styles.itemText}>Test APIs</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleReduxTest} style={styles.item}>
-              <Text style={styles.itemText}>Test Redux</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ alignSelf: 'center', width: 150, position: 'absolute', bottom: 0 }}>
-            <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
-          </View>
+    } // Else (Simple Views)
+    return (
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleEstimateNav} style={styles.item}>
+            {getIcon('food')}
+            <Text style={styles.itemText}>Search Foods</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleLogActNav} style={styles.item}>
+            {getIcon('addLog')}
+            <Text style={styles.itemText}>Log Activity</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleViewActNav} style={styles.item}>
+            {getIcon('activity')}
+            <Text style={styles.itemText}>View Activity</Text>
+          </TouchableOpacity>
         </View>
-      );
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
+            {getIcon('train')}
+            <Text style={styles.itemText}>Training Modules</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
+            {getIcon('profile')}
+            <Text style={styles.itemText}>Profile</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity onPress={this.handleApiTestNav} style={styles.item}>
+            <Text style={styles.itemText}>Test APIs</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleReduxTest} style={styles.item}>
+            <Text style={styles.itemText}>Test Redux</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ alignSelf: 'center', width: 150, position: 'absolute', bottom: 0 }}>
+          <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+        </View>
+      </View>
+    );
   }
 }
 

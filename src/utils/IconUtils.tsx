@@ -1,4 +1,4 @@
-import { Icon, View } from 'native-base';
+import { Icon } from 'native-base';
 import React from 'react';
 
 interface icon {

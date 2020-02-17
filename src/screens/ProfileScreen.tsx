@@ -1,13 +1,9 @@
 import * as React from 'react';
-import { View, Card, CardItem, Left, Thumbnail, Text, Body, Switch } from 'native-base';
-import { DEFAULT_PIC, createGuestUser } from '../utils/ProfileUtils';
-import { Image } from 'react-native';
+import { View, Card, CardItem, Left, Thumbnail, Text, Body } from 'native-base';
+import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
 import { Widget } from '../typings/Widget';
-import { createDispatchHook } from 'react-redux';
-import store from '../store';
-import { addName } from '../actions/actions';
 import { dispatchUpdateWidget } from '../utils/WidgetUtils';
 
 interface ProfileScreenProps {

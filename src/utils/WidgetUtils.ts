@@ -14,7 +14,7 @@ export const getWidgetById = (widgetId: string, widgets: Widget[]) => {
 };
 
 export const shouldRenderWidget = (widget: Widget) => {
-  const shouldRender = true ? widget && widget.enabled : false;
+  const shouldRender = widget && widget.enabled;
 
   return shouldRender;
 };

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Container, Header, Content, Title } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import { ActivityForm } from '../components/ActivityForm';
-import { addName, addLog } from '../actions/actions';
+import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 

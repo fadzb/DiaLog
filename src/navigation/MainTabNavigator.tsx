@@ -1,17 +1,8 @@
-import React from 'react';
-import { Image, View, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import { colors } from '../colors';
 import { CarbScreen } from '../screens/CarbScreen';
 import LogActScreen from '../screens/LogActScreen';
 import { ViewActScreen } from '../screens/ViewActScreen';
-import { LoginScreen } from '../screens/LoginScreen';
-import { TrainScreen } from '../screens/TrainScreen';
-import { APITestScreen } from '../screens/APITestScreen';
-import { ModuleScreen } from '../screens/ModuleScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import { Icon } from 'native-base';
 import { getIcon } from '../utils/IconUtils';
 import { ProfileScreen } from '../screens/ProfileScreen';
 
@@ -50,7 +41,7 @@ export default createBottomTabNavigator(
   {
     defaultNavigationOptions: ({ navigation }: any) => ({
       // eslint-disable-next-line react/prop-types
-      tabBarIcon: ({ focused }: any) => {
+      tabBarIcon: () => {
         const { routeName } = navigation.state;
         let icon = '';
         switch (routeName) {

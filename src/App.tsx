@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import HomeScreen from './screens/HomeScreen';
-import { LoginScreen } from './screens/LoginScreen';
-import { CarbScreen } from './screens/CarbScreen';
-import { LogActScreen } from './screens/LogActScreen';
-import { ViewActScreen } from './screens/ViewActScreen';
-import { TrainScreen } from './screens/TrainScreen';
-import { APITestScreen } from './screens/APITestScreen';
-import { ModuleScreen } from './screens/ModuleScreen';
-import RegisterScreen from './screens/RegisterScreen';
 import { View } from 'native-base';
 import { firebase } from '@react-native-firebase/auth';
 import MainStackNavigator from './navigation/MainStackNavigator';

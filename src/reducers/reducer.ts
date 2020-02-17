@@ -10,7 +10,7 @@ const initialState: any = {
 
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case UPDATE_WIDGET:
+    case UPDATE_WIDGET: {
       // Updated Widget
       const updatedWidget = action.payload;
 
@@ -31,14 +31,16 @@ const reducer = (state = initialState, action: any) => {
 
       // Return new state
       return { ...state, widgets: updatedWidgetList };
+    }
 
     //Add name
-    case ADD_NAME:
+    case ADD_NAME: {
       console.log('add name reducer');
       return { ...state };
+    }
 
     //Add log
-    case ADD_LOG:
+    case ADD_LOG: {
       console.log('Dispatched action to add: ' + action.payload);
 
       const newLog: Log = action.payload;
@@ -49,6 +51,7 @@ const reducer = (state = initialState, action: any) => {
       // console.log(willBe.logs);
 
       return { ...state, ...newState };
+    }
 
     //Default
     default:
