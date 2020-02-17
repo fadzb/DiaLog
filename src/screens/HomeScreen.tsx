@@ -22,6 +22,8 @@ interface HomeScreenProps {
 class HomeScreen extends React.Component<HomeScreenProps> {
   constructor(props: any) {
     super(props);
+
+    // console.log(this.props.widgets);
   }
 
   state = {
