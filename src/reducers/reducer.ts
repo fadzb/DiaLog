@@ -8,7 +8,7 @@ const initialState: any = {
   widgets: [],
 };
 
-const reducer = (state = initialState, action: any) => {
+const rootReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case UPDATE_WIDGET: {
       // Updated Widget
@@ -59,4 +59,4 @@ const reducer = (state = initialState, action: any) => {
   }
 };
 
-export default reducer;
+export default rootReducer;

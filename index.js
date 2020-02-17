@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './src/store';
 
 const RNRedux = () => (
-  <Provider store={store}>
+  <Provider store={store.getStore()}>
     <App />
   </Provider>
 );
