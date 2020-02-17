@@ -45,9 +45,9 @@ class LogActScreen extends React.Component<LogActScreenProps> {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state: any) => {
   return {
-    name: 'state.name for now is faddle',
+    name: state.name,
   };
 };
 

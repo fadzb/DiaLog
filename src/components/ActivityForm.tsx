@@ -65,7 +65,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     };
 
     // Store this log
-    aysncStoreItem(log.time.toString(), log);
+    // aysncStoreItem(log.time.toString(), log);
 
     // Dispatch redux action
     this.props.addLog(log);

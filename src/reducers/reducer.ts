@@ -45,8 +45,8 @@ const reducer = (state = initialState, action: any) => {
 
       const newState = state.logs.push(newLog);
 
-      const willBe = { ...state, ...newState };
-      console.log(willBe);
+      // const willBe = { ...state, ...newState };
+      // console.log(willBe.logs);
 
       return { ...state, ...newState };
 
