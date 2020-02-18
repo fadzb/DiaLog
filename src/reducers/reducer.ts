@@ -1,4 +1,4 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET } from '../actions/types';
+import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -52,6 +52,11 @@ const rootReducer = (state = initialState, action: any) => {
 
       // Return new State
       return { ...state, logs: updatedLogList };
+    }
+
+    // Clear Logs in memory (persisted logs will remain)
+    case CLEAR_LOGS: {
+      return { ...state, logs: initialState.logs };
     }
 
     //Default

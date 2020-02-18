@@ -30,25 +30,25 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
 
   handleUpdateDateTime = (dateTimeInput: any) => {
     this.setState({
-      dateTimeInput,
+      dateTimeInput: dateTimeInput,
     });
   };
 
   handleGlucoseChange = (glucoseInput: string) => {
     this.setState({
-      glucoseInput: glucoseInput ? glucoseInput : 0,
+      glucoseInput: glucoseInput ? Number(glucoseInput) : 0,
     });
   };
 
   handleInsulinChange = (insulinInput: string) => {
     this.setState({
-      insulinInput: insulinInput ? insulinInput : 0,
+      insulinInput: insulinInput ? Number(insulinInput) : 0,
     });
   };
 
   handleChoChange = (choInput: string) => {
     this.setState({
-      choInput: choInput ? choInput : 0,
+      choInput: choInput ? Number(choInput) : 0,
     });
   };
 
@@ -85,6 +85,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
   //TODO: Format time more appropriately
 
   render() {
+    console.log('rendered');
     return (
       <Form style={styles.form}>
         <DateTimeInput updateDateTime={this.handleUpdateDateTime} />

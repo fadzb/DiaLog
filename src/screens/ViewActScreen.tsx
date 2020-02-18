@@ -3,16 +3,18 @@ import { Container, Header, Content, Title, Button, Text } from 'native-base';
 import { styles } from '../styles/ViewActScreen';
 import { ActivityChart } from '../components/ActivityChart';
 import { addName } from '../actions/actions';
-import HomeScreen from './HomeScreen';
 import { connect } from 'react-redux';
+import { Log } from '../typings/Log';
 
 interface ViewActScreenProps {
   navigation: any;
 
+  // Redux
   addName: (name: any) => void;
+  logs: Log[];
 }
 
-export class ViewActScreen extends React.Component<ViewActScreenProps> {
+class ViewActScreen extends React.Component<ViewActScreenProps> {
   constructor(props: any) {
     super(props);
   }
@@ -30,7 +32,7 @@ export class ViewActScreen extends React.Component<ViewActScreenProps> {
           <Title>View Activity</Title>
         </Header>
         <Content style={styles.contentContainer}>
-          <ActivityChart />
+          <ActivityChart preview={false} logs={this.props.logs} />
           <Button onPress={this.handleGoBack}>
             <Text>Go back</Text>
           </Button>
@@ -40,9 +42,10 @@ export class ViewActScreen extends React.Component<ViewActScreenProps> {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state: any) => {
   return {
-    name: 'state.name for now is faddle',
+    name: state.name,
+    logs: state.logs,
   };
 };
 
@@ -57,4 +60,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HomeScreen);
+)(ViewActScreen);

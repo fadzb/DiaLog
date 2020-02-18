@@ -3,7 +3,7 @@ import { Colors } from 'react-native-paper';
 import { StackedBarChart } from 'react-native-chart-kit';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native';
-import { getLogsForDate } from '../utils/ActivityLogUtils';
+import { getLogsForDate, getLogsFromReduxForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { getChartData } from '../utils/ChartUtils';
 import { Log } from '../typings/Log';
@@ -23,13 +23,14 @@ const CHART_CONFIG = {
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
+
+  // Redux state-props
+  logs: Log[];
 }
 
 export class ActivityChart extends React.Component<ActivityChartProps> {
   constructor(props: any) {
     super(props);
-
-    this.getTodaysLogs();
   }
 
   state = {
@@ -39,6 +40,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   // TODO: Cancel async tasks
   componentWillUnmount = () => {};
 
+  // Un-used
   getTodaysLogs = () => {
     // Getting logs for todays date
     getLogsForDate(DateUtils.getTodaysDateTime())
@@ -51,14 +53,16 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   };
 
   render() {
-    const { logs } = this.state;
-    const { preview } = this.props;
+    const { preview, logs } = this.props;
+
+    const todaysLogs = getLogsFromReduxForDate(logs, DateUtils.getTodaysDateTime());
+    const data = getChartData(todaysLogs);
 
     return (
       <View style={styles.chartContainer}>
         <StackedBarChart
           style={styles.chart}
-          data={getChartData(logs)}
+          data={data}
           width={preview ? SCREEN_WIDTH - 40 : SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}

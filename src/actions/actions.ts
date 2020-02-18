@@ -1,4 +1,4 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET } from './types';
+import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS } from './types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -20,5 +20,11 @@ export const updateWidget = (widget: Widget) => {
   return {
     type: UPDATE_WIDGET,
     payload: widget,
+  };
+};
+
+export const clearLogs = () => {
+  return {
+    type: CLEAR_LOGS,
   };
 };
