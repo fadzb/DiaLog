@@ -3,30 +3,35 @@ import { View, Card, CardItem, Left, Thumbnail, Text, Body } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
-import { recentLogsWidget } from '../typings/Widget';
-import { dispatchUpdateWidget } from '../utils/WidgetUtils';
+import { recentLogsWidget, Widget } from '../typings/Widget';
+import { dispatchUpdateWidget, getWidgetById } from '../utils/WidgetUtils';
+import { connect } from 'react-redux';
 
 interface ProfileScreenProps {
   navigation: any;
+
+  // Redux state-props
+  widgets: Widget[];
 }
 
 const profilePic = DEFAULT_PIC;
 
-export class ProfileScreen extends React.Component<ProfileScreenProps> {
+class ProfileScreen extends React.Component<ProfileScreenProps> {
   constructor(props: any) {
     super(props);
   }
-
-  // Get a ref to widgets
-  recentLogsWidget = recentLogsWidget;
 
   state = {
     user: getCurrentUser(),
   };
 
-  handleRecentLogsChange = (newValue: boolean) => {
+  handleRecentLogsChange = (widget: Widget | undefined, newValue: boolean) => {
+    if (!widget) {
+      console.log('Widget undefined');
+      return;
+    }
+
     // Update widget with new value (i.e. enabled/disabled)
-    const widget = this.recentLogsWidget;
     widget.enabled = newValue;
 
     // Dispatch action
@@ -35,6 +40,10 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
 
   render() {
     const { user } = this.state;
+    const { widgets } = this.props;
+
+    // Get widgets
+    const recentLogsWidget = getWidgetById('recentLogs', widgets);
 
     return (
       <View>
@@ -54,13 +63,27 @@ export class ProfileScreen extends React.Component<ProfileScreenProps> {
             <Text>Widgets Enabled</Text>
           </CardItem>
           <CardItem>
-            <SwitchButton
-              widget={this.recentLogsWidget}
-              handleChange={this.handleRecentLogsChange}
-            />
+            <SwitchButton widget={recentLogsWidget} handleChange={this.handleRecentLogsChange} />
           </CardItem>
         </Card>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    name: state.name,
+    widgets: state.widgets,
+  };
+};
+
+//TODO: Should be dispatching from here rather than Widget Utils
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileScreen);

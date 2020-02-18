@@ -4,7 +4,7 @@ import { CarbScreen } from '../screens/CarbScreen';
 import LogActScreen from '../screens/LogActScreen';
 import { ViewActScreen } from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
-import { ProfileScreen } from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 export default createBottomTabNavigator(
   {
