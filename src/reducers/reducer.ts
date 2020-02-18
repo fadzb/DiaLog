@@ -41,16 +41,17 @@ const rootReducer = (state = initialState, action: any) => {
 
     //Add log
     case ADD_LOG: {
-      console.log('Dispatched action to add: ' + action.payload);
-
+      // New Log to add
       const newLog: Log = action.payload;
 
-      const newState = state.logs.push(newLog);
+      // Current state of logs
+      const logs = state.logs;
 
-      // const willBe = { ...state, ...newState };
-      // console.log(willBe.logs);
+      // Get updated list without mutating
+      const updatedLogList: Log[] = logs.concat(newLog);
 
-      return { ...state, ...newState };
+      // Return new State
+      return { ...state, logs: updatedLogList };
     }
 
     //Default

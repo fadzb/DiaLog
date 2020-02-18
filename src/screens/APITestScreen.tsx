@@ -9,6 +9,7 @@ import { aysncStoreItem, asyncGetAllKeys, asyncMultiRemove } from '../storage/As
 import { login, signOut, getCurrentUser, register } from '../utils/FirebaseAuth/AuthUtils';
 import { ScrollView } from 'react-native';
 import { addTodo, getModules } from '../utils/FirebaseDB/FirestoreUtils';
+import store from '../store';
 
 const TEST_EMAIL = 'test@gmail.com';
 const TEST_PASSWORD = '123456';
@@ -85,6 +86,14 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
     );
   };
 
+  purgeRedux = () => {
+    console.log('Purging Redux-Persist state...');
+    store
+      .getPersistor()
+      .purge()
+      .then(() => console.log('purged.'))
+      .catch(error => console.log(error));
+  };
   render() {
     return (
       <ScrollView>
@@ -126,6 +135,12 @@ export class APITestScreen extends React.Component<APITestScreenProps> {
             </Button>
             <Button style={styles.testButtons} onPress={this.getModules}>
               <Text>Get Modules</Text>
+            </Button>
+          </Content>
+          <Content style={styles.contentContainer}>
+            <Title>Redux-Persist</Title>
+            <Button style={styles.testButtons} onPress={this.purgeRedux}>
+              <Text>Purge Redux Persistor</Text>
             </Button>
           </Content>
         </Container>
