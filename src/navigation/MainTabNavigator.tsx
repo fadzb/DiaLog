@@ -5,6 +5,9 @@ import LogActScreen from '../screens/LogActScreen';
 import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
 import ProfileScreen from '../screens/ProfileScreen';
+import { TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text } from 'native-base';
 
 export default createBottomTabNavigator(
   {
@@ -20,12 +23,19 @@ export default createBottomTabNavigator(
         tabBarLabel: 'Food',
       },
     },
+    //TODO: Use onPress to ensure the dateTimePicker updates upon navigate
     LogAct: {
       screen: LogActScreen,
-      navigationOptions: {
-        header: null,
-        tabBarLabel: 'Add Log',
-      },
+      navigationOptions: ({ navigation }: any) => ({
+        tabBarLabel: ({ tintColor }: any) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('LogActScreen', { date: new Date() })}
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Text>All</Text>
+          </TouchableOpacity>
+        ),
+      }),
     },
     ViewAct: {
       screen: ViewActScreen,
