@@ -14,8 +14,16 @@ interface LogActScreenProps {
 }
 
 class LogActScreen extends React.Component<LogActScreenProps> {
+  navigationWillFocusListener: any;
+
   constructor(props: any) {
     super(props);
+
+    // Trying to subscibe component to navigation state
+    this.navigationWillFocusListener = props.navigation.addListener('willFocus', () => {
+      // do something like this.setState() to update your view
+      console.log('Focused!');
+    });
   }
 
   // get food item from navigation prop state
@@ -26,6 +34,11 @@ class LogActScreen extends React.Component<LogActScreenProps> {
   handleFormSubmit = () => {
     this.props.navigation.navigate('ViewAct');
   };
+
+  // Remove listener
+  componentWillUnmount() {
+    this.navigationWillFocusListener.remove();
+  }
 
   render() {
     return (

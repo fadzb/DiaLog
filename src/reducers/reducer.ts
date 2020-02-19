@@ -1,4 +1,4 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET } from '../actions/types';
+import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -8,7 +8,7 @@ const initialState: any = {
   widgets: [],
 };
 
-const reducer = (state = initialState, action: any) => {
+const rootReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case UPDATE_WIDGET: {
       // Updated Widget
@@ -41,16 +41,22 @@ const reducer = (state = initialState, action: any) => {
 
     //Add log
     case ADD_LOG: {
-      console.log('Dispatched action to add: ' + action.payload);
-
+      // New Log to add
       const newLog: Log = action.payload;
 
-      const newState = state.logs.push(newLog);
+      // Current state of logs
+      const logs = state.logs;
 
-      // const willBe = { ...state, ...newState };
-      // console.log(willBe.logs);
+      // Get updated list without mutating
+      const updatedLogList: Log[] = logs.concat(newLog);
 
-      return { ...state, ...newState };
+      // Return new State
+      return { ...state, logs: updatedLogList };
+    }
+
+    // Clear Logs in memory (persisted logs will remain)
+    case CLEAR_LOGS: {
+      return { ...state, logs: initialState.logs };
     }
 
     //Default
@@ -59,4 +65,4 @@ const reducer = (state = initialState, action: any) => {
   }
 };
 
-export default reducer;
+export default rootReducer;

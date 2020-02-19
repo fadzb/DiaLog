@@ -8,6 +8,7 @@ import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
 import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
 import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
+import { Log } from '../typings/Log';
 
 interface HomeScreenProps {
   navigation: any;
@@ -17,6 +18,7 @@ interface HomeScreenProps {
 
   //Redux state
   widgets: any;
+  logs: Log[];
 }
 
 class HomeScreen extends React.Component<HomeScreenProps> {
@@ -78,7 +80,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               <Text>Overview</Text>
             </CardItem>
             <CardItem>
-              <ActivityChart preview={true} />
+              <ActivityChart preview={true} logs={this.props.logs} />
             </CardItem>
           </Card>
 
@@ -155,6 +157,7 @@ const mapStateToProps = (state: any) => {
   return {
     name: state.name,
     widgets: state.widgets,
+    logs: state.logs,
   };
 };
 

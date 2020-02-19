@@ -2,6 +2,14 @@ import { asyncGetAllKeys, asyncMultiGetItems } from '../storage/AsyncStorage';
 import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
 
+// gets logs for date from redux store (no direct AsyncStorage API call)
+export function getLogsFromReduxForDate(logs: Log[], dateTime: Date) {
+  const logsToReturn = filterByDateForRedux(logs, dateTime);
+
+  return logsToReturn;
+}
+
+// UNUSED (Used only for AsyncStorate API)
 // returns a promise containing filtered logs for a selected date
 export async function getLogsForDate(dateTime: Date) {
   // Get all keys, then all items, then filter logs
@@ -12,6 +20,23 @@ export async function getLogsForDate(dateTime: Date) {
   return promiseLogs;
 }
 
+// For redux api
+function filterByDateForRedux(items: any, dateTime: Date) {
+  const logs: Log[] = [];
+
+  items.forEach((item: any) => {
+    const log: Log = item;
+    log.time = new Date(log.time);
+
+    if (DateUtils.sameDay(log.time, dateTime)) {
+      logs.push(log);
+    }
+  });
+
+  return logs;
+}
+
+// UNUSED: for AysncStorage
 function filterByDate(items: any, dateTime: Date) {
   const logs: Log[] = [];
 

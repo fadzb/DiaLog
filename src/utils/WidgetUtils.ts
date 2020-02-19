@@ -4,7 +4,7 @@ import { updateWidget } from '../actions/actions';
 
 // Dispatch redux action to update properties of widget (i.e. enabled/disabled)
 export const dispatchUpdateWidget = (widget: Widget) => {
-  store.dispatch(updateWidget(widget));
+  store.getStore().dispatch(updateWidget(widget));
 };
 
 export const getWidgetById = (widgetId: string, widgets: Widget[]) => {

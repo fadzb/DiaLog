@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import { CarbScreen } from '../screens/CarbScreen';
 import LogActScreen from '../screens/LogActScreen';
-import { ViewActScreen } from '../screens/ViewActScreen';
+import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
-import { ProfileScreen } from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 export default createBottomTabNavigator(
   {
@@ -20,10 +20,10 @@ export default createBottomTabNavigator(
         tabBarLabel: 'Food',
       },
     },
+    //TODO: Use onPress to ensure the dateTimePicker updates upon navigate
     LogAct: {
       screen: LogActScreen,
       navigationOptions: {
-        header: null,
         tabBarLabel: 'Add Log',
       },
     },
