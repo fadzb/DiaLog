@@ -3,7 +3,7 @@ import { View, Card, CardItem, Left, Thumbnail, Text, Body } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
-import { recentLogsWidget, Widget } from '../typings/Widget';
+import { Widget } from '../typings/Widget';
 import { dispatchUpdateWidget, getWidgetById } from '../utils/WidgetUtils';
 import { connect } from 'react-redux';
 

@@ -1,4 +1,4 @@
-import { Widget, tempWidget } from '../typings/Widget';
+import { Widget } from '../typings/Widget';
 import store from '../store';
 import { updateWidget } from '../actions/actions';
 
