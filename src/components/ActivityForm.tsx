@@ -85,7 +85,6 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
   //TODO: Format time more appropriately
 
   render() {
-    console.log('rendered');
     return (
       <Form style={styles.form}>
         <DateTimeInput updateDateTime={this.handleUpdateDateTime} />
