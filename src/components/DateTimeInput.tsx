@@ -6,6 +6,7 @@ import { styles } from '../styles/LogActScreen';
 import { DateUtils } from '../utils/DateUtils';
 
 interface DateTimeInputProps {
+  currentTime: any;
   updateDateTime: (dateTimeInput: any) => void;
 }
 
@@ -17,19 +18,19 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
   }
 
   state = {
-    dateTime: new Date(),
+    dateTime: this.props.currentTime,
     show: false,
   };
 
-  componentDidMount = () => {
-    const todaysDateTime = DateUtils.getTodaysDateTime();
+  // componentDidMount = () => {
+  //   const todaysDateTime = DateUtils.getTodaysDateTime();
 
-    this.setState({
-      dateTime: todaysDateTime,
-    });
+  //   this.setState({
+  //     dateTime: todaysDateTime,
+  //   });
 
-    this.props.updateDateTime(todaysDateTime);
-  };
+  //   this.props.updateDateTime(todaysDateTime);
+  // };
 
   setDateTime = (event: any, dateTime: any) => {
     if (dateTime) {
@@ -52,6 +53,13 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     this.setState({
       show: false,
     });
+  };
+
+  // Update time if parent component updated in meantime
+  componentDidUpdate = (prevProps: any) => {
+    if (prevProps.currentTime != this.props.currentTime) {
+      this.setState({ dateTime: this.props.currentTime });
+    }
   };
 
   render() {
