@@ -50,6 +50,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.props.navigation.navigate('Train', {});
   };
 
+  handleChatNav = () => {
+    this.props.navigation.navigate('Chat', {});
+  };
+
   handleApiTestNav = () => {
     this.props.navigation.navigate('ApiTest', {});
   };
@@ -71,7 +75,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
 
-    if (this.state.DASHBOARD_TOGGLED) {
+    if (!this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
           {/* Always render Overview Widget */}
@@ -131,6 +135,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
           <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
             {getIcon('train')}
             <Text style={styles.itemText}>Training Modules</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleChatNav} style={styles.item}>
+            {getIcon('chat')}
+            <Text style={styles.itemText}>Chat</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleProfileNav} style={styles.item}>
             {getIcon('profile')}

@@ -15,6 +15,7 @@ const Icons: any = {
   activity: { name: 'activity', type: 'Feather' },
   profile: { name: 'person-outline', type: 'MaterialIcons' },
   train: { name: 'open-book', type: 'Entypo' },
+  chat: { name: 'wechat', type: 'AntDesign' },
 };
 
 const getIconJSX = (icon: icon) => {
