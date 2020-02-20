@@ -8,24 +8,28 @@ import { FoodItem } from '../typings/FoodItem';
 interface ActivityFormProps {
   handleSubmit: () => void;
   item: FoodItem;
+  currentTime: any;
 
   //Redux dispatch actions
   addLog: (log: Log) => void;
 }
 
 export class ActivityForm extends React.Component<ActivityFormProps> {
-  // If coming from Estimate CHO screen, set initial state for CHO
-  cho: number = (this.props.item && Number(this.props.item.cho)) || 0;
-
   constructor(props: any) {
     super(props);
   }
 
+  textInputs = {
+    glucoseRef: null,
+    insulinRef: null,
+    choRef: null,
+  };
+
   state = {
-    dateTimeInput: new Date(),
+    dateTimeInput: this.props.currentTime,
     glucoseInput: 0,
     insulinInput: 0,
-    choInput: this.cho,
+    choInput: 0,
   };
 
   handleUpdateDateTime = (dateTimeInput: any) => {
@@ -52,6 +56,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     });
   };
 
+  // Submit inputs as log then clear form
   handleSubmit = () => {
     const { dateTimeInput, glucoseInput, insulinInput, choInput } = this.state;
 
@@ -62,12 +67,11 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       cho: choInput,
     };
 
-    // Store this log
-    // aysncStoreItem(log.time.toString(), log);
-
-    // TODO: Persist Redux state (if not uncomment asyncStoreItem)
     // Dispatch redux action
     this.props.addLog(log);
+
+    // Clear Inputs
+    this.clearInputs();
 
     // Record Submitted: go to view activity screen
     this.props.handleSubmit();
@@ -79,17 +83,40 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     }
   };
 
+  clearInputs = () => {
+    this.textInputs.glucoseRef._root.clear();
+    this.textInputs.insulinRef._root.clear();
+    this.textInputs.choRef._root.clear();
+    this.setState({ dateTimeInput: new Date(), glucoseInput: 0, insulinInput: 0, choInput: 0 });
+  };
+
   //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
   //TODO: Add a Clear button
   //TODO: Allow user to add a note
   //TODO: Format time more appropriately
 
+  // Componenet Updated: May have moved off and back onto screen
+  componentDidUpdate(prevProps: any) {
+    if (prevProps.item !== this.props.item) {
+      this.props.item && this.setState({ choInput: Number(this.props.item.cho) });
+    }
+    if (prevProps.currentTime !== this.props.currentTime) {
+      this.setState({ dateTimeInput: this.props.currentTime });
+    }
+  }
+
   render() {
     return (
       <Form style={styles.form}>
-        <DateTimeInput updateDateTime={this.handleUpdateDateTime} />
+        <DateTimeInput
+          currentTime={this.state.dateTimeInput}
+          updateDateTime={this.handleUpdateDateTime}
+        />
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.glucoseRef = input;
+            }}
             placeholder="Enter Glucose"
             onChangeText={this.handleGlucoseChange}
             keyboardType={'numeric'}
@@ -100,6 +127,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.insulinRef = input;
+            }}
             placeholder="Enter Insulin"
             onChangeText={this.handleInsulinChange}
             keyboardType={'numeric'}
@@ -110,6 +140,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.choRef = input;
+            }}
             placeholder={this.getName() || 'Enter CHO'}
             onChangeText={this.handleChoChange}
             keyboardType={'numeric'}

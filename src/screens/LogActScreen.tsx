@@ -5,6 +5,7 @@ import { ActivityForm } from '../components/ActivityForm';
 import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
+import { DateUtils } from '../utils/DateUtils';
 
 interface LogActScreenProps {
   navigation: any;
@@ -22,17 +23,29 @@ class LogActScreen extends React.Component<LogActScreenProps> {
     // Trying to subscibe component to navigation state
     this.navigationWillFocusListener = props.navigation.addListener('willFocus', () => {
       // do something like this.setState() to update your view
-      console.log('Focused!');
+      this.handleFocus();
     });
   }
 
   // get food item from navigation prop state
   state = {
-    item: this.props.navigation.getParam('item'),
+    currentTime: new Date(),
+    item: {},
   };
 
   handleFormSubmit = () => {
     this.props.navigation.navigate('ViewAct');
+  };
+
+  // Whenever Screen is navigated to
+  handleFocus = () => {
+    // Set the state to the nav query param
+    this.setState({
+      currentTime: DateUtils.getTodaysDateTime(),
+      item: this.props.navigation.getParam('item'),
+    });
+    // Clear Params
+    this.props.navigation.setParams({ item: null });
   };
 
   // Remove listener
@@ -48,6 +61,7 @@ class LogActScreen extends React.Component<LogActScreenProps> {
         </Header>
         <Content style={styles.contentContainer}>
           <ActivityForm
+            currentTime={this.state.currentTime}
             item={this.state.item}
             handleSubmit={this.handleFormSubmit}
             addLog={this.props.addLog}

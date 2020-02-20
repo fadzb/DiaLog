@@ -22,7 +22,9 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   state = {};
 
   handleGoBack = () => {
-    this.props.navigation.goBack();
+    //FIXME: Not working: this.props.navigation.goBack();
+    // Temp fix
+    this.props.navigation.navigate('LogAct', {});
   };
 
   render() {
