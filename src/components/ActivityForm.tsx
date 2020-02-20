@@ -19,6 +19,12 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     super(props);
   }
 
+  textInputs = {
+    glucoseRef: null,
+    insulinRef: null,
+    choRef: null,
+  };
+
   state = {
     dateTimeInput: this.props.currentTime,
     glucoseInput: 0,
@@ -77,9 +83,10 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     }
   };
 
-  //TODO: Only clears badges, not text input values
   clearInputs = () => {
-    console.log('cleared');
+    this.textInputs.glucoseRef._root.clear();
+    this.textInputs.insulinRef._root.clear();
+    this.textInputs.choRef._root.clear();
     this.setState({ dateTimeInput: new Date(), glucoseInput: 0, insulinInput: 0, choInput: 0 });
   };
 
@@ -89,7 +96,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
   //TODO: Format time more appropriately
 
   // Componenet Updated: May have moved off and back onto screen
-  componentDidUpdate(prevProps: any, prevState: any) {
+  componentDidUpdate(prevProps: any) {
     if (prevProps.item !== this.props.item) {
       this.props.item && this.setState({ choInput: Number(this.props.item.cho) });
     }
@@ -99,8 +106,6 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
   }
 
   render() {
-    console.log(this.state.glucoseInput);
-
     return (
       <Form style={styles.form}>
         <DateTimeInput
@@ -109,6 +114,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         />
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.glucoseRef = input;
+            }}
             placeholder="Enter Glucose"
             onChangeText={this.handleGlucoseChange}
             keyboardType={'numeric'}
@@ -119,6 +127,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.insulinRef = input;
+            }}
             placeholder="Enter Insulin"
             onChangeText={this.handleInsulinChange}
             keyboardType={'numeric'}
@@ -129,6 +140,9 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Item>
         <Item rounded style={styles.inputPills}>
           <Input
+            ref={input => {
+              this.textInputs.choRef = input;
+            }}
             placeholder={this.getName() || 'Enter CHO'}
             onChangeText={this.handleChoChange}
             keyboardType={'numeric'}

@@ -22,16 +22,6 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     show: false,
   };
 
-  // componentDidMount = () => {
-  //   const todaysDateTime = DateUtils.getTodaysDateTime();
-
-  //   this.setState({
-  //     dateTime: todaysDateTime,
-  //   });
-
-  //   this.props.updateDateTime(todaysDateTime);
-  // };
-
   setDateTime = (event: any, dateTime: any) => {
     if (dateTime) {
       this.setState({
