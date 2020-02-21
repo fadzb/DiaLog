@@ -7,7 +7,7 @@ import Modal from 'react-native-modal';
 interface PromptChannelKeyProps {
   navigation: any;
 
-  handleModalClose: () => void;
+  handleValidKey: (channelKey: string) => void;
 }
 
 export default class PromptChannelKey extends React.Component<PromptChannelKeyProps> {
@@ -46,6 +46,9 @@ export default class PromptChannelKey extends React.Component<PromptChannelKeyPr
       Alert.alert('Success');
       this.closeModal();
     }
+
+    // Callback to Chat Screen to confirm key
+    this.props.handleValidKey(key);
   };
 
   render() {

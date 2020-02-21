@@ -1,4 +1,4 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS } from '../actions/types';
+import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS, ADD_CHANNEL_KEY } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -6,6 +6,7 @@ const initialState: any = {
   name: '',
   logs: [],
   widgets: [],
+  channelKey: '',
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -57,6 +58,16 @@ const rootReducer = (state = initialState, action: any) => {
     // Clear Logs in memory (persisted logs will remain)
     case CLEAR_LOGS: {
       return { ...state, logs: initialState.logs };
+    }
+
+    // Add a new channel key
+    case ADD_CHANNEL_KEY: {
+      // New key
+      const newKey = action.payload;
+
+      console.log(newKey);
+
+      return { ...state, channelKey: newKey };
     }
 
     //Default
