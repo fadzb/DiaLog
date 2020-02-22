@@ -4,7 +4,16 @@ import { connect } from 'react-redux';
 import PromptChannelKey from '../components/PromptChannelKey';
 import { addChannelKey } from '../actions/actions';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { getMessages } from '../utils/FirebaseDB/FirestoreUtils';
+import {
+  getMessages,
+  sendMessage,
+  groupChatsRef,
+  getChannelRef,
+  unsubscribe,
+  subscribe,
+} from '../utils/FirebaseDB/FirestoreUtils';
+import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
+import { getUserFromAuth } from '../utils/ChatUtils';
 
 interface ChatScreenProps {
   navigation: any;
@@ -21,6 +30,7 @@ class ChatScreen extends React.Component<ChatScreenProps> {
 
   state = {
     messages: [],
+    user: {},
   };
 
   // If no ChannelKey prompt user and callback to this fn with new key
@@ -29,17 +39,37 @@ class ChatScreen extends React.Component<ChatScreenProps> {
   };
 
   onSend = (messages: any) => {
-    console.log('Should send message');
+    const message = messages[0];
+    const channelKey = 'DAFNE123'; // Hard-coding, get from redux-state in future
+
+    sendMessage(channelKey, message);
   };
 
   componentDidMount() {
     const channelKey = 'DAFNE123'; // Hard-coding, get from redux-state in future
+    subscribe(channelKey); // Subsribe to new messages
 
     // Get the previous messages
-    getMessages(channelKey).then(messages => console.log(messages));
+    getMessages(channelKey).then(messages => this.setState({ messages: messages }));
   }
 
-  // Upon render, retreive messages from db
+  // Get User object for GiftedChat
+  getUser = () => {
+    // Get the current user auth
+    const userAuth = getCurrentUser();
+
+    // Create a user object from it
+    const user = getUserFromAuth(userAuth);
+
+    return user;
+  };
+
+  // Unsubscribe to messages (save bandwidth)
+  componentWillUnmount = () => {
+    const channelKey = 'DAFNE123'; //hard-coding
+
+    unsubscribe(channelKey);
+  };
 
   render() {
     return (
@@ -51,9 +81,7 @@ class ChatScreen extends React.Component<ChatScreenProps> {
           <GiftedChat
             messages={this.state.messages}
             onSend={messages => this.onSend(messages)}
-            user={{
-              _id: 1,
-            }}
+            user={this.getUser()}
           />
         )}
       </View>

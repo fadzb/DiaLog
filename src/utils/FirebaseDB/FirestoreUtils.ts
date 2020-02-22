@@ -1,15 +1,47 @@
 import firestore from '@react-native-firebase/firestore';
 
 const ref = firestore().collection('modules');
+const groupChatsSubRef = 'Messages'; // For groupChats collection
+
+// get ref to groupChats collection
+export const groupChatsRef = firestore().collection('groupChats');
+
+// get a ref to specific channel
+export const getChannelRef = (channelKey: string) => {
+  return groupChatsRef.doc(channelKey).collection(groupChatsSubRef);
+};
+
+// Attach a listener to db updates (new messages)
+export const subscribe = (channelKey: string) => {
+  const channelRef = getChannelRef(channelKey);
+
+  channelRef.onSnapshot(querySnapshot => {
+    console.log('new message');
+  });
+};
+
+// Detach listener
+export const unsubscribe = (channelKey: string) => {
+  const channelRef = getChannelRef(channelKey);
+
+  channelRef.onSnapshot(() => {});
+};
+
+// Sends a message to groupChannel
+export const sendMessage = (channelKey: string, message: any) => {
+  groupChatsRef
+    .doc(channelKey)
+    .collection(groupChatsSubRef)
+    .add(message)
+    .then(docRef => console.log('message sent with id: ' + docRef.id))
+    .catch(error => console.log('Error sending message: ', error));
+};
 
 // Returns a promise which resolves to list of messages
 export const getMessages = (channelKey: string) => {
-  const collection = firestore().collection('groupChats');
-  const subCollection = 'Messages';
-
-  return collection
+  return groupChatsRef
     .doc(channelKey)
-    .collection(subCollection)
+    .collection(groupChatsSubRef)
     .get()
     .then(querySnapshot => handleSnapshot(querySnapshot))
     .catch(error => console.log('Error getting documents: ', error));
