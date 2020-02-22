@@ -2,6 +2,19 @@ import firestore from '@react-native-firebase/firestore';
 
 const ref = firestore().collection('modules');
 
+// Returns a promise which resolves to list of messages
+export const getMessages = (channelKey: string) => {
+  const collection = firestore().collection('groupChats');
+  const subCollection = 'Messages';
+
+  return collection
+    .doc(channelKey)
+    .collection(subCollection)
+    .get()
+    .then(querySnapshot => handleSnapshot(querySnapshot))
+    .catch(error => console.log('Error getting documents: ', error));
+};
+
 // Returns a promise which resolves to a list of JS objects (modules)
 export const getModules = (moduleGroup: string) => {
   return ref
