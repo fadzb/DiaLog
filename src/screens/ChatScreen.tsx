@@ -33,24 +33,36 @@ class ChatScreen extends React.Component<ChatScreenProps> {
     user: {},
   };
 
+  setMessages = (messages: any) => {
+    this.setState({ messages: messages });
+  };
+
   // If no ChannelKey prompt user and callback to this fn with new key
   handleNewKey = (key: string) => {
     this.props.addChannelKey(key);
+
+    subscribe(key, this.handleNewMessages);
   };
 
   onSend = (messages: any) => {
     const message = messages[0];
-    const channelKey = 'DAFNE123'; // Hard-coding, get from redux-state in future
 
-    sendMessage(channelKey, message);
+    console.log(this.props.channelKey);
+
+    sendMessage(this.props.channelKey, message);
+  };
+
+  handleNewMessages = (messages: any) => {
+    this.setMessages(messages);
   };
 
   componentDidMount() {
-    const channelKey = 'DAFNE123'; // Hard-coding, get from redux-state in future
-    subscribe(channelKey); // Subsribe to new messages
+    if (this.props.channelKey) {
+      subscribe(this.props.channelKey, this.handleNewMessages);
+    }
 
     // Get the previous messages
-    getMessages(channelKey).then(messages => this.setState({ messages: messages }));
+    getMessages(this.props.channelKey).then(messages => this.setMessages(messages));
   }
 
   // Get User object for GiftedChat
@@ -66,9 +78,7 @@ class ChatScreen extends React.Component<ChatScreenProps> {
 
   // Unsubscribe to messages (save bandwidth)
   componentWillUnmount = () => {
-    const channelKey = 'DAFNE123'; //hard-coding
-
-    unsubscribe(channelKey);
+    unsubscribe(this.props.channelKey);
   };
 
   render() {

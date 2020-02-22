@@ -11,13 +11,11 @@ export const getChannelRef = (channelKey: string) => {
   return groupChatsRef.doc(channelKey).collection(groupChatsSubRef);
 };
 
-// Attach a listener to db updates (new messages)
-export const subscribe = (channelKey: string) => {
+// Attach a listener to db updates (new messages), takes a callback fn
+export const subscribe = (channelKey: string, updateMessages: (messages: any) => void) => {
   const channelRef = getChannelRef(channelKey);
 
-  channelRef.onSnapshot(querySnapshot => {
-    console.log('new message');
-  });
+  channelRef.onSnapshot(querySnapshot => updateMessages(handleSnapshot(querySnapshot)));
 };
 
 // Detach listener
