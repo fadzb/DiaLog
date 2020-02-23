@@ -65,8 +65,6 @@ const rootReducer = (state = initialState, action: any) => {
       // New key
       const newKey = action.payload;
 
-      console.log(newKey);
-
       return { ...state, channelKey: newKey };
     }
 
