@@ -14,6 +14,7 @@ import {
 } from '../utils/FirebaseDB/FirestoreUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { getUserFromAuth } from '../utils/ChatUtils';
+import { Message } from '../typings/Message';
 
 interface ChatScreenProps {
   navigation: any;
@@ -33,7 +34,7 @@ class ChatScreen extends React.Component<ChatScreenProps> {
     user: {},
   };
 
-  setMessages = (messages: any) => {
+  setMessages = (messages: Message[]) => {
     this.setState({ messages: messages });
   };
 
@@ -44,15 +45,13 @@ class ChatScreen extends React.Component<ChatScreenProps> {
     subscribe(key, this.handleNewMessages);
   };
 
-  onSend = (messages: any) => {
+  onSend = (messages: Message[]) => {
     const message = messages[0];
-
-    console.log(this.props.channelKey);
 
     sendMessage(this.props.channelKey, message);
   };
 
-  handleNewMessages = (messages: any) => {
+  handleNewMessages = (messages: Message[]) => {
     this.setMessages(messages);
   };
 

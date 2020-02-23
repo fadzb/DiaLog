@@ -1,9 +1,9 @@
 import { User } from './User';
 
 export interface Message {
-  id: string;
+  _id: string | number;
   text: string;
-  timestamp: Date;
+  createdAt: Date | number;
   user: User;
 }
 

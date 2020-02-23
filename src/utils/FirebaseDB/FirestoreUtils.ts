@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import { Message } from '../../typings/Message';
 
 const ref = firestore().collection('modules');
 const groupChatsSubRef = 'Messages'; // For groupChats collection
@@ -15,7 +16,9 @@ export const getChannelRef = (channelKey: string) => {
 export const subscribe = (channelKey: string, updateMessages: (messages: any) => void) => {
   const channelRef = getChannelRef(channelKey);
 
-  channelRef.onSnapshot(querySnapshot => updateMessages(handleSnapshot(querySnapshot)));
+  channelRef.onSnapshot(querySnapshot =>
+    updateMessages(handleMessagesSnapshot(querySnapshot, false)),
+  );
 };
 
 // Detach listener
@@ -26,7 +29,7 @@ export const unsubscribe = (channelKey: string) => {
 };
 
 // Sends a message to groupChannel
-export const sendMessage = (channelKey: string, message: any) => {
+export const sendMessage = (channelKey: string, message: Message) => {
   groupChatsRef
     .doc(channelKey)
     .collection(groupChatsSubRef)
@@ -40,8 +43,9 @@ export const getMessages = (channelKey: string) => {
   return groupChatsRef
     .doc(channelKey)
     .collection(groupChatsSubRef)
+    .orderBy('createdAt', 'desc')
     .get()
-    .then(querySnapshot => handleSnapshot(querySnapshot))
+    .then(querySnapshot => handleMessagesSnapshot(querySnapshot, true))
     .catch(error => console.log('Error getting documents: ', error));
 };
 
@@ -54,14 +58,35 @@ export const getModules = (moduleGroup: string) => {
     .catch(error => console.log('Error getting documents: ', error));
 };
 
-// Returns a module objects as a list
+// Handle snapshot and parse to Message object list
+const handleMessagesSnapshot = (querySnapshot: any, sorted: boolean) => {
+  const messages: Message[] = [];
+
+  querySnapshot.forEach((doc: any) => {
+    const message: Message = {
+      _id: doc.data()._id,
+      text: doc.data().text,
+      createdAt: doc.data().createdAt.toDate(),
+      user: doc.data().user,
+    };
+
+    messages.push(message);
+  });
+
+  // Sort
+  if (!sorted) {
+    messages.sort((message1: any, message2: any) => {
+      return message2.createdAt - message1.createdAt;
+    });
+  }
+
+  return messages;
+};
+
+// Returns objects generically as a list
 const handleSnapshot = (querySnapshot: any) => {
   const dataList: any = [];
   querySnapshot.forEach((doc: any) => {
-    // Uncomment for testing
-    // console.log(doc.id, ' => ', doc.data());
-
-    //doc.data() returns 'module' as a JavaScript Object
     const data = doc.data();
 
     dataList.push(data);
