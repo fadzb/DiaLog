@@ -5,6 +5,7 @@ import { APITestScreen } from '../screens/APITestScreen';
 import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import MainTabNavigator from './MainTabNavigator';
+import ChatScreen from '../screens/ChatScreen';
 
 //TODO: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
 
@@ -23,6 +24,7 @@ export default (initialRoute: any) =>
       ApiTest: APITestScreen,
 
       // At the moment, these screens will not show tab bar on bottom: need to define custom componenet
+      Chat: ChatScreen,
       Train: TrainScreen,
       Mod: ModuleScreen,
     },

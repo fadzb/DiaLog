@@ -1,4 +1,4 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS } from './types';
+import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS, ADD_CHANNEL_KEY } from './types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -26,5 +26,12 @@ export const updateWidget = (widget: Widget) => {
 export const clearLogs = () => {
   return {
     type: CLEAR_LOGS,
+  };
+};
+
+export const addChannelKey = (key: string) => {
+  return {
+    type: ADD_CHANNEL_KEY,
+    payload: key,
   };
 };
