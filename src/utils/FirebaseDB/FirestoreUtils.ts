@@ -12,6 +12,21 @@ export const getChannelRef = (channelKey: string) => {
   return groupChatsRef.doc(channelKey).collection(groupChatsSubRef);
 };
 
+// check if channel key is valid
+export const validateKey = async (channelKey: string) => {
+  const docRef = groupChatsRef.doc(channelKey);
+
+  return docRef
+    .get()
+    .then(docSnapshot => {
+      if (docSnapshot.exists) {
+        return true;
+      }
+      return false;
+    })
+    .catch(error => console.log(error));
+};
+
 // Attach a listener to db updates (new messages), takes a callback fn
 export const subscribe = (channelKey: string, updateMessages: (messages: any) => void) => {
   const channelRef = getChannelRef(channelKey);

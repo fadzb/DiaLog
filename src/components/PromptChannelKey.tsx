@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, Alert } from 'react-native';
 import { View, Text, Button, Form, Item, Label, Input } from 'native-base';
 import { styles } from '../styles/ChatScreen';
 import Modal from 'react-native-modal';
+import { validateKey } from '../utils/FirebaseDB/FirestoreUtils';
 
 interface PromptChannelKeyProps {
   navigation: any;
@@ -36,19 +37,21 @@ export default class PromptChannelKey extends React.Component<PromptChannelKeyPr
     this.props.navigation.goBack();
   };
 
-  handleConfirm = () => {
+  handleConfirm = async () => {
     const key = this.state.channelKeyInput;
 
     // Validate key
-    const keyValid = true;
+    const keyValid = await validateKey(key);
 
     if (keyValid) {
-      Alert.alert('Success');
+      Alert.alert('Entering Channel: ' + key);
       this.closeModal();
-    }
 
-    // Callback to Chat Screen to confirm key
-    this.props.handleValidKey(key);
+      // Callback to Chat Screen to confirm key
+      this.props.handleValidKey(key);
+    } else {
+      Alert.alert('Invalid Key');
+    }
   };
 
   render() {
