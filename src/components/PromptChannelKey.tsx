@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, TouchableOpacity, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { View, Text, Button, Form, Item, Label, Input } from 'native-base';
 import { styles } from '../styles/ChatScreen';
 import Modal from 'react-native-modal';

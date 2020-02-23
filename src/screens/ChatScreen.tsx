@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'native-base';
+import { View } from 'native-base';
 import { connect } from 'react-redux';
 import PromptChannelKey from '../components/PromptChannelKey';
 import { addChannelKey } from '../actions/actions';
@@ -7,8 +7,6 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import {
   getMessages,
   sendMessage,
-  groupChatsRef,
-  getChannelRef,
   unsubscribe,
   subscribe,
 } from '../utils/FirebaseDB/FirestoreUtils';
