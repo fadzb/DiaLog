@@ -3,12 +3,13 @@ import { createAppContainer } from 'react-navigation';
 import { View } from 'native-base';
 import { firebase } from '@react-native-firebase/auth';
 import { TabNavigator } from './navigation/MainTabNavigator';
+import { AppStack } from './navigation/MainStackNavigator';
 
 // TODO: May need to add async functions to wait for fonts for Native Base: https://github.com/GeekyAnts/NativeBase
 
 const NavContainer = ({ initialRoute }: any) => {
   // return React.createElement(createAppContainer(MainStackNavigator(initialRoute)));
-  return React.createElement(createAppContainer(TabNavigator(initialRoute)));
+  return React.createElement(createAppContainer(AppStack(initialRoute)));
 };
 
 const AppContainer = () => {

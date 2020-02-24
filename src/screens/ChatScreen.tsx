@@ -13,6 +13,7 @@ import {
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { getUserFromAuth } from '../utils/ChatUtils';
 import { Message } from '../typings/Message';
+import { Platform, KeyboardAvoidingView } from 'react-native';
 
 interface ChatScreenProps {
   navigation: any;

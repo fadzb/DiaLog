@@ -11,9 +11,9 @@ export const TabNavigator = (initialRoute: any) =>
   createBottomTabNavigator(
     {
       Home: {
-        screen: AppStack(initialRoute),
+        screen: HomeScreen,
         navigationOptions: {
-          // header: null,
+          tabBarLabel: 'Home',
         },
       },
       Carb: {
@@ -37,7 +37,9 @@ export const TabNavigator = (initialRoute: any) =>
       },
       Profile: {
         screen: ProfileScreen,
-        navigationOptions: {},
+        navigationOptions: {
+          tabBarLabel: 'Profile',
+        },
       },
     },
     {
@@ -70,6 +72,7 @@ export const TabNavigator = (initialRoute: any) =>
         },
         // tab bar options can go here
         title: 'Healthy App',
+        headerMode: 'screen',
         headerStyle: {
           backgroundColor: '#f4511e',
           borderBottomWidth: 0,
