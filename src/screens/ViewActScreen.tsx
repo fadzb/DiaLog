@@ -21,9 +21,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
 
   state = {};
 
-  handleGoBack = () => {
-    //FIXME: Not working: this.props.navigation.goBack();
-    // Temp fix
+  handleAddNewLog = () => {
     this.props.navigation.navigate('LogAct', {});
   };
 
@@ -35,8 +33,8 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
         </Header>
         <Content style={styles.contentContainer}>
           <ActivityChart preview={false} logs={this.props.logs} />
-          <Button onPress={this.handleGoBack}>
-            <Text>Go back</Text>
+          <Button onPress={this.handleAddNewLog}>
+            <Text>Add New Log</Text>
           </Button>
         </Content>
       </Container>

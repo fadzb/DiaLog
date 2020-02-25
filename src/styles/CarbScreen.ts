@@ -58,6 +58,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
+  row: { flex: 0, flexDirection: 'row', justifyContent: 'space-between' },
 
   //Camera styles
   preview: {

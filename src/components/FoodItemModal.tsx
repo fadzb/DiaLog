@@ -47,14 +47,14 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
         <View style={{}}>
           <Text style={styles.text}>{this.props.item.name}</Text>
           <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
-          <Text>CHO: {this.props.item.cho}g</Text>
-          <View>
-            <Button primary style={{ margin: 10, justifyContent: 'center' }} onPress={this.addLog}>
+          <Text>Carbohydrate: {this.props.item.cho}g</Text>
+          <View style={{ flex: 0, flexDirection: 'row' }}>
+            <Button onPress={this.addLog}>
               <Text>Add Log</Text>
             </Button>
-            <TouchableOpacity style={styles.button} onPress={this.handleClose}>
-              <Text>Back to Search</Text>
-            </TouchableOpacity>
+            <Button warning onPress={this.handleClose}>
+              <Text>Cancel</Text>
+            </Button>
           </View>
         </View>
       </Modal>
