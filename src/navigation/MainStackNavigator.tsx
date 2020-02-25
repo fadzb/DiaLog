@@ -6,16 +6,15 @@ import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { TabNavigator } from './MainTabNavigator';
 import ChatScreen from '../screens/ChatScreen';
-import HomeScreen from '../screens/HomeScreen';
 
-//TODO: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
+//FIXME: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
 
 // Configure routes statically
 export const AppStack = (initialRoute: any) =>
   createStackNavigator(
     {
       Home: {
-        screen: TabNavigator(initialRoute),
+        screen: TabNavigator(),
         navigationOptions: {
           headerLeft: null,
         },

@@ -5,9 +5,8 @@ import LogActScreen from '../screens/LogActScreen';
 import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
 import ProfileScreen from '../screens/ProfileScreen';
-import { AppStack } from './MainStackNavigator';
 
-export const TabNavigator = (initialRoute: any) =>
+export const TabNavigator = () =>
   createBottomTabNavigator(
     {
       Home: {
@@ -22,7 +21,6 @@ export const TabNavigator = (initialRoute: any) =>
           tabBarLabel: 'Food',
         },
       },
-      //TODO: Use onPress to ensure the dateTimePicker updates upon navigate
       LogAct: {
         screen: LogActScreen,
         navigationOptions: {
