@@ -4,17 +4,17 @@ import { TrainScreen } from '../screens/TrainScreen';
 import { APITestScreen } from '../screens/APITestScreen';
 import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import MainTabNavigator from './MainTabNavigator';
+import { TabNavigator } from './MainTabNavigator';
 import ChatScreen from '../screens/ChatScreen';
 
-//TODO: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
+//FIXME: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
 
 // Configure routes statically
-export default (initialRoute: any) =>
+export const AppStack = (initialRoute: any) =>
   createStackNavigator(
     {
       Home: {
-        screen: MainTabNavigator,
+        screen: TabNavigator(),
         navigationOptions: {
           headerLeft: null,
         },
@@ -22,8 +22,6 @@ export default (initialRoute: any) =>
       Reg: RegisterScreen,
       Login: LoginScreen,
       ApiTest: APITestScreen,
-
-      // At the moment, these screens will not show tab bar on bottom: need to define custom componenet
       Chat: ChatScreen,
       Train: TrainScreen,
       Mod: ModuleScreen,
