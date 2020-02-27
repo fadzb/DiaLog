@@ -1,5 +1,6 @@
 import { colors } from '../colors';
 import { StyleSheet } from 'react-native';
+import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 
 export const styles = StyleSheet.create({
   container: {
@@ -53,12 +54,15 @@ export const styles = StyleSheet.create({
     top: 100,
     backgroundColor: 'white',
     padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderRadius: 10,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
-  row: { flex: 0, flexDirection: 'row', justifyContent: 'space-between' },
+
+  // Utility
+  row: { flex: 0, flexDirection: 'row' },
+  rowSpaced: { flex: 0, flexDirection: 'row', justifyContent: 'space-between' },
 
   //Camera styles
   preview: {
