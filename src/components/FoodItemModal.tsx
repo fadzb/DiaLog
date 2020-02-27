@@ -40,7 +40,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
   render() {
     return (
       <Modal
-        onBackdropPress={() => console.log('wow')}
+        onBackdropPress={this.handleClose}
         style={styles.modalContent}
         isVisible={this.state.modalVisible}
         animationIn={'slideInLeft'}
