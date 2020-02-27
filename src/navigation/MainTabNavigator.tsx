@@ -85,22 +85,17 @@ TabNavigator.navigationOptions = ({ navigation }: any) => {
     key: null,
   });
 
-  const backBehaviour = 'history';
-
   const headerLeft = (
     <HeaderBackButton
-      // title={'hi'}
       backTitleVisible={true}
       onPress={() => {
-        // navigation.dispatch(backAction);
         navigation.goBack(null);
       }}
     />
   );
 
   return {
-    headerTitle,
-    headerLeft,
-    backBehaviour,
+    // headerTitle, //Uncomment to show Screen names in header
+    // headerLeft, //Uncomment for headerLeft button
   };
 };
