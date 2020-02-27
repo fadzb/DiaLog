@@ -20,7 +20,6 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
 
   state = {
     modalVisible: false,
-    item: this.props.item,
   };
 
   //send post request and show new screen
@@ -34,18 +33,23 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     promise
       .then(responseJson => {
         detailedItem = parseMoreDetails(responseJson);
-        this.openModalWithItem(detailedItem);
+        // Mutate additional properties for item
+        item.cho = detailedItem.cho;
+        item.servingUnit = detailedItem.servingUnit;
+        item.servingWeight = detailedItem.servingWeight;
+        // Open modal
+        this.openModal();
       })
       .catch(error => console.log('error', error));
   };
 
-  openModalWithItem = (item: FoodItem) => {
+  openModal = () => {
     //If modal has already been opened before, update its state
     if (this.modalRef) {
-      this.modalRef.setState({ modalVisible: true, item: item });
+      this.modalRef.setState({ modalVisible: true });
     }
 
-    this.setState({ modalVisible: true, item: item });
+    this.setState({ modalVisible: true });
   };
 
   handleModalClose = () => {
@@ -58,7 +62,7 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
         {this.state.modalVisible && (
           <FoodItemModal
             navigation={this.props.navigation}
-            item={this.state.item}
+            item={this.props.item}
             handleModalClose={this.handleModalClose}
             ref={ref => (this.modalRef = ref)}
           />

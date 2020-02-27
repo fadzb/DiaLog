@@ -2,7 +2,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
-const API_ENABLED = false;
+const API_ENABLED = true;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export function parseMoreDetails(responseJSON: any) {
     name: parsedJson.foods[0].food_name,
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
-    servingUnit: parsedJson.foods[0].serving_unit,
+    servingUnit: parsedJson.foods[0].serving_qty + ' ' + parsedJson.foods[0].serving_unit,
     servingWeight: parsedJson.foods[0].serving_weight_grams,
   };
 
