@@ -4,6 +4,8 @@ import { Item, Input, Button, Text, Form, Badge } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
+import { TouchableOpacity } from 'react-native';
+import { ActivityInput } from './ActivityInput';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
@@ -30,6 +32,11 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     glucoseInput: 0,
     insulinInput: 0,
     choInput: 0,
+
+    // Toggle inputs
+    addGlucose: false,
+    addInsulin: false,
+    addCho: false,
   };
 
   handleUpdateDateTime = (dateTimeInput: any) => {
@@ -112,19 +119,32 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
           currentTime={this.state.dateTimeInput}
           updateDateTime={this.handleUpdateDateTime}
         />
-        <Item rounded style={styles.inputPills}>
-          <Input
-            ref={input => {
-              this.textInputs.glucoseRef = input;
-            }}
-            placeholder="Enter Glucose"
-            onChangeText={this.handleGlucoseChange}
-            keyboardType={'numeric'}
-          />
-          <Badge success style={styles.badge}>
-            <Text>{this.state.glucoseInput} mmo/l</Text>
-          </Badge>
-        </Item>
+
+        {/* TODO: Refactor: export component to ActivityInput */}
+        {/* <ActivityInput placeholder="Enter Glucose" badgeType="glucose" /> */}
+
+        {this.state.addGlucose ? (
+          <Item rounded style={styles.inputPills}>
+            <Input
+              ref={input => {
+                this.textInputs.glucoseRef = input;
+              }}
+              placeholder="Enter Glucose"
+              onChangeText={this.handleGlucoseChange}
+              keyboardType={'numeric'}
+            />
+            <Badge success style={styles.badge}>
+              <Text>{this.state.glucoseInput} mmo/l</Text>
+            </Badge>
+          </Item>
+        ) : (
+          <TouchableOpacity onPress={() => this.setState({ addGlucose: true })}>
+            <Badge success style={{ height: 30, width: 200 }}>
+              <Text>Add Glucose</Text>
+            </Badge>
+          </TouchableOpacity>
+        )}
+
         <Item rounded style={styles.inputPills}>
           <Input
             ref={input => {
