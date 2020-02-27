@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, Image, TouchableOpacity } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
-import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
+import { requestFoodDetails, parseMoreDetails } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 
 interface FoodItemContainerProps {
@@ -20,29 +20,32 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
 
   state = {
     modalVisible: false,
+    item: this.props.item,
   };
 
   //send post request and show new screen
   handleClick = () => {
     const { item } = this.props;
 
+    let detailedItem: FoodItem;
+
     const promise = requestFoodDetails(item.name);
 
     promise
       .then(responseJson => {
-        item.cho = parseFoodItemCHO(responseJson);
-        this.openModal();
+        detailedItem = parseMoreDetails(responseJson);
+        this.openModalWithItem(detailedItem);
       })
       .catch(error => console.log('error', error));
   };
 
-  openModal = () => {
+  openModalWithItem = (item: FoodItem) => {
     //If modal has already been opened before, update its state
     if (this.modalRef) {
-      this.modalRef.setState({ modalVisible: true });
+      this.modalRef.setState({ modalVisible: true, item: item });
     }
 
-    this.setState({ modalVisible: true });
+    this.setState({ modalVisible: true, item: item });
   };
 
   handleModalClose = () => {
@@ -55,7 +58,7 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
         {this.state.modalVisible && (
           <FoodItemModal
             navigation={this.props.navigation}
-            item={this.props.item}
+            item={this.state.item}
             handleModalClose={this.handleModalClose}
             ref={ref => (this.modalRef = ref)}
           />

@@ -56,7 +56,8 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           {/* Nutrtional info */}
           <View style={{ marginVertical: 20 }}>
             <Text>Carbohydrate: {this.props.item.cho}g</Text>
-            <Text>Serving Size: {this.props.item.cho}g</Text>
+            <Text>Serving Unit: {this.props.item.servingUnit}</Text>
+            <Text>Serving Weight: {this.props.item.servingWeight}g</Text>
           </View>
 
           {/* Action buttons */}
