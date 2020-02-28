@@ -1,11 +1,21 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, View, Textarea } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
-import { TouchableOpacity } from 'react-native';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import { ActivityInput } from './ActivityInput';
+import ActivityAddButton from './ActivityAddButton';
+import { getIcon } from '../utils/IconUtils';
+import { AbstractChart } from 'react-native-chart-kit';
+import { Keyboard } from 'react-native';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
@@ -25,6 +35,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     glucoseRef: null,
     insulinRef: null,
     choRef: null,
+    notesRef: null,
   };
 
   state = {
@@ -32,11 +43,13 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     glucoseInput: 0,
     insulinInput: 0,
     choInput: 0,
+    notesInput: '',
 
     // Toggle inputs
     addGlucose: false,
     addInsulin: false,
     addCho: false,
+    addNotes: false,
   };
 
   handleUpdateDateTime = (dateTimeInput: any) => {
@@ -63,22 +76,29 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     });
   };
 
+  handleNotesChange = (notesInput: string) => {
+    this.setState({
+      notesInput: notesInput,
+    });
+  };
+
   // Submit inputs as log then clear form
   handleSubmit = () => {
-    const { dateTimeInput, glucoseInput, insulinInput, choInput } = this.state;
+    const { dateTimeInput, glucoseInput, insulinInput, choInput, notesInput } = this.state;
 
     const log: Log = {
       time: dateTimeInput,
       glucose: glucoseInput,
       insulin: insulinInput,
       cho: choInput,
+      notes: notesInput,
     };
 
     // Dispatch redux action
     this.props.addLog(log);
 
     // Clear Inputs
-    this.clearInputs();
+    this.resetInputs();
 
     // Record Submitted: go to view activity screen
     this.props.handleSubmit();
@@ -90,11 +110,25 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     }
   };
 
-  clearInputs = () => {
-    this.textInputs.glucoseRef._root.clear();
-    this.textInputs.insulinRef._root.clear();
-    this.textInputs.choRef._root.clear();
-    this.setState({ dateTimeInput: new Date(), glucoseInput: 0, insulinInput: 0, choInput: 0 });
+  resetInputs = () => {
+    // Clear inputs
+    this.textInputs.glucoseRef && this.textInputs.glucoseRef._root.clear();
+    this.textInputs.insulinRef && this.textInputs.insulinRef._root.clear();
+    this.textInputs.choRef && this.textInputs.choRef._root.clear();
+    this.textInputs.notesRef && this.textInputs.notesRef._root.clear();
+
+    // Re-hide inputs and reset state
+    this.setState({
+      dateTimeInput: new Date(),
+      glucoseInput: 0,
+      insulinInput: 0,
+      choInput: 0,
+      notesRef: '',
+      addGlucose: false,
+      addInsulin: false,
+      addCho: false,
+      addNotes: false,
+    });
   };
 
   //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
@@ -104,77 +138,143 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
 
   // Componenet Updated: May have moved off and back onto screen
   componentDidUpdate(prevProps: any) {
+    // Time has changed
+    if (prevProps.currentTime !== this.props.currentTime) {
+      // Update time and reset inputs
+      this.resetInputs();
+    }
+    // Pass in item CHO from search screen
     if (prevProps.item !== this.props.item) {
       this.props.item && this.setState({ choInput: Number(this.props.item.cho) });
-    }
-    if (prevProps.currentTime !== this.props.currentTime) {
-      this.setState({ dateTimeInput: this.props.currentTime });
     }
   }
 
   render() {
     return (
-      <Form style={styles.form}>
-        <DateTimeInput
-          currentTime={this.state.dateTimeInput}
-          updateDateTime={this.handleUpdateDateTime}
-        />
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
+        {/* <SafeAreaView style={{ flex: 1 }}> */}
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={{ padding: 24, flex: 1, justifyContent: 'flex-end' }}>
+              <Form style={styles.form}>
+                <DateTimeInput
+                  currentTime={this.state.dateTimeInput}
+                  updateDateTime={this.handleUpdateDateTime}
+                />
 
-        {/* TODO: Refactor: export component to ActivityInput */}
-        {/* <ActivityInput placeholder="Enter Glucose" badgeType="glucose" /> */}
+                {/* TODO: Refactor: export component to ActivityInput */}
+                {/* <ActivityInput placeholder="Enter Glucose" badgeType="glucose" /> */}
 
-        {this.state.addGlucose ? (
-          <Item rounded style={styles.inputPills}>
-            <Input
-              ref={input => {
-                this.textInputs.glucoseRef = input;
-              }}
-              placeholder="Enter Glucose"
-              onChangeText={this.handleGlucoseChange}
-              keyboardType={'numeric'}
-            />
-            <Badge success style={styles.badge}>
-              <Text>{this.state.glucoseInput} mmo/l</Text>
-            </Badge>
-          </Item>
-        ) : (
-          <TouchableOpacity onPress={() => this.setState({ addGlucose: true })}>
-            <Badge success style={{ height: 30, width: 200 }}>
-              <Text>Add Glucose</Text>
-            </Badge>
-          </TouchableOpacity>
-        )}
+                {this.state.addGlucose ? (
+                  <Item rounded style={styles.inputPills}>
+                    <Input
+                      ref={input => {
+                        this.textInputs.glucoseRef = input;
+                      }}
+                      placeholder="Enter Glucose"
+                      onChangeText={this.handleGlucoseChange}
+                      keyboardType={'numeric'}
+                    />
+                    <Badge success style={styles.badge}>
+                      <Text>{this.state.glucoseInput} mmo/l</Text>
+                    </Badge>
+                  </Item>
+                ) : (
+                  <ActivityAddButton
+                    success
+                    handlePress={() => this.setState({ addGlucose: true })}
+                  >
+                    <Text>Add Glucose</Text>
+                  </ActivityAddButton>
+                )}
 
-        <Item rounded style={styles.inputPills}>
-          <Input
-            ref={input => {
-              this.textInputs.insulinRef = input;
-            }}
-            placeholder="Enter Insulin"
-            onChangeText={this.handleInsulinChange}
-            keyboardType={'numeric'}
-          />
-          <Badge info style={styles.badge}>
-            <Text>{this.state.insulinInput} Units</Text>
-          </Badge>
-        </Item>
-        <Item rounded style={styles.inputPills}>
-          <Input
-            ref={input => {
-              this.textInputs.choRef = input;
-            }}
-            placeholder={this.getName() || 'Enter CHO'}
-            onChangeText={this.handleChoChange}
-            keyboardType={'numeric'}
-          />
-          <Badge warning style={styles.badge}>
-            <Text>{this.state.choInput} g</Text>
-          </Badge>
-        </Item>
-        <Button primary style={styles.submitButton} onPress={this.handleSubmit}>
-          <Text>Submit Records</Text>
-        </Button>
-      </Form>
+                {this.state.addInsulin ? (
+                  <Item rounded style={styles.inputPills}>
+                    <Input
+                      ref={input => {
+                        this.textInputs.insulinRef = input;
+                      }}
+                      placeholder="Enter Insulin"
+                      onChangeText={this.handleInsulinChange}
+                      keyboardType={'numeric'}
+                    />
+                    <Badge info style={styles.badge}>
+                      <Text>{this.state.insulinInput} Units</Text>
+                    </Badge>
+                  </Item>
+                ) : (
+                  <ActivityAddButton info handlePress={() => this.setState({ addInsulin: true })}>
+                    <Text>Add Insulin</Text>
+                  </ActivityAddButton>
+                )}
+
+                {this.getName() || this.state.addCho ? (
+                  <Item rounded style={styles.inputPills}>
+                    <Input
+                      ref={input => {
+                        this.textInputs.choRef = input;
+                      }}
+                      placeholder={this.getName() || 'Enter Carbohydrate'}
+                      onChangeText={this.handleChoChange}
+                      keyboardType={'numeric'}
+                    />
+                    <Badge warning style={styles.badge}>
+                      <Text>{this.state.choInput} g</Text>
+                    </Badge>
+                  </Item>
+                ) : (
+                  <ActivityAddButton warning handlePress={() => this.setState({ addCho: true })}>
+                    <Text>Add Carbohydrate</Text>
+                  </ActivityAddButton>
+                )}
+
+                {this.state.addNotes ? (
+                  <Item rounded style={styles.inputPills}>
+                    <Input
+                      ref={input => {
+                        this.textInputs.notesRef = input;
+                      }}
+                      placeholder="Enter Notes..."
+                      onChangeText={this.handleNotesChange}
+                      keyboardType={'default'}
+                      multiline={true}
+                      numberOfLines={5}
+                      style={{ lineHeight: 23, height: 200 }}
+                    />
+                  </Item>
+                ) : (
+                  <Button
+                    light
+                    onPress={() => this.setState({ addNotes: true })}
+                    style={{ marginVertical: 20 }}
+                  >
+                    <Text>Add Notes...</Text>
+                  </Button>
+                )}
+              </Form>
+
+              <View
+                style={{
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  marginBottom: 36,
+                  flex: 1,
+                }}
+              >
+                <Button
+                  style={{ width: '70%', justifyContent: 'center' }}
+                  onPress={this.handleSubmit}
+                >
+                  <Text>Submit Log</Text>
+                </Button>
+
+                {/* <View style={{ flex: 1 }} /> */}
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+        {/* </SafeAreaView> */}
+      </KeyboardAvoidingView>
     );
   }
 }

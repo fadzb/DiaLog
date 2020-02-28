@@ -11,15 +11,21 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   submitButton: {
-    width: '80%',
+    width: '70%',
     alignSelf: 'center',
     justifyContent: 'center',
     margin: 20,
+  },
+  bottom: {
+    flex: 0,
+    justifyContent: 'flex-end',
+    marginBottom: 0,
   },
   badge: {
     alignSelf: 'center',
   },
   pickerControls: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

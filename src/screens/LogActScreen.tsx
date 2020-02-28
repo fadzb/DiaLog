@@ -6,6 +6,7 @@ import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { DateUtils } from '../utils/DateUtils';
+import { ScrollView } from 'react-native';
 
 interface LogActScreenProps {
   navigation: any;
@@ -55,19 +56,12 @@ class LogActScreen extends React.Component<LogActScreenProps> {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header>
-          <Title>Log Activity</Title>
-        </Header>
-        <Content style={styles.contentContainer}>
-          <ActivityForm
-            currentTime={this.state.currentTime}
-            item={this.state.item}
-            handleSubmit={this.handleFormSubmit}
-            addLog={this.props.addLog}
-          />
-        </Content>
-      </Container>
+      <ActivityForm
+        currentTime={this.state.currentTime}
+        item={this.state.item}
+        handleSubmit={this.handleFormSubmit}
+        addLog={this.props.addLog}
+      />
     );
   }
 }
