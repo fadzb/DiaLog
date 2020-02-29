@@ -83,7 +83,12 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
         )}
 
         {/* Log Details */}
-        {this.state.selectedLog && <LogDetails log={this.state.selectedLog} />}
+        {this.state.selectedLog && (
+          <LogDetails
+            log={this.state.selectedLog}
+            closeDetails={() => this.setState({ selectedLog: null })}
+          />
+        )}
       </View>
     );
   }

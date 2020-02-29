@@ -16,6 +16,7 @@ import ActivityAddButton from './ActivityAddButton';
 import { getIcon } from '../utils/IconUtils';
 import { AbstractChart } from 'react-native-chart-kit';
 import { Keyboard } from 'react-native';
+import { makeNotesFromItem } from '../utils/ActivityLogUtils';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
@@ -123,7 +124,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       glucoseInput: 0,
       insulinInput: 0,
       choInput: 0,
-      notesRef: '',
+      notesInput: null,
       addGlucose: false,
       addInsulin: false,
       addCho: false,
@@ -145,7 +146,11 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     }
     // Pass in item CHO from search screen
     if (prevProps.item !== this.props.item) {
-      this.props.item && this.setState({ choInput: Number(this.props.item.cho) });
+      this.props.item &&
+        this.setState({
+          choInput: Number(this.props.item.cho),
+          notesInput: makeNotesFromItem(this.props.item),
+        });
     }
   }
 
@@ -221,7 +226,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </ActivityAddButton>
           )}
 
-          {this.state.addNotes ? (
+          {this.state.addNotes || this.state.notesInput ? (
             <Item rounded style={styles.inputPills}>
               <Input
                 ref={input => {
@@ -233,6 +238,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 multiline={true}
                 numberOfLines={5}
                 style={{ lineHeight: 23, height: 100 }}
+                value={this.state.notesInput}
               />
             </Item>
           ) : (

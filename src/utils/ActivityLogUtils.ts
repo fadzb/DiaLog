@@ -2,6 +2,16 @@ import { asyncGetAllKeys, asyncMultiGetItems } from '../storage/AsyncStorage';
 import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
 import { type } from 'os';
+import { FoodItem } from '../typings/FoodItem';
+
+export function makeNotesFromItem(item: FoodItem) {
+  let notes = '';
+
+  notes += `Food: ${item.name} \n`;
+  notes += `Serving Size: ${item.servingUnit}`;
+
+  return notes;
+}
 
 // get activity type
 export function getType(log: Log) {

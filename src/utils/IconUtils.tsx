@@ -17,6 +17,7 @@ const Icons: any = {
   train: { name: 'open-book', type: 'Entypo' },
   chat: { name: 'wechat', type: 'AntDesign' },
   search: { name: 'search', type: 'FontAwesome' },
+  close: { name: 'close', type: 'EvilIcons' },
 };
 
 const getIconJSX = (icon: icon) => {
