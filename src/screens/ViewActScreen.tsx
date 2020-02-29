@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { ScrollView } from 'react-native';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
+import { LogDetails } from '../components/LogDetails';
 
 interface ViewActScreenProps {
   navigation: any;
@@ -29,8 +30,16 @@ interface ViewActScreenProps {
 }
 
 class ViewActScreen extends React.Component<ViewActScreenProps> {
+  navigationWillFocusListener: any;
+
   constructor(props: any) {
     super(props);
+
+    // Subscribe to nav focus
+    this.navigationWillFocusListener = props.navigation.addListener('willFocus', () => {
+      // do something like this.setState() to update your view
+      this.handleFocus();
+    });
   }
 
   state = {
@@ -45,6 +54,16 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
     this.setState({ selectedLog: log });
   };
 
+  handleFocus = () => {
+    // Reset the selected log
+    this.setState({ selectedLog: null });
+  };
+
+  // Remove listener
+  componentWillUnmount() {
+    this.navigationWillFocusListener.remove();
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -57,22 +76,14 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
         </Button>
 
         {/* Recent Logs */}
-        <ScrollView>
-          <RecentLogsWidget logs={this.props.logs} onSelectLog={this.handleSelectLog} />
-        </ScrollView>
+        {this.props.logs.length > 0 && (
+          <ScrollView>
+            <RecentLogsWidget logs={this.props.logs} onSelectLog={this.handleSelectLog} />
+          </ScrollView>
+        )}
 
         {/* Log Details */}
-        {this.state.selectedLog && (
-          <View>
-            <Card>
-              <CardItem header>
-                <Text>Log Details</Text>
-              </CardItem>
-              <Text>Time: {String(this.state.selectedLog.time)}</Text>
-              <Text>Carbohydrate: 0g</Text>
-            </Card>
-          </View>
-        )}
+        {this.state.selectedLog && <LogDetails log={this.state.selectedLog} />}
       </View>
     );
   }

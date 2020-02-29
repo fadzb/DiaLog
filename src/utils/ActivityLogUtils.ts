@@ -1,6 +1,19 @@
 import { asyncGetAllKeys, asyncMultiGetItems } from '../storage/AsyncStorage';
 import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
+import { type } from 'os';
+
+// get activity type
+export function getType(log: Log) {
+  let type = '';
+  let count = 0;
+
+  log.cho && (type += 'Food ') && count++;
+  log.insulin && (count ? (type += '/ Insulin ') : (type += 'Insulin ') && count++);
+  log.glucose && (count ? (type += '/ Glucose ') : (type += 'Glucose ') && count++);
+
+  return type;
+}
 
 // gets logs for date from redux store (no direct AsyncStorage API call)
 export function getLogsFromReduxForDate(logs: Log[], dateTime: Date) {
