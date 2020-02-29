@@ -1,10 +1,24 @@
 import * as React from 'react';
-import { Container, Header, Content, Title, Button, Text } from 'native-base';
+import {
+  Container,
+  Header,
+  Content,
+  Title,
+  Button,
+  Text,
+  View,
+  Card,
+  CardItem,
+  List,
+  ListItem,
+} from 'native-base';
 import { styles } from '../styles/ViewActScreen';
 import { ActivityChart } from '../components/ActivityChart';
 import { addName } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
+import { ScrollView } from 'react-native';
+import { RecentLogsWidget } from '../components/RecentLogsWidget';
 
 interface ViewActScreenProps {
   navigation: any;
@@ -19,25 +33,47 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
     super(props);
   }
 
-  state = {};
+  state = {
+    selectedLog: null,
+  };
 
   handleAddNewLog = () => {
     this.props.navigation.navigate('LogAct', {});
   };
 
+  handleSelectLog = (log: Log) => {
+    this.setState({ selectedLog: log });
+  };
+
   render() {
     return (
-      <Container style={styles.container}>
-        <Header>
-          <Title>View Activity</Title>
-        </Header>
-        <Content style={styles.contentContainer}>
-          <ActivityChart preview={false} logs={this.props.logs} />
-          <Button onPress={this.handleAddNewLog}>
-            <Text>Add New Log</Text>
-          </Button>
-        </Content>
-      </Container>
+      <View style={{ flex: 1 }}>
+        <ActivityChart preview={false} logs={this.props.logs} />
+        <Button
+          style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
+          onPress={this.handleAddNewLog}
+        >
+          <Text>Add New Log</Text>
+        </Button>
+
+        {/* Recent Logs */}
+        <ScrollView>
+          <RecentLogsWidget logs={this.props.logs} onSelectLog={this.handleSelectLog} />
+        </ScrollView>
+
+        {/* Log Details */}
+        {this.state.selectedLog && (
+          <View>
+            <Card>
+              <CardItem header>
+                <Text>Log Details</Text>
+              </CardItem>
+              <Text>Time: {String(this.state.selectedLog.time)}</Text>
+              <Text>Carbohydrate: 0g</Text>
+            </Card>
+          </View>
+        )}
+      </View>
     );
   }
 }
