@@ -56,12 +56,14 @@ class LogActScreen extends React.Component<LogActScreenProps> {
 
   render() {
     return (
-      <ActivityForm
-        currentTime={this.state.currentTime}
-        item={this.state.item}
-        handleSubmit={this.handleFormSubmit}
-        addLog={this.props.addLog}
-      />
+      <ScrollView>
+        <ActivityForm
+          currentTime={this.state.currentTime}
+          item={this.state.item}
+          handleSubmit={this.handleFormSubmit}
+          addLog={this.props.addLog}
+        />
+      </ScrollView>
     );
   }
 }
