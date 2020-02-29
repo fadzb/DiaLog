@@ -6,7 +6,8 @@ import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { DateUtils } from '../utils/DateUtils';
-import { ScrollView } from 'react-native';
+import { ScrollView, Keyboard } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface LogActScreenProps {
   navigation: any;
@@ -56,14 +57,14 @@ class LogActScreen extends React.Component<LogActScreenProps> {
 
   render() {
     return (
-      <ScrollView>
+      <KeyboardAwareScrollView>
         <ActivityForm
           currentTime={this.state.currentTime}
           item={this.state.item}
           handleSubmit={this.handleFormSubmit}
           addLog={this.props.addLog}
         />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }
