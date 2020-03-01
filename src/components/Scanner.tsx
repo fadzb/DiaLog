@@ -10,7 +10,8 @@ import { getIcon } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
-import vision from '@react-native-firebase/ml-vision';
+import { getActiveChildNavigationOptions } from 'react-navigation';
+import { getLabels, filterLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
 
 interface ScannerProps {
@@ -31,6 +32,9 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     torchOn: false,
     item: FoodItemInstance,
     modalVisible: false,
+
+    //ML
+    labels: [],
   };
 
   // TODO: Handle EAN-13 Barcodes (need to use different API)
@@ -77,13 +81,17 @@ export class Scanner extends React.PureComponent<ScannerProps> {
         const data = await this.camera.takePictureAsync(options);
         console.log(data.uri);
 
-        //ML
-        const labels = await vision().cloudImageLabelerProcessImage(data.uri, {});
-        console.log('labels: ' + labels);
+        getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels)));
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }
     }
+  };
+
+  setLabels = (labels: any) => {
+    this.setState({
+      labels: labels,
+    });
   };
 
   openCamera = () => {
@@ -99,6 +107,11 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   };
 
   render() {
+    if (this.state.labels) {
+      this.state.labels.forEach(label => {
+        console.log(label.text + ' with confidence: ' + label.confidence);
+      });
+    }
     if (this.state.show) {
       return (
         <View style={styles.scannerContainer}>
