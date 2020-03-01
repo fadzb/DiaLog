@@ -10,6 +10,7 @@ import { getIcon } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
+import vision from '@react-native-firebase/ml-vision';
 const zebra = require('../utils/zebra.js');
 
 interface ScannerProps {
@@ -75,6 +76,10 @@ export class Scanner extends React.PureComponent<ScannerProps> {
       try {
         const data = await this.camera.takePictureAsync(options);
         console.log(data.uri);
+
+        //ML
+        const labels = await vision().cloudImageLabelerProcessImage(data.uri, {});
+        console.log('labels: ' + labels);
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }
