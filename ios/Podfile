@@ -3,7 +3,9 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 target 'HealthyApp' do
   # Pods for HealthyApp
-  # pod 'RNSVGRect', :path => "../node_modules/react-native/Libraries/RNSVGRect"
+  # pod 'RNSVGRect', :path => "../nsode_modules/react-native/Libraries/RNSVGRect"
+  # Firebase ML Kit (for cloud only)
+  pod 'Firebase/MLVision'
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
