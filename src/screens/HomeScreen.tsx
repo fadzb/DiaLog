@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, ScrollView } from 'react-native';
+import { TouchableOpacity, ScrollView, ListView, FlatList } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { addName } from '../actions/actions';
@@ -7,7 +7,7 @@ import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
 import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
-import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
+import { getWidgetById, shouldRenderWidget, getDisabledWidgetIds } from '../utils/WidgetUtils';
 import { Log } from '../typings/Log';
 
 interface HomeScreenProps {
@@ -105,6 +105,36 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                   <Text>Recent Log 3</Text>
                 </ListItem>
               </List>
+            </Card>
+          )}
+
+          {/* Create a list component that takes a list of all disabled widgets */}
+          <ScrollView horizontal={true}>
+            {getDisabledWidgetIds(this.props.widgets).map((widgetIds: string, index: any) => {
+              <TouchableOpacity onPress={this.handleChatNav} style={styles.item}>
+                {getIcon('chat')}
+                <Text style={styles.itemText}>Chat</Text>
+              </TouchableOpacity>;
+            })}
+          </ScrollView>
+
+          {/* Provide access to other apps not on Tab Bar */}
+          {false && (
+            <Card>
+              <CardItem header>
+                <Text>Other Apps</Text>
+              </CardItem>
+
+              {/* <View style={styles.row}> */}
+              <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
+                {getIcon('train')}
+                <Text style={styles.itemText}>Training Modules</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.handleChatNav} style={styles.item}>
+                {getIcon('chat')}
+                <Text style={styles.itemText}>Chat</Text>
+              </TouchableOpacity>
+              {/* </View> */}
             </Card>
           )}
 

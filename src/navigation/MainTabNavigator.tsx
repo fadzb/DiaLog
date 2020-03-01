@@ -38,7 +38,7 @@ export const TabNavigator = createBottomTabNavigator(
     Profile: {
       screen: ProfileScreen,
       navigationOptions: {
-        tabBarLabel: 'Profile',
+        tabBarLabel: 'Settings',
       },
     },
   },
@@ -62,7 +62,7 @@ export const TabNavigator = createBottomTabNavigator(
             icon = 'activity';
             break;
           case 'Profile':
-            icon = 'profile';
+            icon = 'settings';
             break;
           default:
             icon = 'home';
