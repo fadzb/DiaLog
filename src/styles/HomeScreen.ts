@@ -14,14 +14,15 @@ export const styles = StyleSheet.create({
   },
   item: {
     flex: 1,
-    height: 120,
+    height: 100,
     paddingVertical: 20,
     borderColor: colors.primaryLight,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 30,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     marginHorizontal: 5,
+    width: 100,
   },
   itemText: {
     color: colors.primary,

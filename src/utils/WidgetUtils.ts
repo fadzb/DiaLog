@@ -2,19 +2,15 @@ import { Widget } from '../typings/Widget';
 import store from '../store';
 import { updateWidget } from '../actions/actions';
 
-// Return ids of each disabled widget
-export const getDisabledWidgetIds = (widgets: Widget[]) => {
-  const disabledWidgetsIds: string[] = [];
-
-  console.log('getting...');
+// Return ids of each disabled widget (NOT ON TAB BAR)
+export const getDisabledWidgets = (widgets: Widget[]) => {
+  const disabledWidgets: Widget[] = [];
 
   widgets.forEach(widget => {
-    if (!widget.enabled) disabledWidgetsIds.push(widget.widgetId);
+    if (!widget.enabled && !widget.onTabBar) disabledWidgets.push(widget);
   });
 
-  console.log(disabledWidgetsIds);
-
-  return disabledWidgetsIds;
+  return disabledWidgets;
 };
 
 // Dispatch redux action to update properties of widget (i.e. enabled/disabled)

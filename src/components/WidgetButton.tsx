@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import { getIcon } from '../utils/IconUtils';
 
 interface WidgetButtonProps {
+  key: any;
   widget: Widget;
   navigation: any;
 }
@@ -26,10 +27,9 @@ export class WidgetButton extends React.Component<WidgetButtonProps> {
     return (
       <View>
         <TouchableOpacity onPress={this.handleWidgetNav} style={styles.item}>
-          {getIcon(widget.iconName)}
-          <Text style={styles.itemText}>Chat</Text>
+          {Boolean(widget.iconName) && getIcon(widget.iconName)}
+          <Text style={styles.itemText}>{widget.widgetName}</Text>
         </TouchableOpacity>
-        ;
       </View>
     );
   }

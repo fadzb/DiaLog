@@ -1,13 +1,13 @@
 import rootReducer from './reducers/reducer';
 import { createStore } from 'redux';
-import { recentLogsWidget, tempWidget, trainWidget, chatWidget } from './typings/Widget';
+import { recentLogsWidget, tempWidget, trainWidget, chatWidget, WIDGETS } from './typings/Widget';
 import { AsyncStorage } from 'react-native';
 import { persistStore, persistReducer } from 'redux-persist';
 
 const initialState: any = {
   name: '',
   logs: [],
-  widgets: [chatWidget, trainWidget, recentLogsWidget, tempWidget],
+  widgets: WIDGETS,
 };
 
 // export default createStore(rootReducer, initialState);

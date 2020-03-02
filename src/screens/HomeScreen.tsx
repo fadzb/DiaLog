@@ -7,8 +7,10 @@ import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
 import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
-import { getWidgetById, shouldRenderWidget, getDisabledWidgetIds } from '../utils/WidgetUtils';
+import { getWidgetById, shouldRenderWidget, getDisabledWidgets } from '../utils/WidgetUtils';
 import { Log } from '../typings/Log';
+import { WidgetButton } from '../components/WidgetButton';
+import { Widget } from '../typings/Widget';
 
 interface HomeScreenProps {
   navigation: any;
@@ -75,7 +77,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
 
-    if (!this.state.DASHBOARD_TOGGLED) {
+    if (this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
           {/* Always render Overview Widget */}
@@ -109,39 +111,27 @@ class HomeScreen extends React.Component<HomeScreenProps> {
           )}
 
           {/* Create a list component that takes a list of all disabled widgets */}
-          <ScrollView horizontal={true}>
-            {getDisabledWidgetIds(this.props.widgets).map((widgetIds: string, index: any) => {
-              <TouchableOpacity onPress={this.handleChatNav} style={styles.item}>
-                {getIcon('chat')}
-                <Text style={styles.itemText}>Chat</Text>
-              </TouchableOpacity>;
-            })}
-          </ScrollView>
-
-          {/* Provide access to other apps not on Tab Bar */}
-          {false && (
-            <Card>
-              <CardItem header>
-                <Text>Other Apps</Text>
-              </CardItem>
-
-              {/* <View style={styles.row}> */}
-              <TouchableOpacity onPress={this.handleTrainNav} style={styles.item}>
-                {getIcon('train')}
-                <Text style={styles.itemText}>Training Modules</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.handleChatNav} style={styles.item}>
-                {getIcon('chat')}
-                <Text style={styles.itemText}>Chat</Text>
-              </TouchableOpacity>
-              {/* </View> */}
-            </Card>
-          )}
+          <Card>
+            <CardItem header>
+              <Text>Other Apps</Text>
+            </CardItem>
+            <CardItem>
+              <ScrollView horizontal={true}>
+                {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
+                  return (
+                    <WidgetButton navigation={this.props.navigation} widget={widget} key={index} />
+                  );
+                })}
+              </ScrollView>
+            </CardItem>
+          </Card>
 
           {/* Toggle View Button */}
-          <View style={{ alignSelf: 'center', width: 150 }}>
-            <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
-          </View>
+          {false && (
+            <View style={{ alignSelf: 'center', width: 150, marginTop: 30 }}>
+              <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+            </View>
+          )}
         </ScrollView>
       );
     } // Else (Simple Views)
