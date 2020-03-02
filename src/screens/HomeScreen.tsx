@@ -11,6 +11,7 @@ import { getWidgetById, shouldRenderWidget, getDisabledWidgets } from '../utils/
 import { Log } from '../typings/Log';
 import { WidgetButton } from '../components/WidgetButton';
 import { Widget } from '../typings/Widget';
+import { RecentLogsWidget } from '../components/RecentLogsWidget';
 
 interface HomeScreenProps {
   navigation: any;
@@ -73,6 +74,10 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.setState({ DASHBOARD_TOGGLED: !this.state.DASHBOARD_TOGGLED });
   };
 
+  handleSelectLog = () => {
+    this.props.navigation.navigate('ViewAct', {});
+  };
+
   render() {
     const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
@@ -92,22 +97,12 @@ class HomeScreen extends React.Component<HomeScreenProps> {
 
           {/* Conditionally render other widgets: i.e. Recent Logs */}
           {renderRecentLogs && (
-            <Card>
-              <CardItem header>
-                <Text>Recent Logs</Text>
-              </CardItem>
-              <List>
-                <ListItem>
-                  <Text>Recent Log 1</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>Recent Log 2</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>Recent Log 3</Text>
-                </ListItem>
-              </List>
-            </Card>
+            <RecentLogsWidget
+              logs={this.props.logs}
+              onSelectLog={() => {}}
+              onPressOut={this.handleSelectLog}
+              maxLogs={5}
+            />
           )}
 
           {/* Create a list component that takes a list of all disabled widgets */}
