@@ -72,6 +72,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
+	<!-- Focing light mode (to fix date time bug) -->
+	<key>UIUserInterfaceStyle</key>
+    <string>Light</string>
+
 	<!-- Adding for react-native-camera ios perms-->
 	<!-- Required with iOS 10 and higher -->
 	<key>NSCameraUsageDescription</key>

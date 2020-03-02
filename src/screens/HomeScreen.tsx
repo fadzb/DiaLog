@@ -6,9 +6,12 @@ import { addName } from '../actions/actions';
 import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
-import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
-import { getWidgetById, shouldRenderWidget } from '../utils/WidgetUtils';
+import { Card, CardItem, View, Text } from 'native-base';
+import { getWidgetById, shouldRenderWidget, getDisabledWidgets } from '../utils/WidgetUtils';
 import { Log } from '../typings/Log';
+import { WidgetButton } from '../components/WidgetButton';
+import { Widget } from '../typings/Widget';
+import { RecentLogsWidget } from '../components/RecentLogsWidget';
 
 interface HomeScreenProps {
   navigation: any;
@@ -71,11 +74,15 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     this.setState({ DASHBOARD_TOGGLED: !this.state.DASHBOARD_TOGGLED });
   };
 
+  handleSelectLog = () => {
+    this.props.navigation.navigate('ViewAct', {});
+  };
+
   render() {
     const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
 
-    if (!this.state.DASHBOARD_TOGGLED) {
+    if (this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
           {/* Always render Overview Widget */}
@@ -90,28 +97,36 @@ class HomeScreen extends React.Component<HomeScreenProps> {
 
           {/* Conditionally render other widgets: i.e. Recent Logs */}
           {renderRecentLogs && (
-            <Card>
-              <CardItem header>
-                <Text>Recent Logs</Text>
-              </CardItem>
-              <List>
-                <ListItem>
-                  <Text>Recent Log 1</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>Recent Log 2</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>Recent Log 3</Text>
-                </ListItem>
-              </List>
-            </Card>
+            <RecentLogsWidget
+              logs={this.props.logs}
+              onSelectLog={() => {}}
+              onPressOut={this.handleSelectLog}
+              maxLogs={5}
+            />
           )}
 
+          {/* Create a list component that takes a list of all disabled widgets */}
+          <Card>
+            <CardItem header>
+              <Text>Other Apps</Text>
+            </CardItem>
+            <CardItem>
+              <ScrollView horizontal={true}>
+                {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
+                  return (
+                    <WidgetButton navigation={this.props.navigation} widget={widget} key={index} />
+                  );
+                })}
+              </ScrollView>
+            </CardItem>
+          </Card>
+
           {/* Toggle View Button */}
-          <View style={{ alignSelf: 'center', width: 150 }}>
-            <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
-          </View>
+          {false && (
+            <View style={{ alignSelf: 'center', width: 150, marginTop: 30 }}>
+              <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+            </View>
+          )}
         </ScrollView>
       );
     } // Else (Simple Views)

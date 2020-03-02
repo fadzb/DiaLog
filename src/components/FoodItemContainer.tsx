@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Text, Image, TouchableOpacity } from 'react-native';
 import { FoodItem } from '../typings/FoodItem';
 import { styles } from '../styles/CarbScreen';
-import { parseFoodItemCHO, requestFoodDetails } from '../api/FoodAPI';
+import { requestFoodDetails, parseMoreDetails } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
+import { View } from 'native-base';
 
 interface FoodItemContainerProps {
   navigation: any;
@@ -26,11 +27,18 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
   handleClick = () => {
     const { item } = this.props;
 
+    let detailedItem: FoodItem;
+
     const promise = requestFoodDetails(item.name);
 
     promise
       .then(responseJson => {
-        item.cho = parseFoodItemCHO(responseJson);
+        detailedItem = parseMoreDetails(responseJson);
+        // Mutate additional properties for item
+        item.cho = detailedItem.cho;
+        item.servingUnit = detailedItem.servingUnit;
+        item.servingWeight = detailedItem.servingWeight;
+        // Open modal
         this.openModal();
       })
       .catch(error => console.log('error', error));
@@ -60,13 +68,10 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
             ref={ref => (this.modalRef = ref)}
           />
         )}
-        <Text style={styles.text}>
-          {this.props.item.name}{' '}
-          <Image
-            source={{ uri: this.props.item.photo_url }}
-            style={{ width: 40, height: 40, alignSelf: 'flex-end' }}
-          />
-        </Text>
+        <View style={styles.row}>
+          <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
+          <Text style={{ fontSize: 22, marginLeft: 20 }}>{this.props.item.name} </Text>
+        </View>
       </TouchableOpacity>
     );
   }

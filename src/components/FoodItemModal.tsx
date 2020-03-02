@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 import { View, Text, Button } from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
@@ -39,22 +39,34 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
   render() {
     return (
       <Modal
+        onBackdropPress={this.handleClose}
         style={styles.modalContent}
         isVisible={this.state.modalVisible}
         animationIn={'slideInLeft'}
         animationOut={'slideOutRight'}
       >
-        <View style={{}}>
-          <Text style={styles.text}>{this.props.item.name}</Text>
-          <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
-          <Text>CHO: {this.props.item.cho}g</Text>
-          <View>
-            <Button primary style={{ margin: 10, justifyContent: 'center' }} onPress={this.addLog}>
+        <View>
+          {/* Row with Image and Item name */}
+          <View style={styles.row}>
+            <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
+            <Text style={{ fontSize: 30, marginLeft: 20 }}>{this.props.item.name}</Text>
+          </View>
+
+          {/* Nutrtional info */}
+          <View style={{ marginVertical: 20 }}>
+            <Text>Carbohydrate: {this.props.item.cho}g</Text>
+            <Text>Serving Unit: {this.props.item.servingUnit}</Text>
+            <Text>Serving Weight: {this.props.item.servingWeight}g</Text>
+          </View>
+
+          {/* Action buttons */}
+          <View style={styles.rowSpaced}>
+            <Button onPress={this.addLog}>
               <Text>Add Log</Text>
             </Button>
-            <TouchableOpacity style={styles.button} onPress={this.handleClose}>
-              <Text>Back to Search</Text>
-            </TouchableOpacity>
+            <Button warning onPress={this.handleClose}>
+              <Text>Cancel</Text>
+            </Button>
           </View>
         </View>
       </Modal>

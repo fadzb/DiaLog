@@ -56,12 +56,20 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     const { show, dateTime } = this.state;
 
     return (
-      <View>
+      <View style={{ marginVertical: 20 }}>
         <View style={styles.pickerControls}>
-          <Button onPress={this.showPicker} title="Change Time" />
-          <Button onPress={this.hidePicker} title="Hide" />
+          {!show && <Button onPress={this.showPicker} title="Change Time" />}
+          {show && <Button onPress={this.hidePicker} title="Hide" />}
         </View>
-        {show && <DateTimePicker value={dateTime} mode={'datetime'} onChange={this.setDateTime} />}
+        {show && (
+          <DateTimePicker
+            display={'default'}
+            is24Hour={true}
+            value={dateTime}
+            mode={'datetime'}
+            onChange={this.setDateTime}
+          />
+        )}
         {ANDROID && show && (
           <DateTimePicker value={dateTime} mode={'time'} onChange={this.setDateTime} />
         )}
