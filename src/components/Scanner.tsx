@@ -14,6 +14,8 @@ import { getActiveChildNavigationOptions } from 'react-navigation';
 import { getLabels, filterLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
 
+const ML_ENABLED = false;
+
 interface ScannerProps {
   navigation: any;
 }
@@ -81,7 +83,10 @@ export class Scanner extends React.PureComponent<ScannerProps> {
         const data = await this.camera.takePictureAsync(options);
         console.log(data.uri);
 
-        getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels)));
+        if (ML_ENABLED) {
+          getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels)));
+        } else {
+        }
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }
