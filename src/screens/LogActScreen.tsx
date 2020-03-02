@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Container, Header, Content, Title } from 'native-base';
-import { styles } from '../styles/LogActScreen';
 import { ActivityForm } from '../components/ActivityForm';
 import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { DateUtils } from '../utils/DateUtils';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface LogActScreenProps {
   navigation: any;
@@ -55,19 +54,14 @@ class LogActScreen extends React.Component<LogActScreenProps> {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Header>
-          <Title>Log Activity</Title>
-        </Header>
-        <Content style={styles.contentContainer}>
-          <ActivityForm
-            currentTime={this.state.currentTime}
-            item={this.state.item}
-            handleSubmit={this.handleFormSubmit}
-            addLog={this.props.addLog}
-          />
-        </Content>
-      </Container>
+      <KeyboardAwareScrollView>
+        <ActivityForm
+          currentTime={this.state.currentTime}
+          item={this.state.item}
+          handleSubmit={this.handleFormSubmit}
+          addLog={this.props.addLog}
+        />
+      </KeyboardAwareScrollView>
     );
   }
 }

@@ -14,10 +14,8 @@ export const AppStack = (initialRoute: any) =>
   createStackNavigator(
     {
       Home: {
-        screen: TabNavigator(),
-        navigationOptions: {
-          headerLeft: null,
-        },
+        screen: TabNavigator,
+        navigationOptions: {},
       },
       Reg: RegisterScreen,
       Login: LoginScreen,

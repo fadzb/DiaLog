@@ -53,11 +53,15 @@ export const styles = StyleSheet.create({
     top: 100,
     backgroundColor: 'white',
     padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderRadius: 10,
     borderColor: 'rgba(0, 0, 0, 0.1)',
   },
+
+  // Utility
+  row: { flex: 0, flexDirection: 'row' },
+  rowSpaced: { flex: 0, flexDirection: 'row', justifyContent: 'space-between' },
 
   //Camera styles
   preview: {

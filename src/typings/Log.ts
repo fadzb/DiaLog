@@ -3,4 +3,5 @@ export interface Log {
   glucose: number;
   insulin: number;
   cho: number;
+  notes?: string;
 }

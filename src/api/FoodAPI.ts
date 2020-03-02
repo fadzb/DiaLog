@@ -85,6 +85,8 @@ export function parseFoodItems(responseJSON: any) {
       name: parsedJson.common[i].food_name,
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
+      servingUnit: '',
+      servingWeight: '',
     };
     foodItems.push(foodItem);
   }
@@ -92,8 +94,7 @@ export function parseFoodItems(responseJSON: any) {
   return foodItems;
 }
 
-export function parseFoodItemCHO(responseJSON: any) {
-  let cho = '0';
+export function parseMoreDetails(responseJSON: any) {
   let parsedJson: any;
 
   if (API_ENABLED) {
@@ -104,9 +105,15 @@ export function parseFoodItemCHO(responseJSON: any) {
     parsedJson = JSON.parse(_fakeDetailedJson);
   }
 
-  cho = parsedJson.foods[0].nf_total_carbohydrate;
+  const detailedItem: FoodItem = {
+    name: parsedJson.foods[0].food_name,
+    photo_url: parsedJson.foods[0].photo.thumb,
+    cho: parsedJson.foods[0].nf_total_carbohydrate,
+    servingUnit: parsedJson.foods[0].serving_qty + ' ' + parsedJson.foods[0].serving_unit,
+    servingWeight: parsedJson.foods[0].serving_weight_grams,
+  };
 
-  return cho;
+  return detailedItem;
 }
 
 export function parseFoodItemFromBarcode(responseJSON: any) {
@@ -120,12 +127,12 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
     parsedJson = JSON.parse(stringyFakeBarcodeJson);
   }
 
-  // console.log(parsedJson);
-
   const foodItem: FoodItem = {
     name: parsedJson.foods[0].food_name,
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
+    servingUnit: parsedJson.foods[0].serving_unit,
+    servingWeight: parsedJson.foods[0].serving_weight_grams,
   };
 
   return foodItem;
