@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Switch, Text, Card, CardItem, List, ListItem, Body } from 'native-base';
-import { Widget } from '../typings/Widget';
+import { View, Text, Card, CardItem, Body } from 'native-base';
 import { Log } from '../typings/Log';
 import { getType } from '../utils/ActivityLogUtils';
 import { getIcon } from '../utils/IconUtils';

@@ -1,12 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, ScrollView, ListView, FlatList } from 'react-native';
+import { TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 import { addName } from '../actions/actions';
 import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
-import { Card, CardItem, View, Text, List, ListItem } from 'native-base';
+import { Card, CardItem, View, Text } from 'native-base';
 import { getWidgetById, shouldRenderWidget, getDisabledWidgets } from '../utils/WidgetUtils';
 import { Log } from '../typings/Log';
 import { WidgetButton } from '../components/WidgetButton';

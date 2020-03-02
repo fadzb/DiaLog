@@ -1,21 +1,10 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, View, Textarea } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, View } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { ActivityInput } from './ActivityInput';
 import ActivityAddButton from './ActivityAddButton';
-import { getIcon } from '../utils/IconUtils';
-import { AbstractChart } from 'react-native-chart-kit';
-import { Keyboard } from 'react-native';
 import { makeNotesFromItem } from '../utils/ActivityLogUtils';
 
 interface ActivityFormProps {

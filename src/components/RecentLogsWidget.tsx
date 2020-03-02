@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Switch, Text, Card, CardItem, List, ListItem } from 'native-base';
-import { Widget } from '../typings/Widget';
+import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
 
 interface RecentLogsWidgetProps {

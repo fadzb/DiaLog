@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import { CarbScreen } from '../screens/CarbScreen';
@@ -6,8 +5,6 @@ import LogActScreen from '../screens/LogActScreen';
 import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
 import ProfileScreen from '../screens/ProfileScreen';
-import { HeaderBackButton } from 'react-navigation-stack';
-import { NavigationActions } from 'react-navigation';
 
 export const TabNavigator = createBottomTabNavigator(
   {
@@ -76,23 +73,23 @@ export const TabNavigator = createBottomTabNavigator(
 );
 
 TabNavigator.navigationOptions = ({ navigation }: any) => {
-  const { routeName } = navigation.state.routes[navigation.state.index];
+  // const { routeName } = navigation.state.routes[navigation.state.index];
 
   // You can do whatever you like here to pick the title based on the route name
-  const headerTitle = routeName;
+  // const headerTitle = routeName;
 
-  const backAction = NavigationActions.back({
-    key: null,
-  });
+  // const backAction = NavigationActions.back({
+  //   key: null,
+  // });
 
-  const headerLeft = (
-    <HeaderBackButton
-      backTitleVisible={true}
-      onPress={() => {
-        navigation.goBack(null);
-      }}
-    />
-  );
+  // const headerLeft = (
+  //   <HeaderBackButton
+  //     backTitleVisible={true}
+  //     onPress={() => {
+  //       navigation.goBack(null);
+  //     }}
+  //   />
+  // );
 
   return {
     // headerTitle, //Uncomment to show Screen names in header

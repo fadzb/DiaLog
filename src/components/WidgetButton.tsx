@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Switch, Text } from 'native-base';
+import { View, Text } from 'native-base';
 import { Widget } from '../typings/Widget';
 import { styles } from '../styles/HomeScreen';
 import { TouchableOpacity } from 'react-native';

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Switch, Text, Badge } from 'native-base';
-import { Widget } from '../typings/Widget';
+import { Badge } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
 interface ActivityAddButtonProps {

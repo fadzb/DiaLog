@@ -1,18 +1,5 @@
 import * as React from 'react';
-import {
-  Container,
-  Header,
-  Content,
-  Title,
-  Button,
-  Text,
-  View,
-  Card,
-  CardItem,
-  List,
-  ListItem,
-} from 'native-base';
-import { styles } from '../styles/ViewActScreen';
+import { Button, Text, View } from 'native-base';
 import { ActivityChart } from '../components/ActivityChart';
 import { addName } from '../actions/actions';
 import { connect } from 'react-redux';

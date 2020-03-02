@@ -1,7 +1,6 @@
 import { asyncGetAllKeys, asyncMultiGetItems } from '../storage/AsyncStorage';
 import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
-import { type } from 'os';
 import { FoodItem } from '../typings/FoodItem';
 
 export function makeNotesFromItem(item: FoodItem) {

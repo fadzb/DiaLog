@@ -7,7 +7,9 @@ export const getDisabledWidgets = (widgets: Widget[]) => {
   const disabledWidgets: Widget[] = [];
 
   widgets.forEach(widget => {
-    if (!widget.enabled && !widget.onTabBar) disabledWidgets.push(widget);
+    if (!widget.enabled && !widget.onTabBar) {
+      disabledWidgets.push(widget);
+    }
   });
 
   return disabledWidgets;

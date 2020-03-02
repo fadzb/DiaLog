@@ -1,6 +1,5 @@
 import { colors } from '../colors';
 import { StyleSheet } from 'react-native';
-import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 
 export const styles = StyleSheet.create({
   container: {

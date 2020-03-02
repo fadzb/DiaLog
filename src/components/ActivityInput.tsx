@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, View } from 'native-base';
-import DateTimeInput from './DateTimeInput';
-import { Log } from '../typings/Log';
-import { FoodItem } from '../typings/FoodItem';
+import { Item, Input, Text, Badge, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 
 interface ActivityInputProps {}

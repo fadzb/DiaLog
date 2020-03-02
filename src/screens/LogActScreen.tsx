@@ -1,12 +1,9 @@
 import * as React from 'react';
-import { Container, Header, Content, Title } from 'native-base';
-import { styles } from '../styles/LogActScreen';
 import { ActivityForm } from '../components/ActivityForm';
 import { addLog } from '../actions/actions';
 import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { DateUtils } from '../utils/DateUtils';
-import { ScrollView, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface LogActScreenProps {

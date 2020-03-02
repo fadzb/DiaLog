@@ -1,6 +1,6 @@
 import rootReducer from './reducers/reducer';
 import { createStore } from 'redux';
-import { recentLogsWidget, tempWidget, trainWidget, chatWidget, WIDGETS } from './typings/Widget';
+import { WIDGETS } from './typings/Widget';
 import { AsyncStorage } from 'react-native';
 import { persistStore, persistReducer } from 'redux-persist';
 

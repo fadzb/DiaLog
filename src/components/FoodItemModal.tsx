@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image } from 'react-native';
 import { View, Text, Button } from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
 import Modal from 'react-native-modal';
-import { colors } from '../colors';
 
 interface FoodItemModalProps {
   navigation: any;
