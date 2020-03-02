@@ -549,15 +549,15 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.2)
   - RNDateTimePicker (2.1.0):
     - React
-  - RNFBApp (6.2.0):
+  - RNFBApp (6.3.4):
     - Firebase/Core (~> 6.13.0)
     - React
-  - RNFBAuth (6.2.0):
+  - RNFBAuth (6.3.4):
     - Firebase/Auth (~> 6.13.0)
     - Firebase/Core (~> 6.13.0)
     - React
     - RNFBApp
-  - RNFBFirestore (6.2.0):
+  - RNFBFirestore (6.3.4):
     - Firebase/Core (~> 6.13.0)
     - Firebase/Firestore (~> 6.13.0)
     - React
@@ -565,6 +565,7 @@ PODS:
   - RNFBMLVision (6.3.4):
     - Firebase/Core (~> 6.13.0)
     - Firebase/MLVision (~> 6.13.0)
+    - Firebase/MLVisionLabelModel (~> 6.13.0)
     - React
     - RNFBApp
   - RNGestureHandler (1.5.0):
@@ -784,10 +785,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   RNDateTimePicker: 9db00606d689f5653f08aa601c81b9d3266a0a19
-  RNFBApp: 5b215aacc09105a1761de31b9a0eb2abcce06253
-  RNFBAuth: 61673c0d38ce225c315e7be13a1b494904baedd2
-  RNFBFirestore: 5de4ae898df51a3ecc16a45db15019836c5cec87
-  RNFBMLVision: 94a2deb9e20556b1963c6c2c046de39120d3c1c3
+  RNFBApp: 7d4006751de8bb5cafa2e8d2e7d94ee250df81db
+  RNFBAuth: ed8b865db45f7ded9dbf535e390cba2ba672aede
+  RNFBFirestore: 04c1eb90463c208ee072988d463c74bec09d08c1
+  RNFBMLVision: 41a66d4a50813e270e96e1c06be64b4ee7f41693
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
