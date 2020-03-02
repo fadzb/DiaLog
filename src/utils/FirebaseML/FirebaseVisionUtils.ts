@@ -1,6 +1,12 @@
 import vision from '@react-native-firebase/ml-vision';
+import { fakeLabels } from './FakeLabels';
+import { badLabels } from './BadLabels';
 
 const VISION_API_KEY = 'AIzaSyA6xJ8Rewe6YgTfiQyDeXJXJBlCDdOXR5M';
+
+export const getFakeLabels = () => {
+  return fakeLabels;
+};
 
 export const getLabels = async (filePath: string) => {
   try {
@@ -13,11 +19,12 @@ export const getLabels = async (filePath: string) => {
   }
 };
 
-export const filterLabels = (labels: any) => {
-  // Remove generic labels (i.e. food, fruit, veg)
+export const filterLabels = (labels: any, numLabels: number) => {
   let filteredLabels;
 
-  filteredLabels = labels.filter((label: any) => label !== 'food');
+  // Filter out generic labels
+  filteredLabels = labels.filter((label: any) => !badLabels.includes(label));
 
-  return filteredLabels;
+  // Return top n lables
+  return filteredLabels.slice(0, numLabels);
 };

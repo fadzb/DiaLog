@@ -11,13 +11,15 @@ import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
 import { getActiveChildNavigationOptions } from 'react-navigation';
-import { getLabels, filterLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
+import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
 
 const ML_ENABLED = false;
+const NUM_LABELS = 5;
 
 interface ScannerProps {
   navigation: any;
+  updateLabels: (labels: string[]) => void;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -34,9 +36,6 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     torchOn: false,
     item: FoodItemInstance,
     modalVisible: false,
-
-    //ML
-    labels: [],
   };
 
   // TODO: Handle EAN-13 Barcodes (need to use different API)
@@ -74,18 +73,20 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     }
   }
 
-  // TODO: Need to store the image correctly and procees (Image Recognition Feature)
-  // TODO: Test on Android
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
         const data = await this.camera.takePictureAsync(options);
-        console.log(data.uri);
 
+        // Close the camera
+        this.closeCamera();
+
+        // Perfrom Image Recognition
         if (ML_ENABLED) {
-          getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels)));
+          getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels, NUM_LABELS)));
         } else {
+          this.setLabels(filterLabels(getFakeLabels(), NUM_LABELS));
         }
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
@@ -94,9 +95,8 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   };
 
   setLabels = (labels: any) => {
-    this.setState({
-      labels: labels,
-    });
+    // Callback fn which updates labels and renders them as options
+    this.props.updateLabels(labels);
   };
 
   openCamera = () => {
@@ -112,11 +112,6 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   };
 
   render() {
-    if (this.state.labels) {
-      this.state.labels.forEach(label => {
-        console.log(label.text + ' with confidence: ' + label.confidence);
-      });
-    }
     if (this.state.show) {
       return (
         <View style={styles.scannerContainer}>
