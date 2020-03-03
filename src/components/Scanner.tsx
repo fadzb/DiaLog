@@ -10,10 +10,15 @@ import { getIcon } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
+import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
+
+const ML_ENABLED = true;
+const NUM_LABELS = 5;
 
 interface ScannerProps {
   navigation: any;
+  updateLabels: (labels: string[]) => void;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -67,18 +72,30 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     }
   }
 
-  // TODO: Need to store the image correctly and procees (Image Recognition Feature)
-  // TODO: Test on Android
   takePicture = async () => {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
         const data = await this.camera.takePictureAsync(options);
-        console.log(data.uri);
+
+        // Close the camera
+        this.closeCamera();
+
+        // Perfrom Image Recognition
+        if (ML_ENABLED) {
+          getLabels(data.uri).then(labels => this.setLabels(filterLabels(labels, NUM_LABELS)));
+        } else {
+          this.setLabels(filterLabels(getFakeLabels(), NUM_LABELS));
+        }
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }
     }
+  };
+
+  setLabels = (labels: any) => {
+    // Callback fn which updates labels and renders them as options
+    this.props.updateLabels(labels);
   };
 
   openCamera = () => {
@@ -104,7 +121,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
               ref={ref => {
                 this.camera = ref;
               }}
-              flashMode={RNCamera.Constants.FlashMode.on}
+              flashMode={RNCamera.Constants.FlashMode.off}
               androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
               androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
               captureAudio={false}

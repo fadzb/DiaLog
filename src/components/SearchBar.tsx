@@ -5,6 +5,7 @@ interface SearchBarProps {
   handleSubmit: (search: string) => void;
   placeholder: string;
   handleClear: () => void;
+  value: string;
 }
 
 export class SearchBar extends React.Component<SearchBarProps> {
@@ -13,7 +14,7 @@ export class SearchBar extends React.Component<SearchBarProps> {
   }
 
   state = {
-    search: '',
+    search: this.props.value || '',
   };
 
   handleSearchBar = (search: string) => {
@@ -27,6 +28,13 @@ export class SearchBar extends React.Component<SearchBarProps> {
   handleSubmit = () => {
     //only use callback (and force re-render of parent component) when text is submitted
     this.props.handleSubmit(this.state.search);
+  };
+
+  // When we pass a label from image recog
+  componentDidUpdate = (prevProps: any) => {
+    if (prevProps.value != this.props.value) {
+      this.setState({ search: this.props.value });
+    }
   };
 
   render() {
