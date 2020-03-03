@@ -7,3 +7,5 @@ export const UPDATE_WIDGET = 'UPDATE_WIDGET';
 export const CLEAR_LOGS = 'CLEAR_LOGS';
 
 export const ADD_CHANNEL_KEY = 'ADD_CHANNEL_KEY';
+
+export const SET_CHO_RATIO = 'SET_CHO_RATIO';

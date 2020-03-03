@@ -8,12 +8,14 @@ import { styles } from '../styles/CarbScreen';
 import { View } from 'native-base';
 import { MLKitLabels } from '../components/MLKitLabels';
 import { connect } from 'react-redux';
+import { setChoRatio } from '../actions/actions';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
 interface CarbScreenProps {
   navigation: any;
   choRatio: number;
+  setChoRatio: (ratio: number) => void;
 }
 
 class CarbScreen extends React.Component<CarbScreenProps> {
@@ -105,7 +107,11 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => {
-  return {};
+  return {
+    setChoRatio: (ratio: number) => {
+      dispatch(setChoRatio(ratio));
+    },
+  };
 };
 
 export default connect(

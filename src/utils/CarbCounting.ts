@@ -1,8 +1,8 @@
 // 1 unit per 10g Carbs
-export const DEFAULT_CHO_RATIO = 1 / 10;
+export const DEFAULT_CHO_RATIO = 10;
 
 export const suggestInsulinDose = (cho: number, ratio: number, currentGlucose?: number) => {
-  let suggestion = cho * ratio;
+  let suggestion = cho / ratio;
 
   // Use current glucose levels to determine if correction dose required
   if (currentGlucose) suggestion = applyCorrectionDose(suggestion, currentGlucose);

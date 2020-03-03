@@ -1,12 +1,21 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS, ADD_CHANNEL_KEY } from '../actions/types';
+import {
+  ADD_NAME,
+  ADD_LOG,
+  UPDATE_WIDGET,
+  CLEAR_LOGS,
+  ADD_CHANNEL_KEY,
+  SET_CHO_RATIO,
+} from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
+// just acts an interface to state => actual initial state defined in store.ts
 const initialState: any = {
   name: '',
   logs: [],
   widgets: [],
   channelKey: '',
+  choRatio: 0,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -66,6 +75,13 @@ const rootReducer = (state = initialState, action: any) => {
       const newKey = action.payload;
 
       return { ...state, channelKey: newKey };
+    }
+
+    case SET_CHO_RATIO: {
+      // new ratio:
+      const newRatio = action.payload;
+
+      return { ...state, choRatio: newRatio };
     }
 
     //Default

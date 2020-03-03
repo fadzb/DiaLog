@@ -1,4 +1,11 @@
-import { ADD_NAME, ADD_LOG, UPDATE_WIDGET, CLEAR_LOGS, ADD_CHANNEL_KEY } from './types';
+import {
+  ADD_NAME,
+  ADD_LOG,
+  UPDATE_WIDGET,
+  CLEAR_LOGS,
+  ADD_CHANNEL_KEY,
+  SET_CHO_RATIO,
+} from './types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
 
@@ -33,5 +40,12 @@ export const addChannelKey = (key: string) => {
   return {
     type: ADD_CHANNEL_KEY,
     payload: key,
+  };
+};
+
+export const setChoRatio = (ratio: number) => {
+  return {
+    type: SET_CHO_RATIO,
+    payload: ratio,
   };
 };
