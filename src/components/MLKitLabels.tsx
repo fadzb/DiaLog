@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, Button, Icon, Card, CardItem } from 'native-base';
-import { TrainModule } from '../typings/TrainModule';
 import { TouchableOpacity } from 'react-native';
 import { getIcon } from '../utils/IconUtils';
 

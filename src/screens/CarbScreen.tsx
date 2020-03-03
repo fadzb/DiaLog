@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SearchBar } from '../components/SearchBar';
 import { FoodList } from '../components/FoodList';
 import { Scanner } from '../components/Scanner';

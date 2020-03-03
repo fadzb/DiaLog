@@ -10,7 +10,6 @@ import { getIcon } from '../utils/IconUtils';
 import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
-import { getActiveChildNavigationOptions } from 'react-navigation';
 import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
 
