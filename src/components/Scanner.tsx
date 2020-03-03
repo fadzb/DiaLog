@@ -14,7 +14,7 @@ import { getActiveChildNavigationOptions } from 'react-navigation';
 import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 const zebra = require('../utils/zebra.js');
 
-const ML_ENABLED = false;
+const ML_ENABLED = true;
 const NUM_LABELS = 5;
 
 interface ScannerProps {
@@ -122,7 +122,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
               ref={ref => {
                 this.camera = ref;
               }}
-              flashMode={RNCamera.Constants.FlashMode.on}
+              flashMode={RNCamera.Constants.FlashMode.off}
               androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
               androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
               captureAudio={false}
