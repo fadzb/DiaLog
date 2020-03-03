@@ -19,6 +19,7 @@ const NUM_LABELS = 5;
 interface ScannerProps {
   navigation: any;
   updateLabels: (labels: string[]) => void;
+  choRatio: number;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -163,6 +164,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             item={this.state.item}
             handleModalClose={() => {}}
             ref={ref => (this.modalRef = ref)}
+            choRatio={this.props.choRatio}
           />
         )}
         <View style={[styles.bottom, { marginBottom: 40 }]}>

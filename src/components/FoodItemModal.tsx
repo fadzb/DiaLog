@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import { View, Text, Button } from 'native-base';
+import { View, Text, Button, Badge } from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
 import Modal from 'react-native-modal';
+import { DAFNESuggestion } from './DAFNESuggestion';
+import { suggestInsulinDose } from '../utils/CarbCounting';
 
 interface FoodItemModalProps {
   navigation: any;
   item: FoodItem;
   handleModalClose: () => void;
+  choRatio: number;
 }
 
 export class FoodItemModal extends React.Component<FoodItemModalProps> {
@@ -50,6 +53,11 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           <View style={styles.row}>
             <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
             <Text style={{ fontSize: 30, marginLeft: 20 }}>{this.props.item.name}</Text>
+            <View style={{ marginLeft: 'auto' }}>
+              <DAFNESuggestion>
+                {suggestInsulinDose(Number(this.props.item.cho), this.props.choRatio)}
+              </DAFNESuggestion>
+            </View>
           </View>
 
           {/* Nutrtional info */}

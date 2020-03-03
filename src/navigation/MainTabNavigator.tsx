@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import { CarbScreen } from '../screens/CarbScreen';
+import CarbScreen from '../screens/CarbScreen';
 import LogActScreen from '../screens/LogActScreen';
 import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';

@@ -7,14 +7,16 @@ import { SafeAreaView } from 'react-navigation';
 import { styles } from '../styles/CarbScreen';
 import { View } from 'native-base';
 import { MLKitLabels } from '../components/MLKitLabels';
+import { connect } from 'react-redux';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
 interface CarbScreenProps {
   navigation: any;
+  choRatio: number;
 }
 
-export class CarbScreen extends React.Component<CarbScreenProps> {
+class CarbScreen extends React.Component<CarbScreenProps> {
   foodListRef: any;
 
   constructor(props: any) {
@@ -78,12 +80,35 @@ export class CarbScreen extends React.Component<CarbScreenProps> {
                 ref={ref => (this.foodListRef = ref)}
                 navigation={this.props.navigation}
                 query={this.state.query}
+                choRatio={this.props.choRatio}
               />
             </View>
           </ScrollView>
         </SafeAreaView>
-        <Scanner navigation={this.props.navigation} updateLabels={this.handleLabels} />
+        <Scanner
+          navigation={this.props.navigation}
+          updateLabels={this.handleLabels}
+          choRatio={this.props.choRatio}
+        />
       </View>
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    name: state.name,
+    widgets: state.widgets,
+    logs: state.logs,
+    choRatio: state.choRatio,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CarbScreen);

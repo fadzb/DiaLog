@@ -10,6 +10,7 @@ interface FoodItemContainerProps {
   navigation: any;
   item: FoodItem;
   key: string;
+  choRatio: string;
 }
 
 export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
@@ -66,6 +67,7 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
             item={this.props.item}
             handleModalClose={this.handleModalClose}
             ref={ref => (this.modalRef = ref)}
+            choRatio={this.props.choRatio}
           />
         )}
         <View style={styles.row}>
