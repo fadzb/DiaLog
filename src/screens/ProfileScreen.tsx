@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Card, CardItem, Left, Thumbnail, Text, Body, Input, Row } from 'native-base';
+import { View, Card, CardItem, Left, Thumbnail, Text, Body, Input, Row, Button } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { setChoRatio } from '../actions/actions';
 import NumericInput from 'react-native-numeric-input';
 import { DEFAULT_CHO_RATIO } from '../utils/CarbCounting';
+import store from '../store';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -44,6 +45,15 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
 
   handleChoRatioInput = (value: number) => {
     this.setState({ choRatioInput: value });
+    this.props.setChoRatio(value);
+  };
+
+  clearApp = () => {
+    store
+      .getPersistor()
+      .purge()
+      .then(() => console.log('App Cleared.'))
+      .catch(error => console.log(error));
   };
 
   render() {
@@ -88,7 +98,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 'auto' }}>
               <Text>1 Unit : </Text>
               <NumericInput
-                value={this.props.choRatio}
+                value={this.state.choRatioInput}
                 type="up-down"
                 onChange={this.handleChoRatioInput}
                 // onChange={value => this.props.setChoRatio(value)}
@@ -105,6 +115,19 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
               />
               <Text> g</Text>
             </View>
+          </CardItem>
+        </Card>
+
+        {/* Other Settings */}
+        <Card>
+          <CardItem header bordered>
+            <Text>Other Settings</Text>
+          </CardItem>
+
+          <CardItem>
+            <Button onPress={this.clearApp}>
+              <Text>Clear App Memory (Purge Redux)</Text>
+            </Button>
           </CardItem>
         </Card>
       </View>
