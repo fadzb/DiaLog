@@ -128,7 +128,6 @@ export class Scanner extends React.PureComponent<ScannerProps> {
       return (
         <View style={styles.scannerContainer}>
           <View style={styles.ncontainer}>
-            {this.state.showSpinner && <Spinner size={'large'} color="blue" />}
             <RNCamera
               style={styles.npreview}
               type={RNCamera.Constants.Type.back}
@@ -147,6 +146,13 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                 }
                 return (
                   <View>
+                    {this.state.showSpinner && (
+                      <Spinner
+                        style={{ alignSelf: 'center', marginBottom: 'auto' }}
+                        size={'large'}
+                        color="blue"
+                      />
+                    )}
                     <View style={styles.torch}>
                       <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
                         {getIcon('flashlight')}
