@@ -4,8 +4,8 @@ import { TouchableOpacity } from 'react-native';
 import { getIcon } from '../utils/IconUtils';
 
 interface MLKitLabelsProps {
-  labels: string[];
-  onPress: (label: string) => void;
+  labels: any[];
+  onPress: (labelText: string) => void;
   closeLabels: () => void;
 }
 
@@ -21,7 +21,7 @@ export class MLKitLabels extends React.Component<MLKitLabelsProps> {
       <View>
         <Card>
           <CardItem header>
-            <Text>Image Recognition Detected Foods:</Text>
+            <Text>Foods Detected:</Text>
             <TouchableOpacity
               onPress={this.props.closeLabels}
               style={{ position: 'absolute', right: 10 }}
@@ -29,10 +29,10 @@ export class MLKitLabels extends React.Component<MLKitLabelsProps> {
               {getIcon('close')}
             </TouchableOpacity>
           </CardItem>
-          {labels.map((label: string, index: any) => {
+          {labels.map((label: any, index: any) => {
             return (
-              <Button iconRight light key={index} onPressOut={() => this.props.onPress(label)}>
-                <Text>{label}</Text>
+              <Button iconRight light key={index} onPressOut={() => this.props.onPress(label.text)}>
+                <Text>{label.text}</Text>
                 <Icon name="arrow-forward" />
               </Button>
             );

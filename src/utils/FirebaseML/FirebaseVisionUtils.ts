@@ -23,7 +23,7 @@ export const filterLabels = (labels: any, numLabels: number) => {
   let filteredLabels;
 
   // Filter out generic labels
-  filteredLabels = labels.filter((label: any) => !badLabels.includes(label));
+  filteredLabels = labels.filter((label: any) => !badLabels.includes(label.text));
 
   // Return top n lables
   return filteredLabels.slice(0, numLabels);

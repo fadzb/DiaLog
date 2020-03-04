@@ -2,7 +2,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
-const API_ENABLED = false;
+const API_ENABLED = true;
 
 const headers = {
   'Content-Type': 'application/json',
