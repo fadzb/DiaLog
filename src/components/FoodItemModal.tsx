@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import { View, Text, Button, Badge } from 'native-base';
+import { View, Text, Button } from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
 import Modal from 'react-native-modal';

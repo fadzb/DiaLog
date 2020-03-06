@@ -8,7 +8,9 @@ export const suggestInsulinDose = (cho: number, ratio: number, currentGlucose?: 
   let suggestion = cho / ratio;
 
   // Use current glucose levels to determine if correction dose required
-  if (currentGlucose) suggestion = applyCorrectionDose(suggestion, currentGlucose);
+  if (currentGlucose) {
+    suggestion = applyCorrectionDose(suggestion, currentGlucose);
+  }
 
   // Round down to nearest .5
   suggestion = Math.floor(suggestion * 2) / 2;

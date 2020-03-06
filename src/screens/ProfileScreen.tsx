@@ -1,17 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Card,
-  CardItem,
-  Left,
-  Thumbnail,
-  Text,
-  Body,
-  Input,
-  Row,
-  Button,
-  Switch,
-} from 'native-base';
+import { View, Card, CardItem, Left, Thumbnail, Text, Body, Button, Switch } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
@@ -20,7 +8,6 @@ import { dispatchUpdateWidget, getWidgetById } from '../utils/WidgetUtils';
 import { connect } from 'react-redux';
 import { setChoRatio, setInsulinSuggestions } from '../actions/actions';
 import NumericInput from 'react-native-numeric-input';
-import { DEFAULT_CHO_RATIO } from '../utils/CarbCounting';
 import store from '../store';
 
 interface ProfileScreenProps {
