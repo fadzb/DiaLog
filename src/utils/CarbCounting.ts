@@ -1,6 +1,9 @@
 // 1 unit per 10g Carbs
 export const DEFAULT_CHO_RATIO = 10;
 
+// toggle off by default
+export const DEFAULT_INSULIN_SUGGESTIONS = false;
+
 export const suggestInsulinDose = (cho: number, ratio: number, currentGlucose?: number) => {
   let suggestion = cho / ratio;
 

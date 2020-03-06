@@ -5,6 +5,7 @@ import {
   CLEAR_LOGS,
   ADD_CHANNEL_KEY,
   SET_CHO_RATIO,
+  SET_INSULIN_SUGGESTIONS,
 } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
@@ -16,6 +17,7 @@ const initialState: any = {
   widgets: [],
   channelKey: '',
   choRatio: 0,
+  insulinSuggestions: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -82,6 +84,12 @@ const rootReducer = (state = initialState, action: any) => {
       const newRatio = action.payload;
 
       return { ...state, choRatio: newRatio };
+    }
+
+    case SET_INSULIN_SUGGESTIONS: {
+      const newValue = action.payload;
+
+      return { ...state, insulinSuggestions: newValue };
     }
 
     //Default

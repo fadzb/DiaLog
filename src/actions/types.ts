@@ -9,3 +9,5 @@ export const CLEAR_LOGS = 'CLEAR_LOGS';
 export const ADD_CHANNEL_KEY = 'ADD_CHANNEL_KEY';
 
 export const SET_CHO_RATIO = 'SET_CHO_RATIO';
+
+export const SET_INSULIN_SUGGESTIONS = 'SET_INSULIN_SUGGESTIONS';

@@ -3,13 +3,14 @@ import { createStore } from 'redux';
 import { WIDGETS } from './typings/Widget';
 import { AsyncStorage } from 'react-native';
 import { persistStore, persistReducer } from 'redux-persist';
-import { DEFAULT_CHO_RATIO } from './utils/CarbCounting';
+import { DEFAULT_CHO_RATIO, DEFAULT_INSULIN_SUGGESTIONS } from './utils/CarbCounting';
 
 const initialState: any = {
   name: '',
   logs: [],
   widgets: WIDGETS,
   choRatio: DEFAULT_CHO_RATIO,
+  insulinSuggestions: DEFAULT_INSULIN_SUGGESTIONS,
 };
 
 // export default createStore(rootReducer, initialState);

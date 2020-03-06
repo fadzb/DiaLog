@@ -11,6 +11,7 @@ interface FoodItemContainerProps {
   item: FoodItem;
   key: string;
   choRatio: string;
+  insulinSuggestions: boolean;
 }
 
 export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
@@ -68,6 +69,7 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
             handleModalClose={this.handleModalClose}
             ref={ref => (this.modalRef = ref)}
             choRatio={this.props.choRatio}
+            insulinSuggestions={this.props.insulinSuggestions}
           />
         )}
         <View style={styles.row}>

@@ -5,6 +5,7 @@ import {
   CLEAR_LOGS,
   ADD_CHANNEL_KEY,
   SET_CHO_RATIO,
+  SET_INSULIN_SUGGESTIONS,
 } from './types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
@@ -47,5 +48,12 @@ export const setChoRatio = (ratio: number) => {
   return {
     type: SET_CHO_RATIO,
     payload: ratio,
+  };
+};
+
+export const setInsulinSuggestions = (value: boolean) => {
+  return {
+    type: SET_INSULIN_SUGGESTIONS,
+    payload: value,
   };
 };

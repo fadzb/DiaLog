@@ -15,6 +15,7 @@ const SEARCH_PLACEHOLDER = 'Search for Food';
 interface CarbScreenProps {
   navigation: any;
   choRatio: number;
+  insulinSuggestions: boolean;
   setChoRatio: (ratio: number) => void;
 }
 
@@ -83,6 +84,7 @@ class CarbScreen extends React.Component<CarbScreenProps> {
                 navigation={this.props.navigation}
                 query={this.state.query}
                 choRatio={this.props.choRatio}
+                insulinSuggestions={this.props.insulinSuggestions}
               />
             </View>
           </ScrollView>
@@ -103,6 +105,7 @@ const mapStateToProps = (state: any) => {
     widgets: state.widgets,
     logs: state.logs,
     choRatio: state.choRatio,
+    insulinSuggestions: state.insulinSuggestions,
   };
 };
 

@@ -8,6 +8,7 @@ interface FoodListProps {
   navigation: any;
   query: string;
   choRatio: number;
+  insulinSuggestions: boolean;
 }
 
 export class FoodList extends React.Component<FoodListProps> {
@@ -55,6 +56,7 @@ export class FoodList extends React.Component<FoodListProps> {
               item={item}
               key={index}
               choRatio={this.props.choRatio}
+              insulinSuggestions={this.props.insulinSuggestions}
             />
           );
         })}
