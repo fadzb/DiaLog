@@ -12,6 +12,7 @@ export const getLabels = async (filePath: string) => {
   try {
     const labels = await vision().cloudImageLabelerProcessImage(filePath, {
       apiKeyOverride: VISION_API_KEY,
+      confidenceThreshold: 0.8,
     });
     return labels;
   } catch (error) {
@@ -23,7 +24,7 @@ export const filterLabels = (labels: any, numLabels: number) => {
   let filteredLabels;
 
   // Filter out generic labels
-  filteredLabels = labels.filter((label: any) => !badLabels.includes(label));
+  filteredLabels = labels.filter((label: any) => !badLabels.includes(label.text));
 
   // Return top n lables
   return filteredLabels.slice(0, numLabels);

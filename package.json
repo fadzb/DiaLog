@@ -32,6 +32,7 @@
     "react-native-gifted-chat": "^0.13.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-modal": "^11.5.3",
+    "react-native-numeric-input": "^1.8.3",
     "react-native-paper": "^3.2.1",
     "react-native-reanimated": "^1.4.0",
     "react-native-router-flux": "^4.0.6",

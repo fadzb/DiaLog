@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button } from 'native-base';
+import { View, Text, Button, Spinner } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
 import {
@@ -11,6 +11,7 @@ import { requestFoodDetailsFromBarcode, parseFoodItemFromBarcode } from '../api/
 import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
 import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
+import { Alert } from 'react-native';
 const zebra = require('../utils/zebra.js');
 
 const ML_ENABLED = true;
@@ -19,6 +20,7 @@ const NUM_LABELS = 5;
 interface ScannerProps {
   navigation: any;
   updateLabels: (labels: string[]) => void;
+  choRatio: number;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -35,6 +37,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     torchOn: false,
     item: FoodItemInstance,
     modalVisible: false,
+    showSpinner: false,
   };
 
   // TODO: Handle EAN-13 Barcodes (need to use different API)
@@ -76,10 +79,10 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
-        const data = await this.camera.takePictureAsync(options);
+        // Render Spinner
+        this.setState({ showSpinner: true });
 
-        // Close the camera
-        this.closeCamera();
+        const data = await this.camera.takePictureAsync(options);
 
         // Perfrom Image Recognition
         if (ML_ENABLED) {
@@ -94,6 +97,16 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   };
 
   setLabels = (labels: any) => {
+    // No labels
+    if (!labels || labels.length < 1) {
+      Alert.alert('No Food Recognised. Please Try Again');
+      this.setState({ showSpinner: false });
+      return;
+    }
+
+    // ML async process finished: disable spinner and close camera
+    this.setState({ show: false, showSpinner: false });
+
     // Callback fn which updates labels and renders them as options
     this.props.updateLabels(labels);
   };
@@ -133,6 +146,13 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                 }
                 return (
                   <View>
+                    {this.state.showSpinner && (
+                      <Spinner
+                        style={{ alignSelf: 'center', marginBottom: 'auto' }}
+                        size={'large'}
+                        color="blue"
+                      />
+                    )}
                     <View style={styles.torch}>
                       <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
                         {getIcon('flashlight')}
@@ -163,6 +183,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             item={this.state.item}
             handleModalClose={() => {}}
             ref={ref => (this.modalRef = ref)}
+            choRatio={this.props.choRatio}
           />
         )}
         <View style={[styles.bottom, { marginBottom: 40 }]}>
