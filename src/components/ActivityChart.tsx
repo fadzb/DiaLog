@@ -8,6 +8,29 @@ import { DateUtils } from '../utils/DateUtils';
 import { getChartData } from '../utils/ChartUtils';
 import { Log } from '../typings/Log';
 import { styles } from '../styles/ViewActScreen';
+import Svg, {
+  Circle,
+  Ellipse,
+  G,
+  Text,
+  TSpan,
+  TextPath,
+  Path,
+  Polygon,
+  Polyline,
+  Line,
+  Rect,
+  Use,
+  Image,
+  Symbol,
+  Defs,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  ClipPath,
+  Pattern,
+  Mask,
+} from 'react-native-svg';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const CHART_CONFIG = {
@@ -60,14 +83,16 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
     return (
       <View style={styles.chartContainer}>
-        <StackedBarChart
+        {/* <StackedBarChart
           style={styles.chart}
           data={data}
           width={preview ? SCREEN_WIDTH - 40 : SCREEN_WIDTH}
           height={220}
           chartConfig={CHART_CONFIG}
           hideLegend={true}
-        />
+        /> */}
+
+        <Svg height="50%" width="50%" viewBox="0 0 100 100"></Svg>
       </View>
     );
   }
