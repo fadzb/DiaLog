@@ -51,16 +51,20 @@ const CHART_CONFIG = {
 
 // x-axis: TIME, y-axis: GLUCOSE VALUE
 const data = [
-  { x: new Date(2020, 3, 8), y: 10 },
-  { x: new Date(2020, 3, 7), y: 20 },
-  { x: new Date(2020, 3, 6), y: 10 },
-  { x: new Date(2020, 3, 5), y: 15 },
-  { x: new Date(2020, 3, 4), y: 5 },
+  { x: new Date() - 1000, y: 10 },
+  { x: new Date() - 1000 * 60 * 60, y: 20 },
+  { x: new Date() - 1000 * 60 * 60 * 3, y: 10 },
+  { x: new Date() - 1000 * 60 * 60 * 7, y: 15 },
+  { x: new Date() - 1000 * 60 * 60 * 11, y: 5 },
 ];
 
-// Scale x from newest log to oldest log
+// Scale x from -12 hours to now
+const oneDayInMS = 86400000;
+const endX = DateUtils.getTodaysDateTime();
+const startX = endX - oneDayInMS / 2;
+
 const scaleX = scaleTime()
-  .domain([new Date(2020, 3, 8), new Date(2020, 3, 4)])
+  .domain([startX, endX])
   .range([0 + innerHorizontalPadding, SCREEN_WIDTH - innerHorizontalPadding]);
 const scaleY = scaleLinear()
   .domain([0, 30])
@@ -102,9 +106,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
     const todaysLogs = getLogsFromReduxForDate(logs, DateUtils.getTodaysDateTime());
     // const data = getChartData(todaysLogs);
-
-    // console.log(data[2]);
-    console.log(scaleX(data[3].x));
+    console.log(new Date(startX));
 
     return (
       <View
