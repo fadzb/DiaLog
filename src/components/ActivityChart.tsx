@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Colors } from 'react-native-paper';
 import { StackedBarChart } from 'react-native-chart-kit';
 import { View } from 'native-base';
-import { Dimensions } from 'react-native';
+import { Dimensions, SafeAreaView } from 'react-native';
 import { getLogsForDate, getLogsFromReduxForDate } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { getChartData } from '../utils/ChartUtils';
@@ -31,7 +31,12 @@ import Svg, {
   Pattern,
   Mask,
 } from 'react-native-svg';
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { scaleTime, scaleLinear, scaleQuantile } from 'd3-scale';
+const horizontalPadding = 5;
+const innerHorizontalPadding = 10;
+const SCREEN_WIDTH = Dimensions.get('window').width - horizontalPadding;
+const height = 200;
+const verticalPadding = 5;
 
 const CHART_CONFIG = {
   backgroundGradientFrom: '#1E2923',
@@ -43,6 +48,23 @@ const CHART_CONFIG = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.3,
 };
+
+// x-axis: TIME, y-axis: GLUCOSE VALUE
+const data = [
+  { x: new Date(2020, 3, 8), y: 10 },
+  { x: new Date(2020, 3, 7), y: 20 },
+  { x: new Date(2020, 3, 6), y: 10 },
+  { x: new Date(2020, 3, 5), y: 15 },
+  { x: new Date(2020, 3, 4), y: 5 },
+];
+
+// Scale x from newest log to oldest log
+const scaleX = scaleTime()
+  .domain([new Date(2020, 3, 8), new Date(2020, 3, 4)])
+  .range([0 + innerHorizontalPadding, SCREEN_WIDTH - innerHorizontalPadding]);
+const scaleY = scaleLinear()
+  .domain([0, 30])
+  .range([height - verticalPadding, verticalPadding]);
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -79,20 +101,34 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const { preview, logs } = this.props;
 
     const todaysLogs = getLogsFromReduxForDate(logs, DateUtils.getTodaysDateTime());
-    const data = getChartData(todaysLogs);
+    // const data = getChartData(todaysLogs);
+
+    // console.log(data[2]);
+    console.log(scaleX(data[3].x));
 
     return (
-      <View style={styles.chartContainer}>
-        {/* <StackedBarChart
-          style={styles.chart}
-          data={data}
-          width={preview ? SCREEN_WIDTH - 40 : SCREEN_WIDTH}
-          height={220}
-          chartConfig={CHART_CONFIG}
-          hideLegend={true}
-        /> */}
-
-        <Svg height="50%" width="50%" viewBox="0 0 100 100"></Svg>
+      <View
+        style={{
+          marginTop: 5,
+          borderWidth: 1,
+          width: SCREEN_WIDTH,
+          height: height,
+          alignSelf: 'center',
+        }}
+      >
+        <Svg height={height} width={SCREEN_WIDTH}>
+          {data.map((dataPoint, index) => {
+            return (
+              <Circle
+                cx={scaleX(dataPoint.x)}
+                cy={scaleY(dataPoint.y)}
+                r="7"
+                fill="green"
+                key={index}
+              />
+            );
+          })}
+        </Svg>
       </View>
     );
   }
