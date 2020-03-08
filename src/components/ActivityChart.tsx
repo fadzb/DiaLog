@@ -32,6 +32,8 @@ import Svg, {
   Mask,
 } from 'react-native-svg';
 import { scaleTime, scaleLinear, scaleQuantile } from 'd3-scale';
+import * as shape from 'd3-shape';
+
 const horizontalPadding = 5;
 const innerHorizontalPadding = 10;
 const SCREEN_WIDTH = Dimensions.get('window').width - horizontalPadding;
@@ -69,6 +71,12 @@ const scaleX = scaleTime()
 const scaleY = scaleLinear()
   .domain([0, 30])
   .range([height - verticalPadding, verticalPadding]);
+
+const line = shape
+  .line()
+  .x((d: any) => scaleX(d.x))
+  .y((d: any) => scaleY(d.y))
+  .curve(shape.curveCardinal.tension(-0.5))(data);
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -119,6 +127,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
         }}
       >
         <Svg height={height} width={SCREEN_WIDTH}>
+          <Path d={line} fill="transparent" stroke="#367be2" strokeWidth={3} />
+
           {data.map((dataPoint, index) => {
             return (
               <Circle
