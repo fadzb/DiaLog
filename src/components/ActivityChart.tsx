@@ -34,12 +34,6 @@ const scaleY = scaleLinear()
   .domain([0, maxGlucose])
   .range([height - verticalPadding, verticalPadding]);
 
-// const line = shape
-//   .line()
-//   .x((d: any) => scaleX(d.x))
-//   .y((d: any) => scaleY(d.y))
-//   .curve(shape.curveCardinal.tension(-0.5))(this.state.logs);
-
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
 
@@ -178,10 +172,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   render() {
     const { preview, logs } = this.props;
-
-    const todaysLogs = getLogsFromReduxForDate(logs, DateUtils.getTodaysDateTime());
-
-    this.getData();
 
     return (
       <View
