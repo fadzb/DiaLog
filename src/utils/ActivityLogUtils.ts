@@ -31,6 +31,24 @@ export function getLogsFromReduxForDate(logs: Log[], dateTime: Date) {
   return logsToReturn;
 }
 
+export function getLogsFromLastxHours(logs: Log[], lastxHours: number) {
+  const logsToReturn: Log[] = [];
+
+  logs.forEach((log: Log) => {
+    // log.time = new Date(log.time); // Uncommenting for now (FIXME: MIGHT BREAK SOMETHING)
+
+    // Check difference between date of log and now
+    const differenceInMS = new Date().getTime() - new Date(log.time).getTime();
+    const differenceInHours = Math.floor(differenceInMS / 1000 / 60 / 60);
+
+    if (differenceInHours <= lastxHours) {
+      logsToReturn.push(log);
+    }
+  });
+
+  return sortByDateAscending(logsToReturn);
+}
+
 // UNUSED (Used only for AsyncStorate API)
 // returns a promise containing filtered logs for a selected date
 export async function getLogsForDate(dateTime: Date) {

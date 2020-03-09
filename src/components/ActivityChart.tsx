@@ -1,64 +1,26 @@
 import * as React from 'react';
-import { Colors } from 'react-native-paper';
-import { StackedBarChart } from 'react-native-chart-kit';
 import { View } from 'native-base';
-import { Dimensions, SafeAreaView } from 'react-native';
-import { getLogsForDate, getLogsFromReduxForDate } from '../utils/ActivityLogUtils';
+import { Dimensions } from 'react-native';
+import {
+  getLogsForDate,
+  getLogsFromReduxForDate,
+  getLogsFromLastxHours,
+} from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
-import { getChartData } from '../utils/ChartUtils';
 import { Log } from '../typings/Log';
 import { styles } from '../styles/ViewActScreen';
-import Svg, {
-  Circle,
-  Ellipse,
-  G,
-  Text,
-  TSpan,
-  TextPath,
-  Path,
-  Polygon,
-  Polyline,
-  Line,
-  Rect,
-  Use,
-  Image,
-  Symbol,
-  Defs,
-  LinearGradient,
-  RadialGradient,
-  Stop,
-  ClipPath,
-  Pattern,
-  Mask,
-} from 'react-native-svg';
-import { scaleTime, scaleLinear, scaleQuantile } from 'd3-scale';
+import Svg, { Circle, G, Text, Path, Line } from 'react-native-svg';
+import { scaleTime, scaleLinear } from 'd3-scale';
 import * as shape from 'd3-shape';
 
 const horizontalPadding = 5;
 const innerHorizontalPadding = 10;
+const outerVerticalPadding = 10; //To allow space for svg line labels (timestamps)
 const SCREEN_WIDTH = Dimensions.get('window').width - horizontalPadding;
 const height = 200;
 const verticalPadding = 5;
-
-const CHART_CONFIG = {
-  backgroundGradientFrom: '#1E2923',
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
-  backgroundGradientToOpacity: 0.5,
-  color: () => Colors.redA100,
-  labelColor: () => Colors.black,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.3,
-};
-
-// x-axis: TIME, y-axis: GLUCOSE VALUE
-const data = [
-  { x: new Date() - 1000, y: 10 },
-  { x: new Date() - 1000 * 60 * 60, y: 20 },
-  { x: new Date() - 1000 * 60 * 60 * 3, y: 10 },
-  { x: new Date() - 1000 * 60 * 60 * 7, y: 15 },
-  { x: new Date() - 1000 * 60 * 60 * 11, y: 5 },
-];
+const maxGlucose = 30;
+const timeSpan = 12; // Show logs over last x hours
 
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
@@ -69,14 +31,14 @@ const scaleX = scaleTime()
   .domain([startX, endX])
   .range([0 + innerHorizontalPadding, SCREEN_WIDTH - innerHorizontalPadding]);
 const scaleY = scaleLinear()
-  .domain([0, 30])
+  .domain([0, maxGlucose])
   .range([height - verticalPadding, verticalPadding]);
 
-const line = shape
-  .line()
-  .x((d: any) => scaleX(d.x))
-  .y((d: any) => scaleY(d.y))
-  .curve(shape.curveCardinal.tension(-0.5))(data);
+// const line = shape
+//   .line()
+//   .x((d: any) => scaleX(d.x))
+//   .y((d: any) => scaleY(d.y))
+//   .curve(shape.curveCardinal.tension(-0.5))(this.state.logs);
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -109,27 +71,139 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     this.setState({ logs });
   };
 
+  //Get glucose data from logs and make suitable for svg
+  getData = () => {
+    const data: any = [];
+    const logs = getLogsFromLastxHours(this.props.logs, timeSpan);
+
+    logs.forEach(log => {
+      data.push({ x: log.time, y: log.glucose });
+    });
+
+    return data;
+  };
+
+  getTimeStamps = () => {
+    //get current time
+    const dateTimeNow = DateUtils.getTodaysDateTime();
+    const hoursNow = dateTimeNow.getHours() + 1; // Add 1-hour padding
+
+    //return a list starting at 12 hours ago and ending at current hour
+    const timeStamps = [];
+    for (let i = timeSpan; i > 0; i--) {
+      timeStamps.push(hoursNow - i);
+    }
+
+    return timeStamps;
+  };
+
+  shouldRenderTimeStamp = (timeStamp: number) => {
+    if (timeStamp % 3 == 0) {
+      return true;
+    }
+    return false;
+  };
+
+  createGridLines = () => {
+    let gridLines = [];
+    const timeStamps = this.getTimeStamps();
+
+    for (let i = 0; i < timeSpan; i++) {
+      // X varies from starting x (i=0) to last x (i=12) => 12 lines
+      const x = (SCREEN_WIDTH / timeSpan) * i;
+
+      gridLines.push(
+        <G>
+          <Line
+            x1={x}
+            y1="0"
+            x2={x}
+            y2={height}
+            stroke="black"
+            strokeWidth="0.2"
+            key={`grindLine-${i}`}
+          />
+          {/* Only render timestamp every 3 hours */}
+          {this.shouldRenderTimeStamp(timeStamps[i]) && (
+            <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
+              {`${timeStamps[i]}:00`}
+            </Text>
+          )}
+        </G>,
+      );
+    }
+
+    return gridLines;
+  };
+
+  // Y-axis labels
+  createGridLabels = () => {
+    let gridLabels = [];
+    const numLabels = 6;
+
+    // Split it 6 times
+    for (let i = 0; i < numLabels; i++) {
+      const y = (height / numLabels) * i;
+
+      gridLabels.push(
+        <G>
+          <Line
+            x1={0}
+            y1={y}
+            x2={SCREEN_WIDTH}
+            y2={y}
+            stroke="black"
+            strokeWidth="0.2"
+            key={`grindLine-${i}`}
+          />
+          {/* Only render timestamp every 3 hours */}
+          {true && (
+            <Text x={0} y={y} key={`timeStamp-${i}`}>
+              {`${maxGlucose - (i * maxGlucose) / numLabels}`}
+            </Text>
+          )}
+        </G>,
+      );
+    }
+
+    return gridLabels;
+  };
+
+  line = () =>
+    shape
+      .line()
+      .x((d: any) => scaleX(d.x))
+      .y((d: any) => scaleY(d.y))
+      .curve(shape.curveCardinal.tension(-0.5))(this.getData());
+
   render() {
     const { preview, logs } = this.props;
 
     const todaysLogs = getLogsFromReduxForDate(logs, DateUtils.getTodaysDateTime());
-    // const data = getChartData(todaysLogs);
-    console.log(new Date(startX));
+
+    this.getData();
 
     return (
       <View
         style={{
           marginTop: 5,
+          marginBottom: 50,
           borderWidth: 1,
           width: SCREEN_WIDTH,
           height: height,
           alignSelf: 'center',
         }}
       >
-        <Svg height={height} width={SCREEN_WIDTH}>
-          <Path d={line} fill="transparent" stroke="#367be2" strokeWidth={3} />
+        <Svg height={height + outerVerticalPadding} width={SCREEN_WIDTH}>
+          {/* Grid */}
+          {this.createGridLines()}
+          {this.createGridLabels()}
 
-          {data.map((dataPoint, index) => {
+          {/* Smooth Line */}
+          <Path d={this.line()} fill="transparent" stroke="#367be2" strokeWidth={3} />
+
+          {/* Data Points */}
+          {this.getData().map((dataPoint: any, index: any) => {
             return (
               <Circle
                 cx={scaleX(dataPoint.x)}
