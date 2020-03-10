@@ -20,7 +20,6 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
     let onPressOut: (log: Log) => void;
 
     const sortedLogs = sortByDateDescending(logs);
-    console.log(sortedLogs[0].time);
 
     if (!this.props.onPressOut) {
       onPressOut = () => {};

@@ -35,10 +35,10 @@ export function getLogsFromLastxHours(logs: Log[], lastxHours: number) {
   const logsToReturn: Log[] = [];
 
   logs.forEach((log: Log) => {
-    // log.time = new Date(log.time); // Uncommenting for now (FIXME: MIGHT BREAK SOMETHING)
+    log.time = new Date(log.time); // Uncommenting for now (FIXME: MIGHT BREAK SOMETHING)
 
     // Check difference between date of log and now
-    const differenceInMS = new Date().getTime() - new Date(log.time).getTime();
+    const differenceInMS = new Date().getTime() - log.time.getTime();
     const differenceInHours = Math.floor(differenceInMS / 1000 / 60 / 60);
 
     if (differenceInHours <= lastxHours) {

@@ -9,9 +9,10 @@ import {
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
 import { styles } from '../styles/ViewActScreen';
-import Svg, { Circle, G, Text, Path, Line } from 'react-native-svg';
+import Svg, { Circle, G, Text, Path, Line, Rect } from 'react-native-svg';
 import { scaleTime, scaleLinear } from 'd3-scale';
 import * as shape from 'd3-shape';
+import { getIcon } from '../utils/IconUtils';
 
 const horizontalPadding = 5;
 const innerHorizontalPadding = 10;
@@ -21,6 +22,8 @@ const height = 200;
 const verticalPadding = 5;
 const maxGlucose = 30;
 const timeSpan = 12; // Show logs over last x hours
+const legendOffsetX = 70; //Padding for legend
+const legendOffsetY = 20;
 
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
@@ -33,6 +36,10 @@ const scaleX = scaleTime()
 const scaleY = scaleLinear()
   .domain([0, maxGlucose])
   .range([height - verticalPadding, verticalPadding]);
+
+const invert = (yPosition: number) => {
+  return height - yPosition;
+};
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -66,9 +73,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   };
 
   //Get glucose data from logs and make suitable for svg
-  getData = () => {
+  getData = (logs: Log[]) => {
     const data: any = [];
-    const logs = getLogsFromLastxHours(this.props.logs, timeSpan);
 
     logs.forEach(log => {
       data.push({ x: log.time, y: log.glucose });
@@ -163,15 +169,49 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     return gridLabels;
   };
 
-  line = () =>
+  createPoints = (logs: Log[]) => {
+    const points: any = [];
+
+    logs.forEach(log => {
+      // Food
+      if (log.cho > 0) {
+        points.push(
+          <G key={`food-point-${log.cho}-${log.time}`} x={scaleX(log.time)} y={scaleY(log.cho)}>
+            <Circle r="7" fill="orange" />
+            <Text>Food</Text>
+          </G>,
+        );
+      }
+
+      // Insulin
+      if (log.insulin > 0) {
+        points.push(
+          <G
+            key={`insulin-point-${log.insulin}-${log.time}`}
+            x={scaleX(log.time)}
+            y={scaleY(log.insulin)}
+          >
+            <Circle r="7" fill="blue" />
+            <Text>Insulin</Text>
+          </G>,
+        );
+      }
+    });
+
+    return points;
+  };
+
+  line = (data: any) =>
     shape
       .line()
       .x((d: any) => scaleX(d.x))
       .y((d: any) => scaleY(d.y))
-      .curve(shape.curveCardinal.tension(-0.5))(this.getData());
+      .curve(shape.curveCardinal.tension(-0.5))(data);
 
   render() {
     const { preview, logs } = this.props;
+    const recentLogs = getLogsFromLastxHours(logs, timeSpan);
+    const data = this.getData(recentLogs);
 
     return (
       <View
@@ -189,11 +229,22 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           {this.createGridLines()}
           {this.createGridLabels()}
 
+          {/* Legend */}
+          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
+            Glucose
+          </Text>
+          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
+            Insulin
+          </Text>
+          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
+            Food
+          </Text>
+
           {/* Smooth Line */}
-          <Path d={this.line()} fill="transparent" stroke="#367be2" strokeWidth={3} />
+          <Path d={this.line(data)} fill="transparent" stroke="grey" strokeWidth={3} />
 
           {/* Data Points */}
-          {this.getData().map((dataPoint: any, index: any) => {
+          {data.map((dataPoint: any, index: any) => {
             return (
               <Circle
                 cx={scaleX(dataPoint.x)}
@@ -204,6 +255,9 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
               />
             );
           })}
+
+          {/* Other Activities */}
+          {this.createPoints(recentLogs)}
         </Svg>
       </View>
     );
