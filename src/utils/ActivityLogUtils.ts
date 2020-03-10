@@ -94,13 +94,23 @@ function filterByDate(items: any, dateTime: Date) {
 
 export function sortByDateAscending(logs: Log[]) {
   const byDate = (a: any, b: any) => {
-    return a.time - b.time;
+    return new Date(a.time) - new Date(b.time);
   };
   const sortedLogs = logs.sort(byDate).slice(0);
 
   return sortedLogs;
 }
 
+export function sortByDateDescending(logs: Log[]) {
+  const byDate = (a: any, b: any) => {
+    return new Date(b.time) - new Date(a.time);
+  };
+  const sortedLogs = logs.sort(byDate).slice(0);
+
+  return sortedLogs;
+}
+
+// UNUSED
 export function getRecentLogs(logs: any, amount: number) {
   const sortedLogs = sortByDateAscending(logs);
   const startIndex = sortedLogs.length > amount ? sortedLogs.length - amount : 0;

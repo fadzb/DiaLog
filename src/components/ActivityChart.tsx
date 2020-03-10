@@ -107,7 +107,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       const x = (SCREEN_WIDTH / timeSpan) * i;
 
       gridLines.push(
-        <G>
+        <G key={`G-lines-${i}`}>
           <Line
             x1={x}
             y1="0"
@@ -140,7 +140,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       const y = (height / numLabels) * i;
 
       gridLabels.push(
-        <G>
+        <G key={`G-labels-${i}`}>
           <Line
             x1={0}
             y1={y}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
+import { sortByDateDescending } from '../utils/ActivityLogUtils';
 
 interface RecentLogsWidgetProps {
   logs: Log[];
@@ -18,6 +19,9 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
     const { logs } = this.props;
     let onPressOut: (log: Log) => void;
 
+    const sortedLogs = sortByDateDescending(logs);
+    console.log(sortedLogs[0].time);
+
     if (!this.props.onPressOut) {
       onPressOut = () => {};
     } else {
@@ -31,14 +35,14 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
             <Text>Recent Logs</Text>
           </CardItem>
           <List>
-            {logs.slice(0, this.props.maxLogs).map((log: Log, index: any) => {
+            {sortedLogs.slice(0, this.props.maxLogs).map((log: Log, index: any) => {
               return (
                 <ListItem
                   key={index}
                   onPress={() => this.props.onSelectLog(log)}
                   onPressOut={() => onPressOut(log)}
                 >
-                  <Text>{String(log.time)}</Text>
+                  <Text>{String(new Date(log.time))}</Text>
                 </ListItem>
               );
             })}
