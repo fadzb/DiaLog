@@ -54,7 +54,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ActivityChart preview={false} logs={this.props.logs} />
+        <ActivityChart preview={false} logs={this.props.logs} onSelectLog={this.handleSelectLog} />
         <Button
           style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
           onPress={this.handleAddNewLog}

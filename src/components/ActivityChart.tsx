@@ -43,9 +43,8 @@ const invert = (yPosition: number) => {
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
-
-  // Redux state-props
   logs: Log[];
+  onSelectLog: (log: Log) => void;
 }
 
 export class ActivityChart extends React.Component<ActivityChartProps> {
@@ -55,6 +54,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   state = {
     logs: [],
+    selectedLog: {},
   };
 
   // TODO: Cancel async tasks
@@ -130,7 +130,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
               {`${timeStamps[i]}:00`}
             </Text>
-            // <Circle x={x} y={height + outerVerticalPadding} r="7" fill="blue" />
           )}
         </G>,
       );
@@ -180,7 +179,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       if (log.cho > 0) {
         points.push(
           <G key={`food-point-${log.cho}-${log.time}`} x={scaleX(log.time)} y={scaleY(log.cho)}>
-            <Circle r="7" fill="orange" />
+            {this.state.selectedLog == log && <Circle r="20" fill="red"></Circle>}
+            <Circle r="7" fill="orange" onPress={() => this.selectLog(log)} />
             <Text>Food</Text>
           </G>,
         );
@@ -202,6 +202,11 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     });
 
     return points;
+  };
+
+  selectLog = (log: Log) => {
+    this.setState({ selectedLog: log });
+    this.props.onSelectLog(log);
   };
 
   line = (data: any) =>
