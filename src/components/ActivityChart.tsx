@@ -130,6 +130,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
               {`${timeStamps[i]}:00`}
             </Text>
+            // <Circle x={x} y={height + outerVerticalPadding} r="7" fill="blue" />
           )}
         </G>,
       );
@@ -232,7 +233,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           {this.createGridLabels()}
 
           {/* Legend */}
-          {/* <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
+          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
             Glucose
           </Text>
           <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
@@ -240,7 +241,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           </Text>
           <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
             Food
-          </Text> */}
+          </Text>
 
           {/* Smooth Line */}
           <Path d={this.line(data)} fill="transparent" stroke="grey" strokeWidth={3} />
@@ -260,11 +261,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
           {/* Other Activities */}
           {this.createPoints(recentLogs)}
-
-          {/* test */}
-          <Text x={100} y={100}>
-            TESTS
-          </Text>
         </Svg>
       </View>
     );
