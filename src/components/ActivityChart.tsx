@@ -1,3 +1,5 @@
+// Using design ideas from revolut chart:
+
 import * as React from 'react';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native';
@@ -9,9 +11,20 @@ import {
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
 import { styles } from '../styles/ViewActScreen';
-import Svg, { Circle, G, Text, Path, Line, Rect } from 'react-native-svg';
+import Svg, {
+  Circle,
+  G,
+  Text,
+  Path,
+  Line,
+  Rect,
+  Defs,
+  LinearGradient,
+  Stop,
+} from 'react-native-svg';
 import { scaleTime, scaleLinear } from 'd3-scale';
 import * as shape from 'd3-shape';
+import * as path from 'svg-path-properties';
 import { getIcon } from '../utils/IconUtils';
 
 const horizontalPadding = 5;
@@ -214,12 +227,22 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       .line()
       .x((d: any) => scaleX(d.x))
       .y((d: any) => scaleY(d.y))
-      .curve(shape.curveCardinal.tension(-0.5))(data);
+      .curve(shape.curveCardinal.tension(0))(data);
 
   render() {
     const { preview, logs } = this.props;
-    const recentLogs = getLogsFromLastxHours(logs, timeSpan);
-    const data = this.getData(recentLogs);
+    const recentLogs = logs && getLogsFromLastxHours(logs, timeSpan);
+    const data = recentLogs && this.getData(recentLogs);
+    const line = data.length > 0 && this.line(data);
+    const properties = line && path.svgPathProperties(line);
+    let startPoint = { x: 0, y: 0 };
+    if (properties) {
+      startPoint =
+        properties.getTotalLength() > 0
+          ? properties.getPointAtLength(0)
+          : { x: scaleX(data[0].x), y: scaleY(data[0].y) };
+    }
+    const { x: startX, y: startY } = startPoint;
 
     return (
       <View
@@ -233,6 +256,15 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
         }}
       >
         <Svg height={height + outerVerticalPadding} width={SCREEN_WIDTH}>
+          {/* Using revolut chart gradient */}
+          <Defs>
+            <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
+              <Stop stopColor="#CDE3F8" offset="0%" />
+              <Stop stopColor="#eef6fd" offset="80%" />
+              <Stop stopColor="#FEFFFF" offset="100%" />
+            </LinearGradient>
+          </Defs>
+
           {/* Grid */}
           {this.createGridLines()}
           {this.createGridLabels()}
@@ -249,7 +281,15 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           </Text>
 
           {/* Smooth Line */}
-          <Path d={this.line(data)} fill="transparent" stroke="grey" strokeWidth={3} />
+          {properties && properties.getTotalLength() > 0 && (
+            <Path
+              d={`${line} V ${height} ${height - verticalPadding} L ${startX} ${height -
+                verticalPadding} L ${startX} ${startY} `}
+              stroke="green"
+              strokeWidth={3}
+              fill="url(#gradient)"
+            />
+          )}
 
           {/* Data Points */}
           {data.map((dataPoint: any, index: any) => {

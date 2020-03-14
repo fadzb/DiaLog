@@ -47,7 +47,8 @@
     "react-navigation-tabs": "^2.7.0",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "svg-path-properties": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
