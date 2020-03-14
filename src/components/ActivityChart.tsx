@@ -91,7 +91,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
     logs.forEach(log => {
       if (Number(log.glucose) > 0) {
-        data.push({ x: log.time, y: log.glucose });
+        data.push({ x: log.time, y: log.glucose, log: log });
       }
     });
 
@@ -192,7 +192,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       if (log.cho > 0) {
         points.push(
           <G key={`food-point-${log.cho}-${log.time}`} x={scaleX(log.time)} y={scaleY(log.cho)}>
-            {this.state.selectedLog == log && <Circle r="20" fill="red"></Circle>}
+            {this.state.selectedLog == log && <Circle r="10" fill="red"></Circle>}
             <Circle r="7" fill="orange" onPress={() => this.selectLog(log)} />
             <Text>Food</Text>
           </G>,
@@ -207,7 +207,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             x={scaleX(log.time)}
             y={scaleY(log.insulin)}
           >
-            <Circle r="7" fill="blue" />
+            {this.state.selectedLog == log && <Circle r="10" fill="red"></Circle>}
+            <Circle r="7" fill="blue" onPress={() => this.selectLog(log)} />
             <Text>Insulin</Text>
           </G>,
         );
@@ -260,6 +261,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           <Defs>
             <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
               <Stop stopColor="#CDE3F8" offset="0%" />
+              {/* <Stop stopColor="green" offset="0%" /> */}
               <Stop stopColor="#eef6fd" offset="80%" />
               <Stop stopColor="#FEFFFF" offset="100%" />
             </LinearGradient>
@@ -270,15 +272,18 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           {this.createGridLabels()}
 
           {/* Legend */}
-          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
-            Glucose
-          </Text>
-          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
-            Insulin
-          </Text>
-          <Text x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
-            Food
-          </Text>
+          <G x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
+            <Circle x={-10} y={-5} r="7" fill="green" />
+            <Text>Glucose</Text>
+          </G>
+          <G x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
+            <Circle x={-10} y={-5} r="7" fill="blue" />
+            <Text>Insulin</Text>
+          </G>
+          <G x={SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
+            <Circle x={-10} y={-5} r="7" fill="orange" />
+            <Text>Food</Text>
+          </G>
 
           {/* Smooth Line */}
           {properties && properties.getTotalLength() > 0 && (
@@ -294,13 +299,19 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           {/* Data Points */}
           {data.map((dataPoint: any, index: any) => {
             return (
-              <Circle
-                cx={scaleX(dataPoint.x)}
-                cy={scaleY(dataPoint.y)}
-                r="7"
-                fill="green"
-                key={index}
-              />
+              <G
+                key={`glucose-point-${dataPoint.glucose}-${dataPoint.x}`}
+                x={scaleX(dataPoint.x)}
+                y={scaleY(dataPoint.y)}
+              >
+                {this.state.selectedLog == dataPoint.log && <Circle r="10" fill="red"></Circle>}
+                <Circle
+                  r="7"
+                  fill="green"
+                  key={index}
+                  onPress={() => this.selectLog(dataPoint.log)}
+                />
+              </G>
             );
           })}
 
