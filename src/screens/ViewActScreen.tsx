@@ -43,7 +43,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
 
   handleFocus = () => {
     // Reset the selected log
-    this.setState({ selectedLog: null });
+    // this.setState({ selectedLog: null });
   };
 
   // Remove listener
@@ -54,7 +54,12 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ActivityChart preview={false} logs={this.props.logs} onSelectLog={this.handleSelectLog} />
+        <ActivityChart
+          preview={false}
+          logs={this.props.logs}
+          onSelectLog={this.handleSelectLog}
+          navigation={this.props.navigation}
+        />
         <Button
           style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
           onPress={this.handleAddNewLog}
