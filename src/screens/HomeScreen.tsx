@@ -25,12 +25,29 @@ interface HomeScreenProps {
 }
 
 class HomeScreen extends React.Component<HomeScreenProps> {
+  navigationWillFocusListener: any;
+
   constructor(props: any) {
     super(props);
+
+    this.navigationWillFocusListener = props.navigation.addListener('willFocus', () => {
+      // do something like this.setState() to update your view
+      this.handleFocus();
+    });
   }
 
   state = {
     DASHBOARD_TOGGLED: true,
+  };
+
+  // Remove listener
+  componentWillUnmount() {
+    this.navigationWillFocusListener.remove();
+  }
+
+  handleFocus = () => {
+    // Reset the selected log
+    // this.setState({ selectedLog: null });
   };
 
   handleLoginNav = () => {
@@ -91,7 +108,12 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               <Text>Overview</Text>
             </CardItem>
             <CardItem>
-              <ActivityChart preview={true} logs={this.props.logs} />
+              <ActivityChart
+                preview={true}
+                logs={this.props.logs}
+                onSelectLog={this.handleSelectLog}
+                navigation={this.props.navigation}
+              />
             </CardItem>
           </Card>
 

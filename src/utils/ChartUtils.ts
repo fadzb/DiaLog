@@ -15,6 +15,7 @@ function getDataBlocks(logs: any) {
   return dataBlocks;
 }
 
+// UNUSED
 export function getChartData(logs: any) {
   const recentLogs = getRecentLogs(logs, RECENT_AMOUNT);
   const recentTimes = getTimesFromLogs(recentLogs);

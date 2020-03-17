@@ -31,6 +31,24 @@ export function getLogsFromReduxForDate(logs: Log[], dateTime: Date) {
   return logsToReturn;
 }
 
+export function getLogsFromLastxHours(logs: Log[], lastxHours: number) {
+  const logsToReturn: Log[] = [];
+
+  logs.forEach((log: Log) => {
+    log.time = new Date(log.time); // Uncommenting for now (FIXME: MIGHT BREAK SOMETHING)
+
+    // Check difference between date of log and now
+    const differenceInMS = new Date().getTime() - log.time.getTime();
+    const differenceInHours = Math.floor(differenceInMS / 1000 / 60 / 60);
+
+    if (differenceInHours <= lastxHours) {
+      logsToReturn.push(log);
+    }
+  });
+
+  return sortByDateAscending(logsToReturn);
+}
+
 // UNUSED (Used only for AsyncStorate API)
 // returns a promise containing filtered logs for a selected date
 export async function getLogsForDate(dateTime: Date) {
@@ -76,13 +94,23 @@ function filterByDate(items: any, dateTime: Date) {
 
 export function sortByDateAscending(logs: Log[]) {
   const byDate = (a: any, b: any) => {
-    return a.time - b.time;
+    return new Date(a.time) - new Date(b.time);
   };
   const sortedLogs = logs.sort(byDate).slice(0);
 
   return sortedLogs;
 }
 
+export function sortByDateDescending(logs: Log[]) {
+  const byDate = (a: any, b: any) => {
+    return new Date(b.time) - new Date(a.time);
+  };
+  const sortedLogs = logs.sort(byDate).slice(0);
+
+  return sortedLogs;
+}
+
+// UNUSED
 export function getRecentLogs(logs: any, amount: number) {
   const sortedLogs = sortByDateAscending(logs);
   const startIndex = sortedLogs.length > amount ? sortedLogs.length - amount : 0;
