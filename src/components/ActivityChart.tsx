@@ -129,8 +129,10 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     //return a list starting at 12 hours ago and ending at current hour
     const timeStamps = [];
     for (let i = timeSpan; i > 0; i--) {
-      timeStamps.push(hoursNow - i);
+      timeStamps.push((hoursNow - i) % 24);
     }
+
+    console.log(timeStamps);
 
     return timeStamps;
   };
@@ -151,23 +153,35 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       const x = (this.SCREEN_WIDTH / timeSpan) * i;
 
       gridLines.push(
-        <G key={`G-lines-${i}`}>
+        // Only render timestamp with full line every 3 hours
+        this.shouldRenderTimeStamp(timeStamps[i]) ? (
+          <G key={`G-lines-${i}`}>
+            <Line
+              x1={x}
+              y1="0"
+              x2={x}
+              y2={height}
+              stroke="grey"
+              strokeWidth="0.3"
+              key={`grindLine-${i}`}
+            />
+
+            <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
+              {`${timeStamps[i]}:00`}
+            </Text>
+          </G>
+        ) : (
+          // Else just draw little stump
           <Line
             x1={x}
-            y1="0"
+            y1={height}
             x2={x}
-            y2={height}
+            y2={height - 10}
             stroke="black"
             strokeWidth="0.3"
             key={`grindLine-${i}`}
           />
-          {/* Only render timestamp every 3 hours */}
-          {this.shouldRenderTimeStamp(timeStamps[i]) && (
-            <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
-              {`${timeStamps[i]}:00`}
-            </Text>
-          )}
-        </G>,
+        ),
       );
     }
 
@@ -190,11 +204,11 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             y1={y}
             x2={this.SCREEN_WIDTH}
             y2={y}
-            stroke="black"
+            stroke="grey"
             strokeWidth="0.3"
             key={`grindLine-${i}`}
           />
-          {/* Only render timestamp every 3 hours */}
+          {/* Only render label every 5 units */}
           {true && (
             <Text x={0} y={y} key={`timeStamp-${i}`}>
               {`${maxGlucose - (i * maxGlucose) / numLabels}`}
@@ -293,10 +307,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             </LinearGradient>
           </Defs>
 
-          {/* Grid */}
-          {this.createGridLines()}
-          {this.createGridLabels()}
-
           {/* Legend */}
           <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
             <Circle x={-10} y={-5} r="7" fill="green" />
@@ -340,6 +350,10 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
               </G>
             );
           })}
+
+          {/* Grid */}
+          {this.createGridLines()}
+          {this.createGridLabels()}
 
           {/* Other Activities */}
           {this.createPoints(recentLogs)}
