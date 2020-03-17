@@ -1,31 +1,15 @@
-// Using design ideas from revolut chart:
+// Using gradient from revolut chart:
 
 import * as React from 'react';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native';
-import {
-  getLogsForDate,
-  getLogsFromReduxForDate,
-  getLogsFromLastxHours,
-} from '../utils/ActivityLogUtils';
+import { getLogsForDate, getLogsFromLastxHours } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
-import { styles } from '../styles/ViewActScreen';
-import Svg, {
-  Circle,
-  G,
-  Text,
-  Path,
-  Line,
-  Rect,
-  Defs,
-  LinearGradient,
-  Stop,
-} from 'react-native-svg';
+import Svg, { Circle, G, Text, Path, Line, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { scaleTime, scaleLinear } from 'd3-scale';
 import * as shape from 'd3-shape';
 import * as path from 'svg-path-properties';
-import { getIcon } from '../utils/IconUtils';
 
 const horizontalPadding = 5;
 const innerHorizontalPadding = 10;
@@ -42,17 +26,6 @@ const legendOffsetY = 20;
 const oneDayInMS = 86400000;
 const endX = DateUtils.getTodaysDateTime();
 const startX = endX - oneDayInMS / 2;
-
-// const scaleX = scaleTime()
-//   .domain([startX, endX])
-//   .range([0 + innerHorizontalPadding, SCREEN_WIDTH - innerHorizontalPadding]);
-// const scaleY = scaleLinear()
-//   .domain([0, maxGlucose])
-//   .range([height - verticalPadding, verticalPadding]);
-
-const invert = (yPosition: number) => {
-  return height - yPosition;
-};
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -131,8 +104,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     for (let i = timeSpan; i > 0; i--) {
       timeStamps.push((hoursNow - i) % 24);
     }
-
-    console.log(timeStamps);
 
     return timeStamps;
   };
@@ -272,7 +243,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       .curve(shape.curveCardinal.tension(0))(data);
 
   render() {
-    const { preview, logs } = this.props;
+    const { logs } = this.props;
     const recentLogs = logs && getLogsFromLastxHours(logs, timeSpan);
     const data = recentLogs && this.getData(recentLogs);
     const line = data.length > 0 && this.line(data);
