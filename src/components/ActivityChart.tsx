@@ -18,14 +18,16 @@ const SCREEN_WIDTH = Dimensions.get('window').width - horizontalPadding;
 const height = 200;
 const verticalPadding = 5;
 const maxGlucose = 30;
-const timeSpan = 12; // Show logs over last x hours
+const oneDayTimeSpan = true;
+const timeSpan = oneDayTimeSpan ? 24 : 12; // Show logs over last x hours
 const legendOffsetX = 70; //Padding for legend
 const legendOffsetY = 20;
+const paddingHours = 1;
 
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
-const endX = DateUtils.getTodaysDateTime();
-const startX = endX - oneDayInMS / 2;
+const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -97,7 +99,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   getTimeStamps = () => {
     //get current time
     const dateTimeNow = DateUtils.getTodaysDateTime();
-    const hoursNow = dateTimeNow.getHours() + 1; // Add 1-hour padding
+    const hoursNow = dateTimeNow.getHours() + paddingHours; // Add 1-hour padding
 
     //return a list starting at 12 hours ago and ending at current hour
     const timeStamps = [];
@@ -137,7 +139,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
               key={`grindLine-${i}`}
             />
 
-            <Text x={x} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
+            <Text x={x - 15} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
               {`${timeStamps[i]}:00`}
             </Text>
           </G>

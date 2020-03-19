@@ -70,7 +70,11 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
         {/* Recent Logs */}
         {this.props.logs.length > 0 && (
           <ScrollView>
-            <RecentLogsWidget logs={this.props.logs} onSelectLog={this.handleSelectLog} />
+            <RecentLogsWidget
+              logs={this.props.logs}
+              onSelectLog={this.handleSelectLog}
+              maxLogs={10}
+            />
           </ScrollView>
         )}
 
