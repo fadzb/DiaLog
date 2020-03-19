@@ -56,14 +56,18 @@ export class Scanner extends React.PureComponent<ScannerProps> {
       console.error('[zebra] error:', e);
     }
 
-    const promise = requestFoodDetailsFromBarcode(upc);
+    try {
+      const promise = requestFoodDetailsFromBarcode(upc);
 
-    promise
-      .then(responseJson => {
-        const foodItem = parseFoodItemFromBarcode(responseJson);
-        this.setState({ item: foodItem, modalVisible: true });
-      })
-      .catch(error => console.log('error', error));
+      promise
+        .then(responseJson => {
+          const foodItem = parseFoodItemFromBarcode(responseJson);
+          this.setState({ item: foodItem, modalVisible: true });
+        })
+        .catch(error => Alert.alert(error));
+    } catch (error) {
+      Alert.alert(error);
+    }
   };
 
   // TODO: Sets state but doesn't actually change torch
