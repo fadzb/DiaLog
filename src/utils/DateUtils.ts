@@ -1,4 +1,38 @@
 export class DateUtils {
+  static DAYS_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  static DAYS = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+
+  static MONTHS_LONG = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  static MONTHS = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'June',
+    'July',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  // Not sure why im doing this? new Date() should work?
   static getTodaysDateTime() {
     const date = new Date().getDate(); //Current Date
     const month = new Date().getMonth(); //Current Month
@@ -10,6 +44,14 @@ export class DateUtils {
     const dateTime = new Date(year, month, date, hours, min, sec);
 
     return dateTime;
+  }
+
+  // return a date object x days ago
+  static getDayXdaysAgo(x: number) {
+    const dateNow = new Date();
+    const oneDayInMs = 1000 * 60 * 60 * 24;
+
+    return new Date(dateNow - oneDayInMs * x);
   }
 
   static parseDate(date: any) {
@@ -29,17 +71,41 @@ export class DateUtils {
     return false;
   }
 
-  static parseDateTimesIntoLabels(dateTimes: Date[]) {
-    const parsedDateTimes: string[] = [];
+  // Turns Date object into 08:30
+  static parseDateTimeIntoLabel(dateTime: Date) {
+    let parsedDateTime = '';
 
-    dateTimes.forEach((dateTime: any) => {
-      const hours = dateTime.getHours();
-      const minutes =
-        dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes();
-      const parsedDateTime = hours + 'h' + minutes;
-      parsedDateTimes.push(parsedDateTime);
-    });
+    const hours = dateTime.getHours();
+    const minutes =
+      dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes();
 
-    return parsedDateTimes;
+    parsedDateTime = hours + ':' + minutes;
+
+    return parsedDateTime;
+  }
+
+  // Turns Date object into Thu 24/07
+  static parseDateTimeIntoDateLabel(dateTime: Date) {
+    let parsedDateTime = '';
+
+    const dayOfWeek = dateTime.getDay();
+    const day = dateTime.getDate();
+    const month = dateTime.getMonth();
+    const hours = dateTime.getHours();
+    const minutes =
+      dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes();
+
+    parsedDateTime =
+      DateUtils.DAYS[dayOfWeek] +
+      ' ' +
+      day +
+      ' ' +
+      DateUtils.MONTHS[month] +
+      ' @ ' +
+      hours +
+      ':' +
+      minutes;
+
+    return parsedDateTime;
   }
 }

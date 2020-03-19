@@ -3,6 +3,21 @@ import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
 
+export function getLogHeader(log: Log) {
+  const timeLabel = DateUtils.parseDateTimeIntoLabel(log.time);
+
+  // If today
+  if (DateUtils.sameDay(log.time, new Date())) {
+    return `Today @ ${timeLabel} : ${getType(log)}`;
+  }
+  // yesterday
+  else if (DateUtils.sameDay(log.time, DateUtils.getDayXdaysAgo(1))) {
+    return `Yesterday @ ${timeLabel} : ${getType(log)}`;
+  } else {
+    return `${DateUtils.parseDateTimeIntoDateLabel(log.time)} : ${getType(log)}`;
+  }
+}
+
 export function makeNotesFromItem(item: FoodItem) {
   let notes = '';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
-import { sortByDateDescending } from '../utils/ActivityLogUtils';
+import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
 
 interface RecentLogsWidgetProps {
   logs: Log[];
@@ -41,7 +41,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
                   onPress={() => this.props.onSelectLog(log)}
                   onPressOut={() => onPressOut(log)}
                 >
-                  <Text>{String(new Date(log.time))}</Text>
+                  <Text>{getLogHeader(log)}</Text>
                 </ListItem>
               );
             })}
