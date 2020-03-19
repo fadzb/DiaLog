@@ -10,4 +10,7 @@ export const badLabels = [
   'Citrus',
   'Rangpur',
   'Vegetarian food',
+  'Dish',
+  'Cuisine',
+  'Ingredient',
 ];
