@@ -5,6 +5,10 @@ target 'HealthyApp' do
   # Pods for HealthyApp
   # pod 'RNSVGRect', :path => "../nsode_modules/react-native/Libraries/RNSVGRect"
   # Firebase ML Kit
+  pod 'Firebase'
+  pod 'Firebase/InAppMessaging'
+  pod 'Firebase/Analytics'
+
   pod 'Firebase/MLVision'
   # On device ml
   pod 'Firebase/MLVisionLabelModel'
