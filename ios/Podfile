@@ -8,6 +8,7 @@ target 'HealthyApp' do
   pod 'Firebase'
   pod 'Firebase/InAppMessaging'
   pod 'Firebase/Analytics'
+  pod 'Firebase/InAppMessagingDisplay'
 
   pod 'Firebase/MLVision'
   # On device ml

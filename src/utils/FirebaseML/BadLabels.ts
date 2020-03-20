@@ -13,4 +13,5 @@ export const badLabels = [
   'Dish',
   'Cuisine',
   'Ingredient',
+  'Lunch',
 ];

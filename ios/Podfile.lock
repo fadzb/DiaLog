@@ -192,6 +192,9 @@ PODS:
   - Firebase/InAppMessaging (6.13.0):
     - Firebase/CoreOnly
     - FirebaseInAppMessaging (~> 0.15.5)
+  - Firebase/InAppMessagingDisplay (6.13.0):
+    - Firebase/CoreOnly
+    - FirebaseInAppMessagingDisplay (~> 0.15.5)
   - Firebase/MLVision (6.13.0):
     - Firebase/CoreOnly
     - FirebaseMLVision (~> 0.19.0)
@@ -245,6 +248,9 @@ PODS:
     - FirebaseCore (~> 6.2)
     - FirebaseInstanceID (~> 4.0)
     - GoogleDataTransportCCTSupport (~> 1.0)
+  - FirebaseInAppMessagingDisplay (0.15.5):
+    - FirebaseCore (~> 6.2)
+    - FirebaseInAppMessaging (>= 0.15.0)
   - FirebaseInstanceID (4.2.7):
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
@@ -600,6 +606,7 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Analytics
   - Firebase/InAppMessaging
+  - Firebase/InAppMessagingDisplay
   - Firebase/MLVision
   - Firebase/MLVisionLabelModel
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
@@ -655,6 +662,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
     - FirebaseInAppMessaging
+    - FirebaseInAppMessagingDisplay
     - FirebaseInstanceID
     - FirebaseMLCommon
     - FirebaseMLVision
@@ -765,6 +773,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseInAppMessaging: 8e1190f8d8cf6f1fcfc8f82f99e0ecce522fc02b
+  FirebaseInAppMessagingDisplay: 60a65c8277f17675a8a5b92e9a97cd914b45d4ff
   FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
   FirebaseMLCommon: 074a67e05122b1c9f6401a4e33b2cea3b4efd224
   FirebaseMLVision: 7a456009787690e3b53436092ae9b635563de8f3
@@ -816,6 +825,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: 7755b3b3fbf74b257ae59ad20bb9b6ffbfc452ee
+PODFILE CHECKSUM: 8defc4f52022d86815e38afed0d5ce4b41c85d91
 
 COCOAPODS: 1.9.1
