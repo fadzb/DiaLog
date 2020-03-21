@@ -10,6 +10,9 @@ firebase.initializeApp({
 // reference to firestore db
 const db = firebase.firestore();
 
+// Listen to form preview
+document.getElementById('moduleContent').addEventListener('input', handleInput);
+
 // Listen to form submit
 document.getElementById('createModuleForm').addEventListener('submit', submitForm);
 
@@ -28,11 +31,12 @@ function submitForm(e) {
   const inputObject = {
     moduleGroup: getInputValue('moduleGroup'),
     moduleName: getInputValue('moduleName'),
-    moduleContent: getInputValue('moduleContent'),
+    moduleContent: document.getElementById('moduleContent').innerHTML,
   };
 
   // Clear Form
   e.target.reset();
+  document.getElementById('moduleContent').innerHTML = '';
 
   // Add new module to modules collection
   addModule(inputObject);
@@ -111,4 +115,14 @@ function previewModule(e, data) {
 
   // Set inner html
   content.innerHTML = data.moduleContent;
+}
+
+// event listener to update preview on text change
+function handleInput(e) {
+  // ref to content container
+  const content = document.getElementById('content');
+
+  const toPreview = document.getElementById('moduleContent');
+  // Set inner html
+  content.innerHTML = toPreview.innerHTML;
 }

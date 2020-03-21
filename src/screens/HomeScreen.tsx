@@ -12,6 +12,7 @@ import { Log } from '../typings/Log';
 import { WidgetButton } from '../components/WidgetButton';
 import { Widget } from '../typings/Widget';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
+import WebView from 'react-native-webview';
 
 interface HomeScreenProps {
   navigation: any;

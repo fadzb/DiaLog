@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View, Text } from 'native-base';
 import { TrainModule } from '../typings/TrainModule';
+import WebView from 'react-native-webview';
+import { SafeAreaView } from 'react-navigation';
 
 interface ModuleContentProps {
   module: TrainModule;
@@ -15,9 +17,15 @@ export class ModuleContent extends React.Component<ModuleContentProps> {
     const { module } = this.props;
 
     return (
-      <View style={{ borderWidth: 1 }}>
-        <Text>{module.moduleContent}</Text>
-      </View>
+      <SafeAreaView style={{ borderWidth: 1 }}>
+        {/* <Text>{module.moduleContent}</Text> */}
+
+        <WebView
+          useWebKit={false}
+          style={{ marginTop: 20 }}
+          source={{ html: '<p>HIIIIIIIIIIIIIIIIIIII</p>' }}
+        />
+      </SafeAreaView>
     );
   }
 }

@@ -3,6 +3,7 @@ import { Container, Header, Title, Content } from 'native-base';
 import { styles } from '../styles/TrainScreen';
 import { ModuleHeader } from '../components/ModuleHeader';
 import { TrainModule } from '../typings/TrainModule';
+import { WebView } from 'react-native-webview';
 
 interface ModuleScreenProps {
   navigation: any;
