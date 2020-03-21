@@ -26,8 +26,6 @@ const paddingHours = 1;
 
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
-const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
-const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
@@ -52,14 +50,20 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   state = {
     logs: [],
     selectedLog: {},
+    endX: 0,
+    startX: 0,
   };
 
+  // Update scale
   handleFocus = () => {
-    this.setState({ selectedLog: null });
+    const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+    const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
+
+    this.setState({ selectedLog: null, endX, startX });
   };
 
   scaleX = scaleTime()
-    .domain([startX, endX])
+    .domain([this.state.startX, this.state.endX])
     .range([0 + innerHorizontalPadding, this.SCREEN_WIDTH - innerHorizontalPadding]);
 
   scaleY = scaleLinear()
