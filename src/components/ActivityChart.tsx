@@ -100,6 +100,10 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     return data;
   };
 
+  mod(number: number, mod: number) {
+    return ((number % mod) + mod) % mod;
+  }
+
   getTimeStamps = () => {
     //get current time
     const dateTimeNow = DateUtils.getTodaysDateTime();
@@ -108,7 +112,8 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     //return a list starting at 12 hours ago and ending at current hour
     const timeStamps = [];
     for (let i = timeSpan; i > 0; i--) {
-      timeStamps.push((hoursNow - i) % 24);
+      const timeStamp = this.mod(hoursNow - i, 24);
+      timeStamps.push(timeStamp);
     }
 
     return timeStamps;
