@@ -2,7 +2,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
-const API_ENABLED = true;
+const API_ENABLED = false;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export function parseFoodItems(responseJSON: any) {
 
   for (let i = 0; i < parsedJson.common.length; i++) {
     const foodItem: FoodItem = {
-      name: parsedJson.common[i].food_name,
+      name: captilize(parsedJson.common[i].food_name),
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
       servingUnit: '',
@@ -106,7 +106,7 @@ export function parseMoreDetails(responseJSON: any) {
   }
 
   const detailedItem: FoodItem = {
-    name: parsedJson.foods[0].food_name,
+    name: captilize(parsedJson.foods[0].food_name),
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
     servingUnit: parsedJson.foods[0].serving_qty + ' ' + parsedJson.foods[0].serving_unit,
@@ -128,7 +128,7 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
   }
 
   const foodItem: FoodItem = {
-    name: parsedJson.foods[0].food_name,
+    name: captilize(parsedJson.foods[0].food_name),
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
     servingUnit: parsedJson.foods[0].serving_unit,
@@ -136,4 +136,11 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
   };
 
   return foodItem;
+}
+
+// https://stackoverflow.com/a/7592235/10610784
+function captilize(string: string) {
+  return string.replace(/(?:^|\s)\S/g, function(a) {
+    return a.toUpperCase();
+  });
 }

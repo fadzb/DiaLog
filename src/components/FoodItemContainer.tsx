@@ -10,7 +10,7 @@ interface FoodItemContainerProps {
   navigation: any;
   item: FoodItem;
   key: string;
-  choRatio: string;
+  choRatio: number;
   insulinSuggestions: boolean;
 }
 

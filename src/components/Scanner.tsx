@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Button, Spinner } from 'native-base';
+import { View, Text, Button, Spinner, Icon } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import { styles } from '../styles/CarbScreen';
 import {
@@ -12,6 +12,7 @@ import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
 import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 import { Alert } from 'react-native';
+
 const zebra = require('../utils/zebra.js');
 
 const ML_ENABLED = true;
@@ -21,6 +22,7 @@ interface ScannerProps {
   navigation: any;
   updateLabels: (labels: string[]) => void;
   choRatio: number;
+  insulinSuggestions: boolean;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -130,57 +132,99 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   render() {
     if (this.state.show) {
       return (
-        <View style={styles.scannerContainer}>
-          <View style={styles.ncontainer}>
-            <RNCamera
-              style={styles.npreview}
-              type={RNCamera.Constants.Type.back}
-              ref={ref => {
-                this.camera = ref;
-              }}
-              flashMode={RNCamera.Constants.FlashMode.off}
-              androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
-              androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
-              captureAudio={false}
-              onBarCodeRead={this.onBarCodeRead.bind(this)}
-            >
-              {({ status }) => {
-                if (status !== 'READY') {
-                  return <PendingView />;
-                }
-                return (
-                  <View>
-                    {this.state.showSpinner && (
-                      <Spinner
-                        style={{ alignSelf: 'center', marginBottom: 'auto' }}
-                        size={'large'}
-                        color="blue"
-                      />
-                    )}
-                    <View style={styles.torch}>
-                      <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
-                        {getIcon('flashlight')}
-                      </Button>
+        <View style={{}}>
+          <View
+            style={{
+              backgroundColor: 'black',
+              marginBottom: 10,
+              width: '95%',
+              alignSelf: 'center',
+            }}
+          >
+            <View style={{ flexDirection: 'column' }}>
+              <RNCamera
+                style={{ justifyContent: 'flex-end', height: 250 }}
+                type={RNCamera.Constants.Type.back}
+                ref={ref => {
+                  this.camera = ref;
+                }}
+                flashMode={RNCamera.Constants.FlashMode.off}
+                androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
+                androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
+                captureAudio={false}
+                onBarCodeRead={this.onBarCodeRead.bind(this)}
+              >
+                {({ status }) => {
+                  if (status !== 'READY') {
+                    return <PendingView />;
+                  }
+                  return (
+                    <View>
+                      {this.state.showSpinner && (
+                        <Spinner
+                          style={{ alignSelf: 'center', marginBottom: 'auto' }}
+                          size={'large'}
+                          color="blue"
+                        />
+                      )}
+                      <View
+                        style={{
+                          alignSelf: 'flex-start',
+                          marginBottom: 70,
+                          marginLeft: 10,
+                        }}
+                      >
+                        <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
+                          {getIcon('flashlight')}
+                        </Button>
+                      </View>
+                      <View
+                        style={{
+                          alignSelf: 'center',
+                          margin: 20,
+                        }}
+                      >
+                        <Button
+                          light
+                          style={{
+                            borderColor: '#fff',
+                            borderWidth: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 70,
+                            height: 70,
+                            backgroundColor: 'rgba(249,173,45,1)',
+
+                            borderRadius: 50,
+                          }}
+                          onPress={this.takePicture.bind(this)}
+                        >
+                          <Icon
+                            name={'food'}
+                            style={{ fontSize: 30 }}
+                            type={'MaterialCommunityIcons'}
+                          />
+                        </Button>
+                      </View>
                     </View>
-                    <View style={styles.ncapture}>
-                      <Button light onPress={this.takePicture.bind(this)}>
-                        {getIcon('camera')}
-                      </Button>
-                    </View>
-                  </View>
-                );
-              }}
-            </RNCamera>
+                  );
+                }}
+              </RNCamera>
+            </View>
           </View>
-          <Button style={styles.bottom} vertical onPress={this.closeCamera}>
+          <Button
+            style={[styles.bottom, { marginBottom: 5, width: '95%', alignSelf: 'center' }]}
+            vertical
+            onPress={this.closeCamera}
+          >
             {getIcon('camera')}
-            <Text>Close Camera</Text>
+            <Text>Close</Text>
           </Button>
         </View>
       );
     }
     return (
-      <View>
+      <View style={{ justifyContent: 'flex-end' }}>
         {this.state.modalVisible && (
           <FoodItemModal
             navigation={this.props.navigation}
@@ -188,12 +232,13 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             handleModalClose={() => {}}
             ref={ref => (this.modalRef = ref)}
             choRatio={this.props.choRatio}
+            insulinSuggestions={this.props.insulinSuggestions}
           />
         )}
-        <View style={[styles.bottom, { marginBottom: 40 }]}>
-          <Button vertical onPress={this.openCamera}>
+        <View style={[styles.bottom, { marginBottom: 5, alignItems: 'center' }]}>
+          <Button vertical style={{ width: '95%' }} onPress={this.openCamera}>
             {getIcon('camera')}
-            <Text>Camera</Text>
+            <Text>Food Scanner</Text>
           </Button>
         </View>
       </View>

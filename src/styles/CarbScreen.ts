@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
   },
   foodListContainer: {
-    flex: 0,
+    flex: 1,
   },
   scrollViewContainer: {
     borderWidth: 1,
@@ -72,7 +72,8 @@ export const styles = StyleSheet.create({
   scannerContainer: {
     flex: 1,
     backgroundColor: 'black',
-    marginBottom: 40,
+    marginBottom: 5,
+    width: '95%',
   },
   cameraContainer: {
     flex: 1,
