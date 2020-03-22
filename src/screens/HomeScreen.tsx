@@ -13,6 +13,7 @@ import { WidgetButton } from '../components/WidgetButton';
 import { Widget } from '../typings/Widget';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
 import WebView from 'react-native-webview';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface HomeScreenProps {
   navigation: any;
@@ -103,53 +104,62 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     if (this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
+          {/* <LinearGradient style={{ height: 1000 }} colors={['#4c669f', '#3b5998', '#192f6a']}> */}
           {/* Always render Overview Widget */}
-          <Card>
-            <CardItem header>
-              <Text>Overview</Text>
-            </CardItem>
-            <CardItem>
-              <ActivityChart
-                preview={true}
+
+          <LinearGradient style={{}} colors={['#4c669f', '#3b5998', '#192f6a']}>
+            <Card>
+              <CardItem header>
+                <Text>Overview</Text>
+              </CardItem>
+
+              <CardItem>
+                <ActivityChart
+                  preview={true}
+                  logs={this.props.logs}
+                  onSelectLog={this.handleSelectLog}
+                  navigation={this.props.navigation}
+                />
+              </CardItem>
+            </Card>
+
+            {/* Conditionally render other widgets: i.e. Recent Logs */}
+            {renderRecentLogs && (
+              <RecentLogsWidget
                 logs={this.props.logs}
-                onSelectLog={this.handleSelectLog}
-                navigation={this.props.navigation}
+                onSelectLog={() => {}}
+                onPressOut={this.handleSelectLog}
+                maxLogs={5}
               />
-            </CardItem>
-          </Card>
+            )}
 
-          {/* Conditionally render other widgets: i.e. Recent Logs */}
-          {renderRecentLogs && (
-            <RecentLogsWidget
-              logs={this.props.logs}
-              onSelectLog={() => {}}
-              onPressOut={this.handleSelectLog}
-              maxLogs={5}
-            />
-          )}
+            {/* Create a list component that takes a list of all disabled widgets */}
+            <Card>
+              <CardItem header>
+                <Text>Other Apps</Text>
+              </CardItem>
+              <CardItem>
+                <ScrollView horizontal={true}>
+                  {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
+                    return (
+                      <WidgetButton
+                        navigation={this.props.navigation}
+                        widget={widget}
+                        key={index}
+                      />
+                    );
+                  })}
+                </ScrollView>
+              </CardItem>
+            </Card>
 
-          {/* Create a list component that takes a list of all disabled widgets */}
-          <Card>
-            <CardItem header>
-              <Text>Other Apps</Text>
-            </CardItem>
-            <CardItem>
-              <ScrollView horizontal={true}>
-                {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
-                  return (
-                    <WidgetButton navigation={this.props.navigation} widget={widget} key={index} />
-                  );
-                })}
-              </ScrollView>
-            </CardItem>
-          </Card>
-
-          {/* Toggle View Button */}
-          {false && (
-            <View style={{ alignSelf: 'center', width: 150, marginTop: 30 }}>
-              <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
-            </View>
-          )}
+            {/* Toggle View Button */}
+            {false && (
+              <View style={{ alignSelf: 'center', width: 150, marginTop: 30 }}>
+                <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
+              </View>
+            )}
+          </LinearGradient>
         </ScrollView>
       );
     } // Else (Simple Views)
