@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Card, CardItem, Left, Thumbnail, Text, Body, Button, Switch } from 'native-base';
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
-import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
+import { getCurrentUser, signOut } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
 import { Widget } from '../typings/Widget';
 import { dispatchUpdateWidget, getWidgetById } from '../utils/WidgetUtils';
@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { setChoRatio, setInsulinSuggestions } from '../actions/actions';
 import NumericInput from 'react-native-numeric-input';
 import store from '../store';
+import { getUserFromAuth } from '../utils/ChatUtils';
+import { firebase } from '@react-native-firebase/auth';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -112,17 +114,10 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
                   value={this.state.choRatioInput}
                   type="up-down"
                   onChange={this.handleChoRatioInput}
-                  // onChange={value => this.props.setChoRatio(value)}
                   totalWidth={100}
-                  // totalHeight={60}
-                  // iconSize={25}
                   step={0.5}
                   valueType="real"
                   rounded
-                  // textColor="#B0228C"
-                  // iconStyle={{ color: 'white' }}
-                  // rightButtonBackgroundColor="#EA3788"
-                  // leftButtonBackgroundColor="#E56B70"
                 />
                 <Text> g</Text>
               </View>
@@ -135,6 +130,20 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
           <CardItem header bordered>
             <Text>Other Settings</Text>
           </CardItem>
+
+          {firebase.auth().currentUser ? (
+            <CardItem>
+              <Button onPress={() => signOut()}>
+                <Text>Logout</Text>
+              </Button>
+            </CardItem>
+          ) : (
+            <CardItem>
+              <Button onPress={() => this.props.navigation.navigate('Login')}>
+                <Text>Sign in</Text>
+              </Button>
+            </CardItem>
+          )}
 
           <CardItem>
             <Button onPress={this.clearApp}>
