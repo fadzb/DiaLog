@@ -85,8 +85,8 @@ export function parseFoodItems(responseJSON: any) {
       name: captilize(parsedJson.common[i].food_name),
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
-      servingUnit: '',
-      servingWeight: '',
+      servingUnit: parsedJson.common[i].serving_qty + ' ' + parsedJson.common[i].serving_unit,
+      servingWeight: parsedJson.common[i].serving_weight_grams,
     };
     foodItems.push(foodItem);
   }
@@ -131,7 +131,7 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
     name: captilize(parsedJson.foods[0].food_name),
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
-    servingUnit: parsedJson.foods[0].serving_unit,
+    servingUnit: parsedJson.foods[0].serving_qty + ' ' + parsedJson.foods[0].serving_unit,
     servingWeight: parsedJson.foods[0].serving_weight_grams,
   };
 
