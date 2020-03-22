@@ -29,7 +29,7 @@ export const AppStack = (initialRoute: any) =>
       headerMode: 'screen',
 
       defaultNavigationOptions: {
-        title: 'Healthy App',
+        title: 'GLUCO-TRACK',
         headerStyle: {
           backgroundColor: '#f4511e',
           borderBottomWidth: 0,

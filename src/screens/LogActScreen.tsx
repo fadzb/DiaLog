@@ -56,6 +56,7 @@ class LogActScreen extends React.Component<LogActScreenProps> {
     return (
       <KeyboardAwareScrollView>
         <ActivityForm
+          navigation={this.props.navigation}
           currentTime={this.state.currentTime}
           item={this.state.item}
           handleSubmit={this.handleFormSubmit}

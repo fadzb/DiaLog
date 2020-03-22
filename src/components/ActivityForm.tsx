@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, View } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, View, Icon } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
 import ActivityAddButton from './ActivityAddButton';
 import { makeNotesFromItem } from '../utils/ActivityLogUtils';
+import { getIcon } from '../utils/IconUtils';
+import { TouchableOpacity } from 'react-native';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
   item: FoodItem;
   currentTime: any;
+  navigation: any;
 
   //Redux dispatch actions
   addLog: (log: Log) => void;
@@ -171,7 +174,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <ActivityAddButton success handlePress={() => this.setState({ addGlucose: true })}>
-              <Text>Add Glucose</Text>
+              <Text>Add Blood Glucose</Text>
             </ActivityAddButton>
           )}
 
@@ -210,9 +213,14 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
               </Badge>
             </Item>
           ) : (
-            <ActivityAddButton warning handlePress={() => this.setState({ addCho: true })}>
-              <Text>Add Carbohydrate</Text>
-            </ActivityAddButton>
+            <View style={{}}>
+              <ActivityAddButton warning handlePress={() => this.setState({ addCho: true })}>
+                <Text>Add Carbohydrate</Text>
+              </ActivityAddButton>
+              <TouchableOpacity onPressOut={() => this.props.navigation.navigate('Carb')}>
+                <Icon style={{ position: 'absolute', right: -40, bottom: 13 }} name={'search'} />
+              </TouchableOpacity>
+            </View>
           )}
 
           {this.state.addNotes || this.state.notesInput ? (
