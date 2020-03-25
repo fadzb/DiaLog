@@ -14,6 +14,7 @@ import { Widget } from '../typings/Widget';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
 import WebView from 'react-native-webview';
 import LinearGradient from 'react-native-linear-gradient';
+import { GradientContainer } from '../components/GradientContainer';
 
 interface HomeScreenProps {
   navigation: any;
@@ -104,11 +105,9 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     if (this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
-          {/* <LinearGradient style={{ height: 1000 }} colors={['#4c669f', '#3b5998', '#192f6a']}> */}
           {/* Always render Overview Widget */}
-
-          <LinearGradient style={{}} colors={['#4c669f', '#3b5998', '#192f6a']}>
-            <Card>
+          <GradientContainer>
+            <Card style={styles.card}>
               <CardItem header>
                 <Text>Overview</Text>
               </CardItem>
@@ -130,11 +129,12 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                 onSelectLog={() => {}}
                 onPressOut={this.handleSelectLog}
                 maxLogs={5}
+                preview={true}
               />
             )}
 
             {/* Create a list component that takes a list of all disabled widgets */}
-            <Card>
+            <Card style={styles.card}>
               <CardItem header>
                 <Text>Other Apps</Text>
               </CardItem>
@@ -159,7 +159,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                 <Button label={'Toggle Dashboard'} onPress={this.toggleDashboard} />
               </View>
             )}
-          </LinearGradient>
+          </GradientContainer>
         </ScrollView>
       );
     } // Else (Simple Views)

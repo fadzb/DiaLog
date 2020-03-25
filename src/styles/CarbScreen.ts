@@ -21,12 +21,14 @@ export const styles = StyleSheet.create({
   },
   listItemContainer: {
     height: 60,
-    width: '90%',
+    width: '96%',
     padding: 10,
     marginVertical: 1,
     marginHorizontal: 1,
     borderColor: colors.GRAY_LIGHT,
-    borderWidth: 3,
+    borderWidth: 5,
+    borderRadius: 30,
+    backgroundColor: 'white',
   },
   foodListContainer: {
     flex: 1,

@@ -2,12 +2,14 @@ import * as React from 'react';
 import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
 import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
+import { styles } from '../styles/HomeScreen';
 
 interface RecentLogsWidgetProps {
   logs: Log[];
   onSelectLog: (log: Log) => void;
   onPressOut?: (log: Log) => void;
   maxLogs?: number;
+  preview?: boolean;
 }
 
 export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
@@ -29,7 +31,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
 
     return (
       <View>
-        <Card>
+        <Card style={this.props.preview ? styles.card : {}}>
           <CardItem header>
             <Text>Recent Logs</Text>
           </CardItem>

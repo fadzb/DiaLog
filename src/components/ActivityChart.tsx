@@ -35,7 +35,7 @@ interface ActivityChartProps {
 }
 
 export class ActivityChart extends React.Component<ActivityChartProps> {
-  SCREEN_WIDTH = this.props.preview ? SCREEN_WIDTH - 20 : SCREEN_WIDTH;
+  SCREEN_WIDTH = this.props.preview ? SCREEN_WIDTH - 40 : SCREEN_WIDTH;
   navigationWillFocusListener: any;
 
   constructor(props: any) {

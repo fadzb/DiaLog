@@ -30,4 +30,15 @@ export const styles = StyleSheet.create({
   itemImage: {
     height: 35,
   },
+  // Card Items e.g. Overview
+  card: {
+    width: '95%',
+    overflow: 'hidden',
+    // alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 15,
+    borderColor: 'red',
+  },
 });
