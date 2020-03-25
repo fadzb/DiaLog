@@ -15,16 +15,16 @@ export const styles = StyleSheet.create({
     flex: 1,
     height: 100,
     paddingVertical: 20,
-    borderColor: colors.primaryLight,
-    borderWidth: 1,
-    borderRadius: 30,
+    // borderColor: colors.primaryLight,
+    // borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 5,
     width: 100,
   },
   itemText: {
-    color: colors.primary,
+    // color: colors.primary,
+    color: 'white',
     // fontFamily: fonts.regular,
   },
   itemImage: {
@@ -39,6 +39,6 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     borderRadius: 15,
-    borderColor: 'red',
+    // borderColor: 'red',
   },
 });

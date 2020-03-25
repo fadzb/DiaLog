@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, View, Icon } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, Icon, CardItem, View } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
@@ -8,6 +8,8 @@ import ActivityAddButton from './ActivityAddButton';
 import { makeNotesFromItem } from '../utils/ActivityLogUtils';
 import { getIcon } from '../utils/IconUtils';
 import { TouchableOpacity } from 'react-native';
+import { Card } from 'react-native-paper';
+import { GLOBAL } from '../styles/global';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
@@ -150,16 +152,29 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     return (
       <View style={{ flex: 1 }}>
         <Form style={styles.form}>
-          <DateTimeInput
-            currentTime={this.state.dateTimeInput}
-            updateDateTime={this.handleUpdateDateTime}
-          />
+          <View
+            style={[
+              {
+                backgroundColor: 'white',
+                marginTop: 20,
+                borderRadius: 20,
+                // borderWidth: 3,
+                paddingHorizontal: 10,
+              },
+              GLOBAL.shadowBox,
+            ]}
+          >
+            <DateTimeInput
+              currentTime={this.state.dateTimeInput}
+              updateDateTime={this.handleUpdateDateTime}
+            />
+          </View>
 
           {/* TODO: Refactor: export component to ActivityInput */}
           {/* <ActivityInput placeholder="Enter Glucose" badgeType="glucose" /> */}
 
           {this.state.addGlucose ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.glucoseRef = input;
@@ -179,7 +194,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
           )}
 
           {this.state.addInsulin ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.insulinRef = input;
@@ -199,7 +214,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
           )}
 
           {this.getName() || this.state.addCho ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.choRef = input;
@@ -224,7 +239,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
           )}
 
           {this.state.addNotes || this.state.notesInput ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.notesRef = input;
@@ -242,7 +257,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             <Button
               light
               onPress={() => this.setState({ addNotes: true })}
-              style={{ marginVertical: 20 }}
+              style={[{ marginVertical: 20 }, GLOBAL.shadowBox]}
             >
               <Text>Add Notes...</Text>
             </Button>
@@ -250,12 +265,15 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Form>
 
         <View
-          style={{
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            marginBottom: 36,
-            flex: 1,
-          }}
+          style={[
+            {
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              marginBottom: 36,
+              flex: 1,
+            },
+            GLOBAL.shadowBox,
+          ]}
         >
           <Button
             style={{ width: '70%', justifyContent: 'center', marginVertical: 20 }}

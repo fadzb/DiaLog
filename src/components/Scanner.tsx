@@ -12,6 +12,7 @@ import { FoodItemModal } from './FoodItemModal';
 import { FoodItemInstance } from '../typings/FoodItem';
 import { getLabels, filterLabels, getFakeLabels } from '../utils/FirebaseML/FirebaseVisionUtils';
 import { Alert } from 'react-native';
+import { GLOBAL } from '../styles/global';
 
 const zebra = require('../utils/zebra.js');
 
@@ -134,12 +135,15 @@ export class Scanner extends React.PureComponent<ScannerProps> {
       return (
         <View style={{}}>
           <View
-            style={{
-              backgroundColor: 'black',
-              marginBottom: 10,
-              width: '95%',
-              alignSelf: 'center',
-            }}
+            style={[
+              {
+                backgroundColor: 'black',
+                marginBottom: 10,
+                width: '95%',
+                alignSelf: 'center',
+              },
+              GLOBAL.shadowBox,
+            ]}
           >
             <View style={{ flexDirection: 'column' }}>
               <RNCamera
@@ -213,7 +217,11 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             </View>
           </View>
           <Button
-            style={[styles.bottom, { marginBottom: 5, width: '95%', alignSelf: 'center' }]}
+            style={[
+              styles.bottom,
+              { marginBottom: 5, width: '95%', alignSelf: 'center' },
+              GLOBAL.shadowBox,
+            ]}
             vertical
             onPress={this.closeCamera}
           >
@@ -235,7 +243,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             insulinSuggestions={this.props.insulinSuggestions}
           />
         )}
-        <View style={[styles.bottom, { marginBottom: 5, alignItems: 'center' }]}>
+        <View style={[styles.bottom, { marginBottom: 5, alignItems: 'center' }, GLOBAL.shadowBox]}>
           <Button vertical style={{ width: '95%' }} onPress={this.openCamera}>
             {getIcon('camera')}
             <Text>Food Scanner</Text>

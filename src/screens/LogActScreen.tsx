@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Log } from '../typings/Log';
 import { DateUtils } from '../utils/DateUtils';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GradientContainer } from '../components/GradientContainer';
+import { View } from 'native-base';
 
 interface LogActScreenProps {
   navigation: any;
@@ -55,13 +57,18 @@ class LogActScreen extends React.Component<LogActScreenProps> {
   render() {
     return (
       <KeyboardAwareScrollView>
-        <ActivityForm
-          navigation={this.props.navigation}
-          currentTime={this.state.currentTime}
-          item={this.state.item}
-          handleSubmit={this.handleFormSubmit}
-          addLog={this.props.addLog}
-        />
+        {/* <GradientContainer colors={['#ff9191', '#ffffff']}> */}
+        <GradientContainer>
+          <View style={{}}>
+            <ActivityForm
+              navigation={this.props.navigation}
+              currentTime={this.state.currentTime}
+              item={this.state.item}
+              handleSubmit={this.handleFormSubmit}
+              addLog={this.props.addLog}
+            />
+          </View>
+        </GradientContainer>
       </KeyboardAwareScrollView>
     );
   }

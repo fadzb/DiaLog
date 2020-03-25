@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 1,
     borderColor: colors.GRAY_LIGHT,
     borderWidth: 5,
-    borderRadius: 30,
+    borderRadius: 15,
     backgroundColor: 'white',
   },
   foodListContainer: {

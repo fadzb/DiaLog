@@ -5,6 +5,7 @@ import { styles } from '../styles/CarbScreen';
 import { requestFoodDetails, parseMoreDetails } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { View } from 'native-base';
+import { GLOBAL } from '../styles/global';
 
 const TRUNCATE_AFTER = 20;
 
@@ -67,7 +68,10 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
+      <TouchableOpacity
+        onPress={this.handleClick}
+        style={[styles.listItemContainer, GLOBAL.shadowBox]}
+      >
         {this.state.modalVisible && (
           <FoodItemModal
             navigation={this.props.navigation}

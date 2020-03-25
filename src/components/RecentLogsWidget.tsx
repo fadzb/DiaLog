@@ -3,6 +3,7 @@ import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
 import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
 import { styles } from '../styles/HomeScreen';
+import { GLOBAL } from '../styles/global';
 
 interface RecentLogsWidgetProps {
   logs: Log[];
@@ -30,7 +31,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
     }
 
     return (
-      <View>
+      <View style={GLOBAL.shadowBox}>
         <Card style={this.props.preview ? styles.card : {}}>
           <CardItem header>
             <Text>Recent Logs</Text>

@@ -29,9 +29,10 @@ export const AppStack = (initialRoute: any) =>
       headerMode: 'screen',
 
       defaultNavigationOptions: {
-        title: 'GLUCO-TRACK',
+        title: 'DiaLog',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          // backgroundColor: '#f4511e',
+          backgroundColor: '#e66465',
           borderBottomWidth: 0,
         },
         headerTintColor: '#fff',

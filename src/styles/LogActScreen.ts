@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   inputPills: {
     width: '90%',
     marginTop: 10,
+    backgroundColor: 'white',
   },
   submitButton: {
     width: '70%',

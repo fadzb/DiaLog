@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Platform, Button } from 'react-native';
+import { View, Platform, Button, Dimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import { DateUtils } from '../utils/DateUtils';
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 interface DateTimeInputProps {
   currentTime: any;
@@ -19,7 +20,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
   state = {
     dateTime: this.props.currentTime,
-    show: false,
+    show: SCREEN_HEIGHT > 800 ? true : false,
   };
 
   setDateTime = (event: any, dateTime: any) => {
@@ -56,7 +57,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     const { show, dateTime } = this.state;
 
     return (
-      <View style={{ marginVertical: 20 }}>
+      <View style={{ marginBottom: 20 }}>
         <View style={styles.pickerControls}>
           {!show && <Button onPress={this.showPicker} title="Change Time" />}
           {show && <Button onPress={this.hidePicker} title="Hide" />}

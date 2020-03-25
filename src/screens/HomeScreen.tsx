@@ -15,6 +15,7 @@ import { RecentLogsWidget } from '../components/RecentLogsWidget';
 import WebView from 'react-native-webview';
 import LinearGradient from 'react-native-linear-gradient';
 import { GradientContainer } from '../components/GradientContainer';
+import { GLOBAL } from '../styles/global';
 
 interface HomeScreenProps {
   navigation: any;
@@ -107,20 +108,22 @@ class HomeScreen extends React.Component<HomeScreenProps> {
         <ScrollView style={styles.container}>
           {/* Always render Overview Widget */}
           <GradientContainer>
-            <Card style={styles.card}>
-              <CardItem header>
-                <Text>Overview</Text>
-              </CardItem>
+            <View style={GLOBAL.shadowBox}>
+              <Card style={styles.card}>
+                <CardItem header>
+                  <Text>Overview</Text>
+                </CardItem>
 
-              <CardItem>
-                <ActivityChart
-                  preview={true}
-                  logs={this.props.logs}
-                  onSelectLog={this.handleSelectLog}
-                  navigation={this.props.navigation}
-                />
-              </CardItem>
-            </Card>
+                <CardItem>
+                  <ActivityChart
+                    preview={true}
+                    logs={this.props.logs}
+                    onSelectLog={this.handleSelectLog}
+                    navigation={this.props.navigation}
+                  />
+                </CardItem>
+              </Card>
+            </View>
 
             {/* Conditionally render other widgets: i.e. Recent Logs */}
             {renderRecentLogs && (
@@ -134,24 +137,26 @@ class HomeScreen extends React.Component<HomeScreenProps> {
             )}
 
             {/* Create a list component that takes a list of all disabled widgets */}
-            <Card style={styles.card}>
-              <CardItem header>
-                <Text>Other Apps</Text>
-              </CardItem>
-              <CardItem>
-                <ScrollView horizontal={true}>
-                  {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
-                    return (
-                      <WidgetButton
-                        navigation={this.props.navigation}
-                        widget={widget}
-                        key={index}
-                      />
-                    );
-                  })}
-                </ScrollView>
-              </CardItem>
-            </Card>
+            <View style={GLOBAL.shadowBox}>
+              <Card style={styles.card}>
+                <CardItem header>
+                  <Text>Other Apps</Text>
+                </CardItem>
+                <CardItem>
+                  <ScrollView horizontal={true}>
+                    {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
+                      return (
+                        <WidgetButton
+                          navigation={this.props.navigation}
+                          widget={widget}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </ScrollView>
+                </CardItem>
+              </Card>
+            </View>
 
             {/* Toggle View Button */}
             {false && (
