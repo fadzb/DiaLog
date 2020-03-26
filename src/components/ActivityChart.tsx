@@ -27,6 +27,16 @@ const paddingHours = 1;
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
 
+//remove later
+// const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+// const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
+// const scaleX = scaleTime()
+//   .domain([startX, endX])
+//   .range([0 + innerHorizontalPadding, SCREEN_WIDTH - innerHorizontalPadding]);
+// const scaleY = scaleLinear()
+//   .domain([0, maxGlucose])
+//   .range([height - verticalPadding, verticalPadding]);
+
 interface ActivityChartProps {
   preview: boolean; //reduce chart width for preview
   logs: Log[];
@@ -50,21 +60,24 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   state = {
     logs: [],
     selectedLog: {},
-    endX: 0,
-    startX: 0,
+    // endX: 0,
+    // startX: 0,
   };
 
   // Update scale
   handleFocus = () => {
-    const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
-    const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
+    this.endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+    this.startX = this.endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 
-    this.setState({ selectedLog: null, endX, startX });
+    this.setState({ selectedLog: null });
   };
 
+  endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+  startX = this.endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
+
   scaleX = scaleTime()
-    .domain([this.state.startX, this.state.endX])
-    .range([0 + innerHorizontalPadding, this.SCREEN_WIDTH - innerHorizontalPadding]);
+    .domain([this.startX, this.endX])
+    .range([0 - innerHorizontalPadding, this.SCREEN_WIDTH - innerHorizontalPadding]);
 
   scaleY = scaleLinear()
     .domain([0, maxGlucose])
