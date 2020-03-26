@@ -13,10 +13,6 @@ const initialState: any = {
   insulinSuggestions: DEFAULT_INSULIN_SUGGESTIONS,
 };
 
-// export default createStore(rootReducer, initialState);
-
-//TODO: Persisted Store
-
 // Persist Config
 const persistConfig = {
   key: 'root',
