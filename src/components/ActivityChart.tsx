@@ -339,7 +339,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       .line()
       .x((d: any) => this.scaleX(d.x))
       .y((d: any) => this.scaleY(d.y))
-      .curve(shape.curveCardinal.tension(0))(data);
+      .curve(shape.curveCardinal.tension(0.6))(data);
 
   render() {
     const { logs } = this.props;
