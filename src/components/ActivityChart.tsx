@@ -56,6 +56,7 @@ interface ActivityChartProps {
   logs: Log[];
   onSelectLog: (log: Log) => void;
   navigation: any;
+  selectedLog: Log;
 }
 
 export class ActivityChart extends React.Component<ActivityChartProps> {
@@ -73,7 +74,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   state = {
     logs: [],
-    selectedLog: {},
+    selectedLog: this.props.selectedLog,
   };
 
   // Update scale
@@ -340,6 +341,14 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
       .x((d: any) => this.scaleX(d.x))
       .y((d: any) => this.scaleY(d.y))
       .curve(shape.curveCardinal.tension(0.6))(data);
+
+  // Componenet Updated: We selected a log from diff component
+  componentDidUpdate(prevProps: any) {
+    if (prevProps.selectedLog !== this.props.selectedLog) {
+      // Update time and reset inputs
+      this.setState({ selectedLog: this.props.selectedLog });
+    }
+  }
 
   render() {
     const { logs } = this.props;

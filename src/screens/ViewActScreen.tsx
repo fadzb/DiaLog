@@ -32,7 +32,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   }
 
   state = {
-    selectedLog: null,
+    selectedLog: {},
   };
 
   handleAddNewLog = () => {
@@ -45,7 +45,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
 
   handleFocus = () => {
     // Reset the selected log
-    // this.setState({ selectedLog: null });
+    this.setState({ selectedLog: null });
   };
 
   // Remove listener
@@ -62,6 +62,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
             preview={false}
             logs={this.props.logs}
             onSelectLog={this.handleSelectLog}
+            selectedLog={this.state.selectedLog}
             navigation={this.props.navigation}
           />
           {/* </LinearGradient> */}
@@ -78,6 +79,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
               <RecentLogsWidget
                 logs={this.props.logs}
                 onSelectLog={this.handleSelectLog}
+                selectedLog={this.state.selectedLog}
                 maxLogs={10}
               />
             </ScrollView>

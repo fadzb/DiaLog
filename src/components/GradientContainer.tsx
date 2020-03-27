@@ -15,7 +15,8 @@ export class GradientContainer extends React.Component<GradientContainerProps> {
     return (
       <LinearGradient
         style={{ flex: 1, minHeight: '100%' }}
-        colors={this.props.colors || ['#e66465', '#9198e5', 'white']}
+        // colors={this.props.colors || ['#e66465', '#9198e5', 'white']}
+        colors={this.props.colors || ['rgba(252,126,0,1)', 'white']}
       >
         {this.props.children}
       </LinearGradient>

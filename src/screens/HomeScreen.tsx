@@ -16,6 +16,7 @@ import WebView from 'react-native-webview';
 import LinearGradient from 'react-native-linear-gradient';
 import { GradientContainer } from '../components/GradientContainer';
 import { GLOBAL } from '../styles/global';
+import { TrainWidget } from '../components/TrainWidget';
 
 interface HomeScreenProps {
   navigation: any;
@@ -100,8 +101,15 @@ class HomeScreen extends React.Component<HomeScreenProps> {
   };
 
   render() {
-    const recentLogsWidget = getWidgetById('recentLogs', this.props.widgets);
+    const { widgets } = this.props;
+
+    // Widgets
+    const recentLogsWidget = getWidgetById('recentLogs', widgets);
+    const trainWidget = getWidgetById('Train', widgets);
+
+    // Toggles
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
+    const renderTrainingModules = trainWidget && shouldRenderWidget(trainWidget);
 
     if (this.state.DASHBOARD_TOGGLED) {
       return (
@@ -125,9 +133,12 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               </Card>
             </View>
 
-            {/* Conditionally render other widgets: i.e. Recent Logs */}
+            {/* Conditionally render other widgets:*/}
+
+            {/* Recent Logs */}
             {renderRecentLogs && (
               <RecentLogsWidget
+                selectedLog={null}
                 logs={this.props.logs}
                 onSelectLog={() => {}}
                 onPressOut={this.handleSelectLog}
@@ -135,6 +146,9 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                 preview={true}
               />
             )}
+
+            {/* Training Modules */}
+            {renderTrainingModules && <TrainWidget navigation={this.props.navigation} />}
 
             {/* Create a list component that takes a list of all disabled widgets */}
             <View style={GLOBAL.shadowBox}>

@@ -11,6 +11,7 @@ interface RecentLogsWidgetProps {
   onPressOut?: (log: Log) => void;
   maxLogs?: number;
   preview?: boolean;
+  selectedLog: Log;
 }
 
 export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
@@ -43,6 +44,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
                   key={index}
                   onPress={() => this.props.onSelectLog(log)}
                   onPressOut={() => onPressOut(log)}
+                  selected={this.props.selectedLog == log}
                 >
                   <Text>{getLogHeader(log)}</Text>
                 </ListItem>

@@ -39,7 +39,7 @@ export class WidgetButton extends React.Component<WidgetButtonProps> {
           borderWidth: 1,
         }}
       >
-        <LinearGradient style={{ flex: 1 }} colors={['white', '#e66465', '#9198e5']}>
+        <LinearGradient style={{ flex: 1 }} colors={['white', 'rgba(252, 126, 0, 1)']}>
           <View style={styles.item}>
             <TouchableOpacity onPress={this.handleWidgetNav}>
               {Boolean(widget.iconName) && getIcon(widget.iconName)}

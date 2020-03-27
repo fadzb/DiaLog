@@ -3,7 +3,7 @@ import { View, Card, CardItem, Left, Thumbnail, Text, Body, Button, Switch } fro
 import { DEFAULT_PIC } from '../utils/ProfileUtils';
 import { getCurrentUser, signOut } from '../utils/FirebaseAuth/AuthUtils';
 import { SwitchButton } from '../components/SwitchButton';
-import { Widget } from '../typings/Widget';
+import { Widget, trainWidget } from '../typings/Widget';
 import { dispatchUpdateWidget, getWidgetById } from '../utils/WidgetUtils';
 import { connect } from 'react-redux';
 import { setChoRatio, setInsulinSuggestions } from '../actions/actions';
@@ -33,7 +33,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
     choRatioInput: this.props.choRatio,
   };
 
-  handleRecentLogsChange = (widget: Widget | undefined, newValue: boolean) => {
+  handleWidgetChange = (widget: Widget | undefined, newValue: boolean) => {
     if (!widget) {
       console.log('Widget undefined');
       return;
@@ -65,6 +65,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
 
     // Get widgets
     const recentLogsWidget = getWidgetById('recentLogs', widgets);
+    const trainWidget = getWidgetById('Train', widgets);
 
     return (
       <View>
@@ -84,10 +85,13 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
         {/* Widgets */}
         <Card>
           <CardItem header bordered>
-            <Text>Widgets Enabled</Text>
+            <Text>Dashboard Widgets Enabled</Text>
           </CardItem>
           <CardItem>
-            <SwitchButton widget={recentLogsWidget} handleChange={this.handleRecentLogsChange} />
+            <SwitchButton widget={recentLogsWidget} handleChange={this.handleWidgetChange} />
+          </CardItem>
+          <CardItem>
+            <SwitchButton widget={trainWidget} handleChange={this.handleWidgetChange} />
           </CardItem>
         </Card>
 

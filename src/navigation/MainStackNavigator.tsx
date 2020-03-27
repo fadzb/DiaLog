@@ -6,6 +6,7 @@ import { ModuleScreen } from '../screens/ModuleScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { TabNavigator } from './MainTabNavigator';
 import ChatScreen from '../screens/ChatScreen';
+import { WebViewScreen } from '../screens/WebViewScreen';
 
 //FIXME: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
 
@@ -23,6 +24,7 @@ export const AppStack = (initialRoute: any) =>
       Chat: ChatScreen,
       Train: TrainScreen,
       Mod: ModuleScreen,
+      Web: WebViewScreen,
     },
     {
       initialRouteName: `${initialRoute}`,
@@ -31,8 +33,9 @@ export const AppStack = (initialRoute: any) =>
       defaultNavigationOptions: {
         title: 'DiaLog',
         headerStyle: {
-          // backgroundColor: '#f4511e',
-          backgroundColor: '#e66465',
+          // backgroundColor: '#e66465',
+          // backgroundColor: '#9198e5',
+          backgroundColor: 'rgba(252, 126, 0, 1)',
           borderBottomWidth: 0,
         },
         headerTintColor: '#fff',
