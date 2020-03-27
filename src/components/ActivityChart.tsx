@@ -6,10 +6,22 @@ import { Dimensions } from 'react-native';
 import { getLogsForDate, getLogsFromLastxHours } from '../utils/ActivityLogUtils';
 import { DateUtils } from '../utils/DateUtils';
 import { Log } from '../typings/Log';
-import Svg, { Circle, G, Text, Path, Line, Defs, LinearGradient, Stop } from 'react-native-svg';
+import Svg, {
+  Circle,
+  G,
+  Text,
+  Path,
+  Line,
+  Defs,
+  LinearGradient,
+  Stop,
+  Rect,
+  Pattern,
+} from 'react-native-svg';
 import { scaleTime, scaleLinear } from 'd3-scale';
 import * as shape from 'd3-shape';
 import * as path from 'svg-path-properties';
+import { default as LinearGradientColour } from 'react-native-linear-gradient';
 
 const horizontalPadding = 5;
 const innerHorizontalPadding = 10;
@@ -18,6 +30,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width - horizontalPadding;
 const height = 200;
 const verticalPadding = 5;
 const maxGlucose = 30;
+const maxInsulin = 35;
+const maxCarb = 100;
 const oneDayTimeSpan = true;
 const timeSpan = oneDayTimeSpan ? 24 : 12; // Show logs over last x hours
 const legendOffsetX = 70; //Padding for legend
@@ -60,8 +74,6 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   state = {
     logs: [],
     selectedLog: {},
-    // endX: 0,
-    // startX: 0,
   };
 
   // Update scale
@@ -77,11 +89,23 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   scaleX = scaleTime()
     .domain([this.startX, this.endX])
-    .range([0 - innerHorizontalPadding, this.SCREEN_WIDTH - innerHorizontalPadding]);
+    .range([
+      0 - innerHorizontalPadding,
+      this.SCREEN_WIDTH - innerHorizontalPadding - horizontalPadding,
+    ]);
 
   scaleY = scaleLinear()
     .domain([0, maxGlucose])
     .range([height - verticalPadding, verticalPadding]);
+
+  // length should be between 6 and 10
+  scaleInsulinTriangle = scaleLinear()
+    .domain([0, maxInsulin])
+    .range([6, 10]);
+
+  scaleFoodSquare = scaleLinear()
+    .domain([0, maxCarb])
+    .range([10, 15]);
 
   // Remove listener
   componentWillUnmount() {
@@ -220,32 +244,42 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const points: any = [];
 
     logs.forEach(log => {
-      // Food
+      // Food Squares
       if (log.cho > 0) {
         points.push(
           <G
             key={`food-point-${log.cho}-${log.time}`}
-            x={this.scaleX(log.time)}
-            y={this.scaleY(log.cho)}
+            x={this.scaleX(log.time) - 8} // -8 to center square
+            y={
+              log.insulin > 0
+                ? height - this.scaleInsulinTriangle(log.insulin) - 23 - 5
+                : height - 23
+            } // bump up on top of insulin triangle
           >
-            {this.state.selectedLog == log && <Circle r="10" fill="red"></Circle>}
-            <Circle r="7" fill="orange" onPress={() => this.selectLog(log)} />
-            <Text>Food</Text>
+            {this.square(this.scaleFoodSquare(log.cho), 'orange', 'white', () =>
+              this.selectLog(log),
+            )}
+            {this.state.selectedLog == log &&
+              this.square(this.scaleFoodSquare(log.cho) + 3, 'orange', 'red', () =>
+                this.selectLog(log),
+              )}
           </G>,
         );
       }
 
-      // Insulin
+      // Insulin Triangles
       if (log.insulin > 0) {
         points.push(
           <G
             key={`insulin-point-${log.insulin}-${log.time}`}
-            x={this.scaleX(log.time)}
-            y={this.scaleY(log.insulin)}
+            x={this.scaleX(log.time) - 9} // -9 to center the triangle on exact point
+            y={height - 23} // bump up on top of food square
           >
-            {this.state.selectedLog == log && <Circle r="10" fill="red"></Circle>}
-            <Circle r="7" fill="blue" onPress={() => this.selectLog(log)} />
-            <Text>Insulin</Text>
+            {this.triangle(this.scaleInsulinTriangle(log.insulin), 'blue', 'white', () =>
+              this.selectLog(log),
+            )}
+            {this.state.selectedLog == log &&
+              this.triangle(this.scaleInsulinTriangle(log.insulin) + 2, 'blue', 'red')}
           </G>,
         );
       }
@@ -257,6 +291,47 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
   selectLog = (log: Log) => {
     this.setState({ selectedLog: log });
     this.props.onSelectLog(log);
+  };
+
+  triangle = (
+    length: number,
+    fill: string,
+    stroke: string,
+    onPress?: () => void,
+    x?: number,
+    y?: number,
+  ) => {
+    return (
+      <Path
+        d={`M 0 0 L ${length * 2} 0 L ${length} ${length * 2} z`}
+        fill={fill}
+        stroke={stroke}
+        onPress={onPress}
+        x={x}
+        y={y}
+      />
+    );
+  };
+
+  square = (
+    length: number,
+    fill: string,
+    stroke: string,
+    onPress?: () => void,
+    x?: number,
+    y?: number,
+  ) => {
+    return (
+      <Rect
+        width={length}
+        height={length}
+        fill={fill}
+        stroke={stroke}
+        onPress={onPress}
+        x={x}
+        y={y}
+      />
+    );
   };
 
   line = (data: any) =>
@@ -282,78 +357,80 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const { x: startX, y: startY } = startPoint;
 
     return (
-      <View
-        style={{
-          marginTop: 5,
-          marginBottom: 50,
-          borderWidth: 1,
-          width: this.SCREEN_WIDTH,
-          height: height,
-          alignSelf: 'center',
-        }}
-      >
-        <Svg height={height + outerVerticalPadding} width={this.SCREEN_WIDTH}>
-          {/* Using revolut chart gradient */}
-          <Defs>
-            <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
-              <Stop stopColor="#CDE3F8" offset="0%" />
-              <Stop stopColor="#eef6fd" offset="80%" />
-              <Stop stopColor="#FEFFFF" offset="100%" />
-            </LinearGradient>
-          </Defs>
+      <LinearGradientColour colors={['rgba(245,248,114,1)', 'white']} style={{}}>
+        <View
+          style={{
+            marginTop: 5,
+            marginBottom: 50,
+            // borderWidth: 1,
+            width: this.SCREEN_WIDTH,
+            height: height,
+            alignSelf: 'center',
+          }}
+        >
+          <Svg height={height + outerVerticalPadding} width={this.SCREEN_WIDTH}>
+            {/* Using revolut chart gradient */}
+            <Defs>
+              <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
+                <Stop stopColor="#CDE3F8" offset="0%" />
+                <Stop stopColor="#eef6fd" offset="80%" />
+                <Stop stopColor="#FEFFFF" offset="100%" />
+              </LinearGradient>
+            </Defs>
 
-          {/* Legend */}
-          <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
-            <Circle x={-10} y={-5} r="7" fill="green" />
-            <Text>Glucose</Text>
-          </G>
-          <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
-            <Circle x={-10} y={-5} r="7" fill="blue" />
-            <Text>Insulin</Text>
-          </G>
-          <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
-            <Circle x={-10} y={-5} r="7" fill="orange" />
-            <Text>Food</Text>
-          </G>
+            {/* Legend */}
+            <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY}>
+              <Circle x={-10} y={-5} r="7" fill="green" />
+              <Text>Glucose</Text>
+            </G>
+            <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 15}>
+              {this.triangle(7, 'blue', 'white', () => {}, -16, -10)}
+              <Text>Insulin</Text>
+            </G>
+            <G x={this.SCREEN_WIDTH - legendOffsetX} y={legendOffsetY + 30}>
+              {this.square(14, 'orange', 'white', () => {}, -16, -10)}
+              <Text>Food</Text>
+            </G>
 
-          {/* Smooth Line */}
-          {properties && properties.getTotalLength() > 0 && (
-            <Path
-              d={`${line} V ${height} ${height - verticalPadding} L ${startX} ${height -
-                verticalPadding} L ${startX} ${startY} `}
-              stroke="green"
-              strokeWidth={3}
-              fill="url(#gradient)"
-            />
-          )}
+            {/* Smooth Line */}
+            {properties && properties.getTotalLength() > 0 && (
+              <Path
+                d={`${line} V ${height} ${height - verticalPadding} L ${startX} ${height -
+                  verticalPadding} L ${startX} ${startY} `}
+                stroke="green"
+                strokeWidth={3}
+                fill="url(#gradient)"
+              />
+            )}
 
-          {/* Data Points */}
-          {data.map((dataPoint: any, index: any) => {
-            return (
-              <G
-                key={`glucose-point-${dataPoint.glucose}-${dataPoint.x}`}
-                x={this.scaleX(dataPoint.x)}
-                y={this.scaleY(dataPoint.y)}
-              >
-                {this.state.selectedLog == dataPoint.log && <Circle r="10" fill="red"></Circle>}
-                <Circle
-                  r="7"
-                  fill="green"
-                  key={index}
-                  onPress={() => this.selectLog(dataPoint.log)}
-                />
-              </G>
-            );
-          })}
+            {/* Data Points */}
+            {data.map((dataPoint: any, index: any) => {
+              return (
+                <G
+                  key={`glucose-point-${dataPoint.glucose}-${dataPoint.x}`}
+                  x={this.scaleX(dataPoint.x)}
+                  y={this.scaleY(dataPoint.y)}
+                >
+                  {this.state.selectedLog == dataPoint.log && <Circle r="10" fill="red"></Circle>}
+                  <Circle
+                    r="7"
+                    fill="green"
+                    key={index}
+                    onPress={() => this.selectLog(dataPoint.log)}
+                  />
+                </G>
+              );
+            })}
 
-          {/* Grid */}
-          {this.createGridLines()}
-          {this.createGridLabels()}
+            {/* Grid */}
+            {this.createGridLines()}
+            {this.createGridLabels()}
 
-          {/* Other Activities */}
-          {this.createPoints(recentLogs)}
-        </Svg>
-      </View>
+            {/* Other Activities */}
+            {this.createPoints(recentLogs)}
+          </Svg>
+        </View>
+      </LinearGradientColour>
     );
   }
 }

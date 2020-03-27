@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
 import { LogDetails } from '../components/LogDetails';
 import { GradientContainer } from '../components/GradientContainer';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface ViewActScreenProps {
   navigation: any;
@@ -56,12 +57,14 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
     return (
       <View style={{ flex: 1 }}>
         <GradientContainer>
+          {/* <LinearGradient colors={['rgba(245,248,114,1)', 'white']} style={{}}> */}
           <ActivityChart
             preview={false}
             logs={this.props.logs}
             onSelectLog={this.handleSelectLog}
             navigation={this.props.navigation}
           />
+          {/* </LinearGradient> */}
           <Button
             style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
             onPress={this.handleAddNewLog}
