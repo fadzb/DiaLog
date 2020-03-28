@@ -366,7 +366,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
     const { x: startX, y: startY } = startPoint;
 
     return (
-      <LinearGradientColour colors={['rgba(245,248,114,1)', 'white']} style={{}}>
+      <LinearGradientColour colors={['white', 'rgba(245,248,114,1)', 'white']} style={{}}>
         <View
           style={{
             marginTop: 5,

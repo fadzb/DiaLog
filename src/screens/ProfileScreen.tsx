@@ -66,6 +66,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
     // Get widgets
     const recentLogsWidget = getWidgetById('recentLogs', widgets);
     const trainWidget = getWidgetById('Train', widgets);
+    const chatWidget = getWidgetById('Chat', widgets);
 
     return (
       <View>
@@ -92,6 +93,9 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
           </CardItem>
           <CardItem>
             <SwitchButton widget={trainWidget} handleChange={this.handleWidgetChange} />
+          </CardItem>
+          <CardItem>
+            <SwitchButton widget={chatWidget} handleChange={this.handleWidgetChange} />
           </CardItem>
         </Card>
 
@@ -137,7 +141,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
 
           {firebase.auth().currentUser ? (
             <CardItem>
-              <Button onPress={() => signOut()}>
+              <Button style={{ backgroundColor: 'orange' }} onPress={() => signOut()}>
                 <Text>Logout</Text>
               </Button>
             </CardItem>
@@ -150,8 +154,8 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
           )}
 
           <CardItem>
-            <Button onPress={this.clearApp}>
-              <Text>Clear App Memory (Purge Redux)</Text>
+            <Button danger onPress={this.clearApp}>
+              <Text>Clear App Memory</Text>
             </Button>
           </CardItem>
         </Card>

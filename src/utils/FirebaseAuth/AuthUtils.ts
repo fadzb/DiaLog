@@ -26,7 +26,6 @@ export const getCurrentUser = () => {
 };
 
 export const login = async (email: string, password: any) => {
-  //Login a test user
   try {
     const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
     console.log(userCredential.user.email + ' logged in.');

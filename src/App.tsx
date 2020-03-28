@@ -4,6 +4,7 @@ import { View } from 'native-base';
 import { firebase } from '@react-native-firebase/auth';
 import { AppStack } from './navigation/MainStackNavigator';
 import LinearGradient from 'react-native-linear-gradient';
+import { GradientContainer } from './components/GradientContainer';
 
 const NavContainer = ({ initialRoute }: any) => {
   // return React.createElement(createAppContainer(MainStackNavigator(initialRoute)));
@@ -49,9 +50,9 @@ const AppContainer = () => {
 
 const App = () => (
   <View style={{ flex: 1 }}>
-    <LinearGradient style={{ flex: 1, minHeight: '100%' }} colors={['#e66465', '#9198e5']}>
+    <GradientContainer>
       <AppContainer />
-    </LinearGradient>
+    </GradientContainer>
   </View>
 );
 

@@ -17,14 +17,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import { GradientContainer } from '../components/GradientContainer';
 import { GLOBAL } from '../styles/global';
 import { TrainWidget } from '../components/TrainWidget';
+import { ChatWidget } from '../components/ChatWidget';
 
 interface HomeScreenProps {
   navigation: any;
-
-  //Redux dispatch actions
+  channelKey: string;
   addName: (name: any) => void;
-
-  //Redux state
   widgets: any;
   logs: Log[];
 }
@@ -106,10 +104,12 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     // Widgets
     const recentLogsWidget = getWidgetById('recentLogs', widgets);
     const trainWidget = getWidgetById('Train', widgets);
+    const chatWidget = getWidgetById('Chat', widgets);
 
     // Toggles
     const renderRecentLogs = recentLogsWidget && shouldRenderWidget(recentLogsWidget);
     const renderTrainingModules = trainWidget && shouldRenderWidget(trainWidget);
+    const renderChat = chatWidget && shouldRenderWidget(chatWidget);
 
     if (this.state.DASHBOARD_TOGGLED) {
       return (
@@ -145,6 +145,11 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                 maxLogs={5}
                 preview={true}
               />
+            )}
+
+            {/* Chat */}
+            {renderChat && (
+              <ChatWidget navigation={this.props.navigation} channelKey={this.props.channelKey} />
             )}
 
             {/* Training Modules */}
@@ -233,6 +238,7 @@ const mapStateToProps = (state: any) => {
     name: state.name,
     widgets: state.widgets,
     logs: state.logs,
+    channelKey: state.channelKey,
   };
 };
 
