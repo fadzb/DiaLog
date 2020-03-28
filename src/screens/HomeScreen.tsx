@@ -111,6 +111,9 @@ class HomeScreen extends React.Component<HomeScreenProps> {
     const renderTrainingModules = trainWidget && shouldRenderWidget(trainWidget);
     const renderChat = chatWidget && shouldRenderWidget(chatWidget);
 
+    // Disabled widgets:
+    const disabledWidgets = getDisabledWidgets(this.props.widgets);
+
     if (this.state.DASHBOARD_TOGGLED) {
       return (
         <ScrollView style={styles.container}>
@@ -156,26 +159,28 @@ class HomeScreen extends React.Component<HomeScreenProps> {
             {renderTrainingModules && <TrainWidget navigation={this.props.navigation} />}
 
             {/* Create a list component that takes a list of all disabled widgets */}
-            <View style={GLOBAL.shadowBox}>
-              <Card style={styles.card}>
-                <CardItem header>
-                  <Text>Other Apps</Text>
-                </CardItem>
-                <CardItem>
-                  <ScrollView horizontal={true}>
-                    {getDisabledWidgets(this.props.widgets).map((widget: Widget, index: any) => {
-                      return (
-                        <WidgetButton
-                          navigation={this.props.navigation}
-                          widget={widget}
-                          key={index}
-                        />
-                      );
-                    })}
-                  </ScrollView>
-                </CardItem>
-              </Card>
-            </View>
+            {disabledWidgets.length > 0 && (
+              <View style={GLOBAL.shadowBox}>
+                <Card style={styles.card}>
+                  <CardItem header>
+                    <Text>Other Apps</Text>
+                  </CardItem>
+                  <CardItem>
+                    <ScrollView horizontal={true}>
+                      {disabledWidgets.map((widget: Widget, index: any) => {
+                        return (
+                          <WidgetButton
+                            navigation={this.props.navigation}
+                            widget={widget}
+                            key={index}
+                          />
+                        );
+                      })}
+                    </ScrollView>
+                  </CardItem>
+                </Card>
+              </View>
+            )}
 
             {/* Toggle View Button */}
             {false && (

@@ -182,7 +182,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
               x2={x}
               y2={height}
               stroke="grey"
-              strokeWidth="0.3"
+              strokeWidth="0.1"
               key={`grindLine-${i}`}
             />
 
@@ -225,7 +225,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             x2={this.SCREEN_WIDTH}
             y2={y}
             stroke="grey"
-            strokeWidth="0.3"
+            strokeWidth="0.1"
             key={`grindLine-${i}`}
           />
           {/* Only render label every 5 units */}

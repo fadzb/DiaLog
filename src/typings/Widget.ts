@@ -12,7 +12,7 @@ export interface Widget {
 export const chatWidget: Widget = {
   widgetId: 'Chat',
   widgetName: 'Chat',
-  enabled: false,
+  enabled: true,
   navKey: 'Chat',
   iconName: 'chat',
   onTabBar: false,
@@ -21,7 +21,7 @@ export const chatWidget: Widget = {
 export const trainWidget: Widget = {
   widgetId: 'Train',
   widgetName: 'Training Modules',
-  enabled: false,
+  enabled: true,
   navKey: 'Train',
   iconName: 'train',
   onTabBar: false,
@@ -37,7 +37,7 @@ export const recentLogsWidget: Widget = {
 export const testWidget: Widget = {
   widgetId: 'ApiTest',
   widgetName: 'Test APIs',
-  enabled: false,
+  enabled: true,
   navKey: 'ApiTest',
   onTabBar: false,
 };
