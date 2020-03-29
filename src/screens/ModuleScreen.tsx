@@ -18,6 +18,7 @@ import { styles } from '../styles/TrainScreen';
 import { ModuleHeader } from '../components/ModuleHeader';
 import { TrainModule } from '../typings/TrainModule';
 import { WebView } from 'react-native-webview';
+const DAFNE_IMAGE = require('../assets/images/dafne.png');
 
 interface ModuleScreenProps {
   navigation: any;
@@ -51,12 +52,12 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
             return (
               <ListItem key={`list-item-${module}`} thumbnail>
                 <Left>
-                  <Thumbnail square source={{ uri: module.thumbnail }} />
+                  <Thumbnail square source={DAFNE_IMAGE} />
                 </Left>
                 <Body>
                   <Text>{module.moduleName}</Text>
                   <Text note numberOfLines={1}>
-                    {module.desc}
+                    {module.desc} ...
                   </Text>
                 </Body>
                 <Right>

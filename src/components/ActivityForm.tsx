@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, Icon, CardItem, View } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, Icon, CardItem, View, Toast } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
@@ -10,6 +10,7 @@ import { getIcon } from '../utils/IconUtils';
 import { TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import { GLOBAL } from '../styles/global';
+import { DateUtils } from '../utils/DateUtils';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
@@ -89,6 +90,11 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       notes: notesInput,
     };
 
+    Toast.show({
+      text: `Log at ${DateUtils.parseDateTimeIntoDateLabel(dateTimeInput)} Added!`,
+      buttonText: 'Okay',
+    });
+
     // Dispatch redux action
     this.props.addLog(log);
 
@@ -126,9 +132,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     });
   };
 
-  //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
   //TODO: Add a Clear button
-  //TODO: Allow user to add a note
   //TODO: Format time more appropriately
 
   // Componenet Updated: May have moved off and back onto screen

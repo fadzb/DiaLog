@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createAppContainer } from 'react-navigation';
-import { View } from 'native-base';
+import { View, Root } from 'native-base';
 import { firebase } from '@react-native-firebase/auth';
 import { AppStack } from './navigation/MainStackNavigator';
 import LinearGradient from 'react-native-linear-gradient';
@@ -49,11 +49,13 @@ const AppContainer = () => {
 };
 
 const App = () => (
-  <View style={{ flex: 1 }}>
-    <GradientContainer>
-      <AppContainer />
-    </GradientContainer>
-  </View>
+  <Root>
+    <View style={{ flex: 1 }}>
+      <GradientContainer>
+        <AppContainer />
+      </GradientContainer>
+    </View>
+  </Root>
 );
 
 export default App;

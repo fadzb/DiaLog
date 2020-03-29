@@ -101,7 +101,7 @@ export class DateUtils {
       day +
       ' ' +
       DateUtils.MONTHS[month] +
-      ' @ ' +
+      ' at ' +
       hours +
       ':' +
       minutes;

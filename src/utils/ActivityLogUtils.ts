@@ -8,11 +8,11 @@ export function getLogHeader(log: Log) {
 
   // If today
   if (DateUtils.sameDay(log.time, new Date())) {
-    return `Today @ ${timeLabel} : ${getType(log)}`;
+    return `Today at ${timeLabel} : ${getType(log)}`;
   }
   // yesterday
   else if (DateUtils.sameDay(log.time, DateUtils.getDayXdaysAgo(1))) {
-    return `Yesterday @ ${timeLabel} : ${getType(log)}`;
+    return `Yesterday at ${timeLabel} : ${getType(log)}`;
   } else {
     return `${DateUtils.parseDateTimeIntoDateLabel(log.time)} : ${getType(log)}`;
   }

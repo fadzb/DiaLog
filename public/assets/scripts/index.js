@@ -28,10 +28,14 @@ function submitForm(e) {
   // Prevent Default
   e.preventDefault();
 
+  // Wrap module content in custom tag
+  const content = `<i> ${document.getElementById('moduleContent').innerHTML} </i>`;
+
   const inputObject = {
     moduleGroup: getInputValue('moduleGroup'),
     moduleName: getInputValue('moduleName'),
-    moduleContent: document.getElementById('moduleContent').innerHTML,
+    desc: getInputValue('moduleDesc'),
+    moduleContent: content,
   };
 
   // Clear Form
@@ -123,6 +127,7 @@ function handleInput(e) {
   const content = document.getElementById('content');
 
   const toPreview = document.getElementById('moduleContent');
+
   // Set inner html
   content.innerHTML = toPreview.innerHTML;
 }
