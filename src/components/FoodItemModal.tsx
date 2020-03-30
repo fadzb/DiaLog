@@ -65,7 +65,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
 
           {/* Nutrtional info */}
           <View style={{ marginVertical: 20 }}>
-            <Text>Carbohydrate: {this.props.item.cho}g</Text>
+            <Text style={{ fontWeight: 'bold' }}>Carbohydrate: {this.props.item.cho}g</Text>
             <Text>Serving Unit: {this.props.item.servingUnit}</Text>
             <Text>Serving Weight: {this.props.item.servingWeight}g</Text>
           </View>
@@ -73,10 +73,10 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           {/* Action buttons */}
           <View style={styles.rowSpaced}>
             <Button onPress={this.addLog}>
-              <Text>Add Log</Text>
+              <Text style={{ fontWeight: 'bold' }}>ADD LOG</Text>
             </Button>
             <Button warning onPress={this.handleClose}>
-              <Text>Cancel</Text>
+              <Text style={{ fontWeight: 'bold' }}>CANCEL</Text>
             </Button>
           </View>
         </View>

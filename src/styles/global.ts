@@ -16,3 +16,7 @@ export const GLOBAL = StyleSheet.create({
     },
   },
 });
+
+export const PRIMARY = 'rgba(0,106,255,1)';
+export const SECONDARY = 'rgba(255,119,0,1)';
+export const TERTIARY = 'rgba(244,244,244,1)';

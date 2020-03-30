@@ -74,7 +74,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             <Tab
               heading={
                 <TabHeading>
-                  <Text>Register</Text>
+                  <Text>REGISTER</Text>
                 </TabHeading>
               }
             >
@@ -90,7 +90,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
                     <Input secureTextEntry onChangeText={this.handlePasswordChange} />
                   </Item>
                   <Button primary style={styles.registerButton} onPress={this.handleRegister}>
-                    <Text>Register</Text>
+                    <Text style={styles.buttonText}>REGISTER</Text>
                   </Button>
                 </Form>
               </View>
@@ -98,7 +98,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             <Tab
               heading={
                 <TabHeading>
-                  <Text>Login</Text>
+                  <Text>LOGIN</Text>
                 </TabHeading>
               }
             >
@@ -114,7 +114,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
                     <Input secureTextEntry onChangeText={this.handlePasswordChange} />
                   </Item>
                   <Button primary style={styles.registerButton} onPress={this.handleLogin}>
-                    <Text>Login</Text>
+                    <Text style={styles.buttonText}>LOGIN</Text>
                   </Button>
                 </Form>
                 <Button
@@ -122,7 +122,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
                   style={[styles.registerButton, { backgroundColor: 'orange' }]}
                   onPress={this.handleLoginGuest}
                 >
-                  <Text>Login as Guest</Text>
+                  <Text style={styles.buttonText}>LOGIN as Guest</Text>
                 </Button>
               </View>
             </Tab>

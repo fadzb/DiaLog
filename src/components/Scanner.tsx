@@ -197,7 +197,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                             justifyContent: 'center',
                             width: 70,
                             height: 70,
-                            backgroundColor: 'rgba(249,173,45,1)',
+                            backgroundColor: 'rgba(0,106,255,1)',
 
                             borderRadius: 50,
                           }}
@@ -205,7 +205,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                         >
                           <Icon
                             name={'food'}
-                            style={{ fontSize: 30 }}
+                            style={{ fontSize: 30, color: 'white' }}
                             type={'MaterialCommunityIcons'}
                           />
                         </Button>
@@ -219,14 +219,20 @@ export class Scanner extends React.PureComponent<ScannerProps> {
           <Button
             style={[
               styles.bottom,
-              { marginBottom: 5, width: '95%', alignSelf: 'center' },
+              {
+                marginBottom: 10,
+                width: '95%',
+                alignSelf: 'center',
+                justifyContent: 'center',
+                borderRadius: 15,
+                backgroundColor: 'orange',
+              },
               GLOBAL.shadowBox,
             ]}
-            vertical
             onPress={this.closeCamera}
           >
             {getIcon('camera')}
-            <Text>Close</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 23, right: 10 }}>CLOSE</Text>
           </Button>
         </View>
       );
@@ -243,10 +249,13 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             insulinSuggestions={this.props.insulinSuggestions}
           />
         )}
-        <View style={[styles.bottom, { marginBottom: 5, alignItems: 'center' }, GLOBAL.shadowBox]}>
-          <Button vertical style={{ width: '95%' }} onPress={this.openCamera}>
+        <View style={[styles.bottom, { marginBottom: 10, alignItems: 'center' }, GLOBAL.shadowBox]}>
+          <Button
+            style={{ width: '95%', justifyContent: 'center', borderRadius: 15 }}
+            onPress={this.openCamera}
+          >
             {getIcon('camera')}
-            <Text>Food Scanner</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 23, right: 10 }}>FOOD SCANNER</Text>
           </Button>
         </View>
       </View>

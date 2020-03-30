@@ -67,10 +67,16 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
           />
           {/* </LinearGradient> */}
           <Button
-            style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
+            style={{
+              width: '98%',
+              margin: 5,
+              borderRadius: 10,
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}
             onPress={this.handleAddNewLog}
           >
-            <Text>Add New Log</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 21 }}>ADD NEW LOG</Text>
           </Button>
 
           {/* Recent Logs */}

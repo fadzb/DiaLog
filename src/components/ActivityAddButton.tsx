@@ -8,6 +8,7 @@ interface ActivityAddButtonProps {
   success?: boolean;
   info?: boolean;
   warning?: boolean;
+  style?: any;
 }
 
 export default class ActivityAddButton extends React.Component<ActivityAddButtonProps> {
@@ -18,11 +19,16 @@ export default class ActivityAddButton extends React.Component<ActivityAddButton
   state = {};
 
   render() {
-    const { success, info, warning } = this.props;
+    const { style, success, info, warning } = this.props;
 
     return (
       <TouchableOpacity style={[{ margin: 10 }, GLOBAL.shadowBox]} onPress={this.props.handlePress}>
-        <Badge success={success} info={info} warning={warning} style={{ height: 40, width: 200 }}>
+        <Badge
+          success={success}
+          info={info}
+          warning={warning}
+          style={[{ height: 40, width: 200 }, style]}
+        >
           {this.props.children}
         </Badge>
       </TouchableOpacity>

@@ -9,7 +9,7 @@ import { makeNotesFromItem } from '../utils/ActivityLogUtils';
 import { getIcon } from '../utils/IconUtils';
 import { TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
-import { GLOBAL } from '../styles/global';
+import { GLOBAL, PRIMARY, SECONDARY } from '../styles/global';
 import { DateUtils } from '../utils/DateUtils';
 
 interface ActivityFormProps {
@@ -160,8 +160,8 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             style={[
               {
                 backgroundColor: 'white',
-                marginTop: 20,
-                borderRadius: 20,
+                marginVertical: 20,
+                borderRadius: 30,
                 // borderWidth: 3,
                 paddingHorizontal: 10,
               },
@@ -193,7 +193,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <ActivityAddButton success handlePress={() => this.setState({ addGlucose: true })}>
-              <Text>Add Blood Glucose</Text>
+              <Text style={styles.buttonText}>Add Blood Glucose</Text>
             </ActivityAddButton>
           )}
 
@@ -213,7 +213,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <ActivityAddButton info handlePress={() => this.setState({ addInsulin: true })}>
-              <Text>Add Insulin</Text>
+              <Text style={styles.buttonText}>Add Insulin</Text>
             </ActivityAddButton>
           )}
 
@@ -233,11 +233,23 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <View style={{}}>
-              <ActivityAddButton warning handlePress={() => this.setState({ addCho: true })}>
-                <Text>Add Carbohydrate</Text>
+              <ActivityAddButton
+                warning
+                style={{ backgroundColor: SECONDARY }}
+                handlePress={() => this.setState({ addCho: true })}
+              >
+                <Text style={styles.buttonText}>Add Carbohydrate</Text>
               </ActivityAddButton>
               <TouchableOpacity onPressOut={() => this.props.navigation.navigate('Carb')}>
-                <Icon style={{ position: 'absolute', right: -40, bottom: 13 }} name={'search'} />
+                <Icon
+                  style={{
+                    position: 'absolute',
+                    right: -40,
+                    bottom: 13,
+                    color: PRIMARY,
+                  }}
+                  name={'search'}
+                />
               </TouchableOpacity>
             </View>
           )}
@@ -280,10 +292,10 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
           ]}
         >
           <Button
-            style={{ width: '70%', justifyContent: 'center', marginVertical: 20 }}
+            style={{ width: '65%', justifyContent: 'center', marginVertical: 20, borderRadius: 10 }}
             onPress={this.handleSubmit}
           >
-            <Text>Submit Log</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 21 }}>SUBMIT LOG</Text>
           </Button>
         </View>
       </View>
