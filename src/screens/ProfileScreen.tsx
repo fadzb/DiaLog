@@ -11,6 +11,7 @@ import NumericInput from 'react-native-numeric-input';
 import store from '../store';
 import { getUserFromAuth } from '../utils/ChatUtils';
 import { firebase } from '@react-native-firebase/auth';
+import { ScrollView } from 'react-native';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -69,7 +70,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
     const chatWidget = getWidgetById('Chat', widgets);
 
     return (
-      <View>
+      <ScrollView>
         {/* Profile */}
         <Card>
           <CardItem>
@@ -159,7 +160,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
             </Button>
           </CardItem>
         </Card>
-      </View>
+      </ScrollView>
     );
   }
 }

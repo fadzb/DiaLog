@@ -145,7 +145,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
                 logs={this.props.logs}
                 onSelectLog={() => {}}
                 onPressOut={this.handleSelectLog}
-                maxLogs={5}
+                maxLogs={3}
                 preview={true}
               />
             )}

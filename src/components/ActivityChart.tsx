@@ -41,7 +41,7 @@ const paddingHours = 1;
 // Scale x from -12 hours to now
 const oneDayInMS = 86400000;
 
-//remove later
+// old logic: remove later
 // const endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
 // const startX = endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 // const scaleX = scaleTime()
