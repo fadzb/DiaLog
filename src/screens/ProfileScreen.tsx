@@ -12,6 +12,8 @@ import store from '../store';
 import { getUserFromAuth } from '../utils/ChatUtils';
 import { firebase } from '@react-native-firebase/auth';
 import { ScrollView } from 'react-native';
+import { ProfileModal } from '../components/ProfileModal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -20,11 +22,15 @@ interface ProfileScreenProps {
   insulinSuggestions: boolean;
   setChoRatio: (ratio: number) => void;
   setInsulinSuggestions: (value: boolean) => void;
+  displayName: string;
+  channelKey: string;
 }
 
 const profilePic = DEFAULT_PIC;
 
 class ProfileScreen extends React.Component<ProfileScreenProps> {
+  modalRef: ProfileModal | null | undefined;
+
   constructor(props: any) {
     super(props);
   }
@@ -32,6 +38,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
   state = {
     user: getCurrentUser(),
     choRatioInput: this.props.choRatio,
+    modalVisible: false,
   };
 
   handleWidgetChange = (widget: Widget | undefined, newValue: boolean) => {
@@ -60,6 +67,20 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
       .catch(error => console.log(error));
   };
 
+  openProfile = () => {
+    //If modal has already been opened before, update its state
+    if (this.modalRef) {
+      this.modalRef.setState({ modalVisible: true });
+    }
+
+    this.setState({ modalVisible: true });
+  };
+
+  // refresh to update display name
+  handleModalClose = () => {
+    this.setState({ user: getCurrentUser() });
+  };
+
   render() {
     const { user } = this.state;
     const { widgets } = this.props;
@@ -72,30 +93,42 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
     return (
       <ScrollView>
         {/* Profile */}
-        <Card>
-          <CardItem>
-            <Left>
-              <Thumbnail source={profilePic} />
-              <Body>
-                <Text>{user.displayName || 'No Display Name'}</Text>
-                <Text note>{user.email}</Text>
-              </Body>
-            </Left>
-          </CardItem>
-        </Card>
+        <TouchableOpacity onPress={this.openProfile}>
+          <Card>
+            <CardItem>
+              {this.state.modalVisible && (
+                <ProfileModal
+                  navigation={this.props.navigation}
+                  handleModalClose={this.handleModalClose}
+                  ref={ref => (this.modalRef = ref)}
+                  user={this.state.user}
+                  channelKey={this.props.channelKey}
+                />
+              )}
+              <Left>
+                <Thumbnail source={profilePic} />
+                <Body>
+                  <Text>{user.displayName || 'No Display Name'}</Text>
+                  <Text note>{user.email}</Text>
+                </Body>
+              </Left>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
 
         {/* Widgets */}
         <Card>
           <CardItem header bordered>
             <Text>Dashboard Widgets Enabled</Text>
           </CardItem>
-          <CardItem>
+
+          <CardItem bordered>
             <SwitchButton widget={recentLogsWidget} handleChange={this.handleWidgetChange} />
           </CardItem>
-          <CardItem>
+          <CardItem bordered>
             <SwitchButton widget={trainWidget} handleChange={this.handleWidgetChange} />
           </CardItem>
-          <CardItem>
+          <CardItem bordered>
             <SwitchButton widget={chatWidget} handleChange={this.handleWidgetChange} />
           </CardItem>
         </Card>
@@ -106,7 +139,7 @@ class ProfileScreen extends React.Component<ProfileScreenProps> {
           </CardItem>
 
           {/* Enable/ Disable */}
-          <CardItem>
+          <CardItem style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text>Enable Insulin Suggestions: </Text>
             <Switch
               value={this.props.insulinSuggestions}
@@ -172,6 +205,7 @@ const mapStateToProps = (state: any) => {
     logs: state.logs,
     choRatio: state.choRatio,
     insulinSuggestions: state.insulinSuggestions,
+    channelKey: state.channelKey,
   };
 };
 

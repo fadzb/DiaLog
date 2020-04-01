@@ -77,6 +77,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
             value={dateTime}
             mode={'datetime'}
             onChange={this.setDateTime}
+            maximumDate={new Date()}
           />
         )}
         {ANDROID && show && (

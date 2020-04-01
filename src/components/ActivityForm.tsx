@@ -7,7 +7,7 @@ import { FoodItem } from '../typings/FoodItem';
 import ActivityAddButton from './ActivityAddButton';
 import { makeNotesFromItem } from '../utils/ActivityLogUtils';
 import { getIcon } from '../utils/IconUtils';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, AccessibilityInfo } from 'react-native';
 import { Card } from 'react-native-paper';
 import { GLOBAL, PRIMARY, SECONDARY } from '../styles/global';
 import { DateUtils } from '../utils/DateUtils';
@@ -89,6 +89,15 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       cho: choInput,
       notes: notesInput,
     };
+
+    // Empty Log
+    if (log.insulin == 0 && log.cho == 0 && log.glucose == 0) {
+      Toast.show({
+        text: `Error: Cannot Submit Empty Log!`,
+        buttonText: 'Okay',
+      });
+      return;
+    }
 
     Toast.show({
       text: `Log at ${DateUtils.parseDateTimeIntoDateLabel(dateTimeInput)} Added!`,
@@ -186,6 +195,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Glucose"
                 onChangeText={this.handleGlucoseChange}
                 keyboardType={'numeric'}
+                maxLength={2}
               />
               <Badge success style={styles.badge}>
                 <Text>{this.state.glucoseInput} mmo/l</Text>
@@ -206,6 +216,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Insulin"
                 onChangeText={this.handleInsulinChange}
                 keyboardType={'numeric'}
+                maxLength={2}
               />
               <Badge info style={styles.badge}>
                 <Text>{this.state.insulinInput} Units</Text>
@@ -226,6 +237,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder={this.getName() || 'Enter Carbohydrate'}
                 onChangeText={this.handleChoChange}
                 keyboardType={'numeric'}
+                maxLength={3}
               />
               <Badge warning style={styles.badge}>
                 <Text>{this.state.choInput} g</Text>

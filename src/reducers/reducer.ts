@@ -6,9 +6,12 @@ import {
   ADD_CHANNEL_KEY,
   SET_CHO_RATIO,
   SET_INSULIN_SUGGESTIONS,
+  UPDATE_DISPLAY_NAME,
 } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
+import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
+import { firebase } from '@react-native-firebase/auth';
 
 // just acts an interface to state => actual initial state defined in store.ts
 const initialState: any = {
@@ -18,6 +21,7 @@ const initialState: any = {
   channelKey: '',
   choRatio: 0,
   insulinSuggestions: false,
+  displayName: '',
 };
 
 const rootReducer = (state = initialState, action: any) => {

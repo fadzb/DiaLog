@@ -21,13 +21,13 @@ const Icons: any = {
   settings: { name: 'settings', type: 'Feather' },
 };
 
-const getIconJSX = (icon: icon) => {
-  return <Icon name={icon.name} type={icon.type} />;
+const getIconJSX = (icon: icon, color?: string) => {
+  return <Icon name={icon.name} type={icon.type} style={{ color: color }} />;
 };
 
-export const getIcon = (key: string) => {
+export const getIcon = (key: string, color?: string) => {
   const icon_object: icon = Icons[key];
-  const icon_jsx: any = getIconJSX(icon_object);
+  const icon_jsx: any = getIconJSX(icon_object, color);
 
   return icon_jsx;
 };

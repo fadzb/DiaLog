@@ -20,7 +20,7 @@ export const chatWidget: Widget = {
 
 export const trainWidget: Widget = {
   widgetId: 'Train',
-  widgetName: 'Training Modules',
+  widgetName: 'Training',
   enabled: true,
   navKey: 'Train',
   iconName: 'train',

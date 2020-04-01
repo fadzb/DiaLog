@@ -4,7 +4,7 @@ import { Widget } from '../typings/Widget';
 import { styles } from '../styles/HomeScreen';
 import { TouchableOpacity } from 'react-native';
 import { getIcon } from '../utils/IconUtils';
-import { GLOBAL } from '../styles/global';
+import { GLOBAL, PRIMARY, SECONDARY, TERTIARY } from '../styles/global';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface WidgetButtonProps {
@@ -37,12 +37,17 @@ export class WidgetButton extends React.Component<WidgetButtonProps> {
           alignContent: 'center',
           borderRadius: 100,
           borderWidth: 1,
+          borderColor: SECONDARY,
         }}
       >
-        <LinearGradient style={{ flex: 1 }} colors={['white', 'rgba(252, 126, 0, 1)']}>
+        <LinearGradient style={{ flex: 1 }} colors={['blue', PRIMARY]}>
           <View style={styles.item}>
             <TouchableOpacity onPress={this.handleWidgetNav}>
-              {Boolean(widget.iconName) && getIcon(widget.iconName)}
+              {Boolean(widget.iconName) && (
+                <View style={{ alignSelf: 'center', right: 3 }}>
+                  {getIcon(`${widget.iconName}`, 'white')}
+                </View>
+              )}
               <Text style={styles.itemText}>{widget.widgetName}</Text>
             </TouchableOpacity>
           </View>

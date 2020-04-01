@@ -98,6 +98,7 @@ class CarbScreen extends React.Component<CarbScreenProps> {
               updateLabels={this.handleLabels}
               choRatio={this.props.choRatio}
               insulinSuggestions={this.props.insulinSuggestions}
+              clearSearch={this.clearFoodList}
             />
           </View>
         </GradientContainer>

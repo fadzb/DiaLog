@@ -90,10 +90,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   scaleX = scaleTime()
     .domain([this.startX, this.endX])
-    .range([
-      0 - innerHorizontalPadding,
-      this.SCREEN_WIDTH - innerHorizontalPadding - horizontalPadding,
-    ]);
+    .range([0, this.SCREEN_WIDTH - innerHorizontalPadding]);
 
   scaleY = scaleLinear()
     .domain([0, maxGlucose])

@@ -48,7 +48,7 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
       <View style={GLOBAL.shadowBox}>
         <Card style={styles.card}>
           <CardItem header>
-            <Text>Chat</Text>
+            <Text style={styles.header}>Chat</Text>
           </CardItem>
           {channelKey ? (
             <ListItem thumbnail>

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { blueVersion as colors } from '../colors';
+import { SECONDARY, PRIMARY } from './global';
 
 export const styles = StyleSheet.create({
   container: {
@@ -23,9 +24,9 @@ export const styles = StyleSheet.create({
     width: 100,
   },
   itemText: {
-    // color: colors.primary,
     color: 'white',
-    // fontFamily: fonts.regular,
+    fontWeight: 'bold',
+    fontSize: 19,
   },
   itemImage: {
     height: 35,
@@ -40,5 +41,10 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 15,
     // borderColor: 'red',
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: PRIMARY,
   },
 });

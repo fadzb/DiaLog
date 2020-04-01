@@ -24,6 +24,7 @@ interface ScannerProps {
   updateLabels: (labels: string[]) => void;
   choRatio: number;
   insulinSuggestions: boolean;
+  clearSearch: () => void;
 }
 
 export class Scanner extends React.PureComponent<ScannerProps> {
@@ -37,7 +38,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
 
   state = {
     show: false,
-    torchOn: false,
+    torchOn: RNCamera.Constants.FlashMode.off,
     item: FoodItemInstance,
     modalVisible: false,
     showSpinner: false,
@@ -73,12 +74,11 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     }
   };
 
-  // TODO: Sets state but doesn't actually change torch
-  handleTorch(value: any) {
-    if (value === true) {
-      this.setState({ torchOn: false });
+  toggleTorch() {
+    if (this.state.torchOn == RNCamera.Constants.FlashMode.off) {
+      this.setState({ torchOn: RNCamera.Constants.FlashMode.torch });
     } else {
-      this.setState({ torchOn: true });
+      this.setState({ torchOn: RNCamera.Constants.FlashMode.off });
     }
   }
 
@@ -86,9 +86,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       try {
-        // Render Spinner
-        this.setState({ showSpinner: true });
-
+        // Take pic
         const data = await this.camera.takePictureAsync(options);
 
         // Perfrom Image Recognition
@@ -97,6 +95,12 @@ export class Scanner extends React.PureComponent<ScannerProps> {
         } else {
           this.setLabels(filterLabels(getFakeLabels(), NUM_LABELS));
         }
+
+        // Render Spinner and Close camera
+        this.setState({ showSpinner: true, show: false });
+
+        // Clear (Text) Search results
+        this.props.clearSearch();
       } catch (error) {
         console.log(JSON.stringify(error, null, 2));
       }
@@ -152,7 +156,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                 ref={ref => {
                   this.camera = ref;
                 }}
-                flashMode={RNCamera.Constants.FlashMode.off}
+                flashMode={this.state.torchOn || RNCamera.Constants.FlashMode.off}
                 androidCameraPermissionOptions={ANDROID_CAMERA_PERMISSION_OPTIONS}
                 androidRecordAudioPermissionOptions={ANDROID_RECORD_AUDIO_PERMISSION_OPTIONS}
                 captureAudio={false}
@@ -178,7 +182,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
                           marginLeft: 10,
                         }}
                       >
-                        <Button light onPress={() => this.handleTorch(this.state.torchOn)}>
+                        <Button light onPress={() => this.toggleTorch()}>
                           {getIcon('flashlight')}
                         </Button>
                       </View>
@@ -231,7 +235,7 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             ]}
             onPress={this.closeCamera}
           >
-            {getIcon('camera')}
+            {getIcon('camera', 'white')}
             <Text style={{ fontWeight: 'bold', fontSize: 23, right: 10 }}>CLOSE</Text>
           </Button>
         </View>
@@ -249,12 +253,19 @@ export class Scanner extends React.PureComponent<ScannerProps> {
             insulinSuggestions={this.props.insulinSuggestions}
           />
         )}
+        {this.state.showSpinner && (
+          <Spinner
+            style={{ alignSelf: 'center', marginBottom: 'auto' }}
+            size={'large'}
+            color="blue"
+          />
+        )}
         <View style={[styles.bottom, { marginBottom: 10, alignItems: 'center' }, GLOBAL.shadowBox]}>
           <Button
             style={{ width: '95%', justifyContent: 'center', borderRadius: 15 }}
             onPress={this.openCamera}
           >
-            {getIcon('camera')}
+            {getIcon('camera', 'white')}
             <Text style={{ fontWeight: 'bold', fontSize: 23, right: 10 }}>FOOD SCANNER</Text>
           </Button>
         </View>

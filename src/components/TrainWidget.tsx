@@ -51,7 +51,7 @@ export class TrainWidget extends React.Component<TrainWidgetProps> {
       <View style={GLOBAL.shadowBox}>
         <Card style={styles.card}>
           <CardItem header>
-            <Text>Training Modules</Text>
+            <Text style={styles.header}>Training Modules</Text>
           </CardItem>
           <List>
             {this.state.moduleGroups.map((moduleGroup: any, index: any) => {

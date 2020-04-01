@@ -42,6 +42,7 @@ export const AppStack = (initialRoute: any) =>
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        headerBackTitle: 'Back',
       },
     },
   );

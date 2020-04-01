@@ -122,24 +122,22 @@ class HomeScreen extends React.Component<HomeScreenProps> {
             <View style={GLOBAL.shadowBox}>
               <Card style={styles.card}>
                 <CardItem header>
-                  <Text>Overview</Text>
+                  <Text style={styles.header}>Overview</Text>
                 </CardItem>
 
-                <CardItem>
-                  <ActivityChart
-                    preview={true}
-                    logs={this.props.logs}
-                    onSelectLog={this.handleSelectLog}
-                    navigation={this.props.navigation}
-                  />
-                </CardItem>
+                <ActivityChart
+                  preview={true}
+                  logs={this.props.logs}
+                  onSelectLog={this.handleSelectLog}
+                  navigation={this.props.navigation}
+                />
               </Card>
             </View>
 
             {/* Conditionally render other widgets:*/}
 
             {/* Recent Logs */}
-            {renderRecentLogs && (
+            {renderRecentLogs && this.props.logs.length > 0 && (
               <RecentLogsWidget
                 selectedLog={null}
                 logs={this.props.logs}

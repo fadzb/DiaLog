@@ -35,7 +35,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
       <View style={GLOBAL.shadowBox}>
         <Card style={this.props.preview ? styles.card : {}}>
           <CardItem header>
-            <Text>Recent Logs</Text>
+            <Text style={this.props.preview ? styles.header : {}}>Recent Logs</Text>
           </CardItem>
           <List>
             {sortedLogs.slice(0, this.props.maxLogs).map((log: Log, index: any) => {
