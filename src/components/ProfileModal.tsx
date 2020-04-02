@@ -1,6 +1,17 @@
 import * as React from 'react';
 import { Image } from 'react-native';
-import { View, Text, Button, Item, Input, Label, Toast, Right, Thumbnail } from 'native-base';
+import {
+  View,
+  Text,
+  Button,
+  Item,
+  Input,
+  Label,
+  Toast,
+  Right,
+  Thumbnail,
+  Spinner,
+} from 'native-base';
 import { styles } from '../styles/CarbScreen';
 import { FoodItem } from '../typings/FoodItem';
 import Modal from 'react-native-modal';
@@ -25,6 +36,7 @@ export class ProfileModal extends React.Component<ProfileModalProps> {
   state = {
     modalVisible: true,
     displayName: this.props.user.displayName,
+    showSpinner: false,
   };
 
   //When component is first mounted, it remains mounted even after closed to allow for slideOut animation
@@ -39,14 +51,17 @@ export class ProfileModal extends React.Component<ProfileModalProps> {
   };
 
   handleUpdate = async () => {
+    //render spinner
+    this.setState({ showSpinner: true });
+
     // wait for firebase to updated
     firebase.auth().currentUser &&
       (await firebase.auth().currentUser.updateProfile({
         displayName: this.state.displayName,
       }));
 
-    // close modal
-    this.setState({ modalVisible: false });
+    // close modal and close spinner
+    this.setState({ modalVisible: false, showSpinner: false });
 
     // fire toast
     Toast.show({
@@ -78,7 +93,7 @@ export class ProfileModal extends React.Component<ProfileModalProps> {
           </View>
 
           <View style={{ marginVertical: 40 }}>
-            <Item fixedLabel>
+            <Item inlineLabel>
               <Label>Display Name</Label>
               <Right>
                 <Input
@@ -95,6 +110,16 @@ export class ProfileModal extends React.Component<ProfileModalProps> {
             <Button onPress={this.handleUpdate}>
               <Text style={{ fontWeight: 'bold' }}>Update</Text>
             </Button>
+
+            {/* loading spinner */}
+            {this.state.showSpinner && (
+              <Spinner
+                style={{ height: 10, marginTop: 'auto', marginBottom: 15 }}
+                size={'large'}
+                color="blue"
+              />
+            )}
+
             <Button warning onPress={this.handleClose}>
               <Text style={{ fontWeight: 'bold' }}>Cancel</Text>
             </Button>

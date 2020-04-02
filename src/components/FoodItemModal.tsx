@@ -73,10 +73,10 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
           {/* Action buttons */}
           <View style={styles.rowSpaced}>
             <Button onPress={this.addLog}>
-              <Text style={{ fontWeight: 'bold' }}>ADD LOG</Text>
+              <Text style={{ fontWeight: 'bold' }}>Add Log</Text>
             </Button>
             <Button warning onPress={this.handleClose}>
-              <Text style={{ fontWeight: 'bold' }}>CANCEL</Text>
+              <Text style={{ fontWeight: 'bold' }}>Cancel</Text>
             </Button>
           </View>
         </View>

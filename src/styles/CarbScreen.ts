@@ -1,5 +1,6 @@
 import { colors } from '../colors';
 import { StyleSheet } from 'react-native';
+import { TERTIARY } from './global';
 
 export const styles = StyleSheet.create({
   container: {
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 1,
     marginHorizontal: 1,
-    borderColor: colors.GRAY_LIGHT,
+    borderColor: TERTIARY,
     borderWidth: 5,
     borderRadius: 15,
     backgroundColor: 'white',

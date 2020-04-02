@@ -12,13 +12,15 @@ import {
   Thumbnail,
   Body,
   Button,
+  Toast,
 } from 'native-base';
 import { Log } from '../typings/Log';
 import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
 import { styles } from '../styles/HomeScreen';
-import { GLOBAL } from '../styles/global';
+import { GLOBAL, PRIMARY } from '../styles/global';
 import { getModuleGroups } from '../utils/TrainModuleUtils';
 import { getModules } from '../utils/FirebaseDB/FirestoreUtils';
+import { firebase } from '@react-native-firebase/auth';
 const DAFNE_IMAGE = require('../assets/images/dafne.png');
 
 interface ChatWidgetProps {
@@ -37,12 +39,28 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
 
   componentDidMount = () => {};
 
-  handlePress = () => {
+  handlePress = (user: any) => {
+    // Not logged in
+    if (!user) {
+      Toast.show({
+        text: `Please Login to access this feature!`,
+        buttonText: 'Login',
+        buttonStyle: { backgroundColor: PRIMARY },
+        type: 'warning',
+        duration: 5000,
+        onClose: (reason: any) => {
+          reason == 'user' && this.props.navigation.navigate('Login');
+        },
+      });
+
+      return;
+    }
     this.props.navigation.navigate('Chat');
   };
 
   render() {
     const { channelKey } = this.props;
+    const user = firebase.auth().currentUser;
 
     return (
       <View style={GLOBAL.shadowBox}>
@@ -50,7 +68,7 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
           <CardItem header>
             <Text style={styles.header}>Chat</Text>
           </CardItem>
-          {channelKey ? (
+          {channelKey && user ? (
             <ListItem thumbnail>
               <Left>
                 <Thumbnail source={DAFNE_IMAGE} />
@@ -62,7 +80,7 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
                 </Text>
               </Body>
               <Right>
-                <Button onPress={this.handlePress} transparent>
+                <Button onPress={() => this.handlePress(user)} transparent>
                   <Text>View</Text>
                 </Button>
               </Right>
@@ -73,7 +91,7 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
                 <Text>Received a DAFNE Channel Key? </Text>
               </Left>
               <Right>
-                <Button transparent onPress={this.handlePress}>
+                <Button transparent onPress={() => this.handlePress(user)}>
                   <Text>Enter</Text>
                 </Button>
               </Right>

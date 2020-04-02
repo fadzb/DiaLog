@@ -7,6 +7,9 @@ import RegisterScreen from '../screens/RegisterScreen';
 import { TabNavigator } from './MainTabNavigator';
 import ChatScreen from '../screens/ChatScreen';
 import { WebViewScreen } from '../screens/WebViewScreen';
+import { Image, StyleSheet } from 'react-native';
+import React from 'react';
+const LOGO = require('../assets/images/Logo-3.png');
 
 //FIXME: https://github.com/react-navigation/react-navigation/issues/741 to get individual header titles
 
@@ -31,10 +34,11 @@ export const AppStack = (initialRoute: any) =>
       headerMode: 'screen',
 
       defaultNavigationOptions: {
-        title: 'DiaLog',
+        headerBackground: <Image source={LOGO} style={{ alignSelf: 'center', marginTop: 35 }} />,
         headerStyle: {
           // backgroundColor: '#e66465',
           // backgroundColor: '#9198e5',
+
           backgroundColor: 'rgba(252, 126, 0, 1)',
           borderBottomWidth: 0,
         },

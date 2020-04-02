@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styles } from '../styles/LoginScreen';
-import { login } from '../utils/FirebaseAuth/AuthUtils';
+import { login, register } from '../utils/FirebaseAuth/AuthUtils';
 import {
   Container,
   Left,
@@ -20,6 +20,7 @@ import {
   Tab,
   TabHeading,
   Icon,
+  Toast,
 } from 'native-base';
 import { SafeAreaView } from 'react-navigation';
 import { Image } from 'react-native';
@@ -45,11 +46,6 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.setState({ password });
   };
 
-  //TODO: Alert user
-  handleOnSuccessfulLogin = (userCredential: any) => {
-    console.log(`${userCredential.user.email} logged in`);
-  };
-
   handleLogin = () => {
     const { email, password } = this.state;
 
@@ -58,12 +54,38 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     );
   };
 
+  handleOnSuccessfulLogin = (userCredential: any) => {
+    Toast.show({
+      text: `Welcome back ${userCredential.user.displayName || userCredential.user.email}! `,
+      type: 'success',
+      duration: 4000,
+    });
+  };
+
   handleSwitchToSignUp = () => {
     this.props.navigation.navigate('Reg', {});
   };
 
   handleLoginGuest = () => {
     this.props.navigation.navigate('Home', {});
+  };
+
+  handleRegister = () => {
+    const { email, password } = this.state;
+
+    //Register then call onSuccessfulRegister to handle what happens next
+    register(email, password).then(
+      userCredential => userCredential && this.onSuccessfulRegister(userCredential),
+    );
+  };
+
+  // Currently the onAuthStateChanged which wraps around the App will render the Home Page when a user is logged in
+  onSuccessfulRegister = (userCredential: any) => {
+    Toast.show({
+      text: `Account Registered!`,
+      type: 'success',
+      duration: 4000,
+    });
   };
 
   render() {

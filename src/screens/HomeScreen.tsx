@@ -18,6 +18,7 @@ import { GradientContainer } from '../components/GradientContainer';
 import { GLOBAL } from '../styles/global';
 import { TrainWidget } from '../components/TrainWidget';
 import { ChatWidget } from '../components/ChatWidget';
+import { getCurrentUser } from '../utils/FirebaseAuth/AuthUtils';
 
 interface HomeScreenProps {
   navigation: any;
