@@ -11,6 +11,8 @@ const initialState: any = {
   widgets: WIDGETS,
   choRatio: DEFAULT_CHO_RATIO,
   insulinSuggestions: DEFAULT_INSULIN_SUGGESTIONS,
+  messagesInChannel: 0,
+  messagesSeen: 0,
 };
 
 // Persist Config

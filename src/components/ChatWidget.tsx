@@ -17,7 +17,7 @@ import {
 import { Log } from '../typings/Log';
 import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
 import { styles } from '../styles/HomeScreen';
-import { GLOBAL, PRIMARY } from '../styles/global';
+import { GLOBAL, PRIMARY, SECONDARY } from '../styles/global';
 import { getModuleGroups } from '../utils/TrainModuleUtils';
 import { getModules } from '../utils/FirebaseDB/FirestoreUtils';
 import { firebase } from '@react-native-firebase/auth';
@@ -26,16 +26,15 @@ const DAFNE_IMAGE = require('../assets/images/dafne.png');
 interface ChatWidgetProps {
   navigation: any;
   channelKey: string;
+  messagesInChannel: number;
+  updateMessagesSeen: (number: number) => void;
+  messagesSeen: number;
 }
 
 export class ChatWidget extends React.Component<ChatWidgetProps> {
   constructor(props: any) {
     super(props);
   }
-
-  state = {
-    newMessages: 1,
-  };
 
   componentDidMount = () => {};
 
@@ -55,12 +54,18 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
 
       return;
     }
+
+    // Assume this action leads to user seeing messages
+    this.props.updateMessagesSeen(this.props.messagesInChannel);
+
     this.props.navigation.navigate('Chat');
   };
 
   render() {
     const { channelKey } = this.props;
     const user = firebase.auth().currentUser;
+
+    const newMessages = this.props.messagesInChannel - this.props.messagesSeen;
 
     return (
       <View style={GLOBAL.shadowBox}>
@@ -75,12 +80,12 @@ export class ChatWidget extends React.Component<ChatWidgetProps> {
               </Left>
               <Body>
                 <Text>{channelKey}</Text>
-                <Text note numberOfLines={1}>
-                  {this.state.newMessages} New Messages . . .
+                <Text numberOfLines={1} style={{ fontSize: 14, color: SECONDARY }}>
+                  {newMessages} New Messages . . .
                 </Text>
               </Body>
               <Right>
-                <Button onPress={() => this.handlePress(user)} transparent>
+                <Button onPress={() => this.handlePress(user)}>
                   <Text>View</Text>
                 </Button>
               </Right>

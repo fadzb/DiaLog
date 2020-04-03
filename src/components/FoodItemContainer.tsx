@@ -87,7 +87,9 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
           <Text style={{ fontSize: 22, marginLeft: 20, alignSelf: 'center' }}>
             {this.truncate(this.props.item.name)}{' '}
           </Text>
-          <Text style={{ marginLeft: 'auto' }}>{this.props.item.servingUnit}</Text>
+          <Text style={{ marginLeft: 'auto' }}>
+            {this.props.item.serving_qty} {this.props.item.servingUnit}
+          </Text>
           <Text></Text>
         </View>
       </TouchableOpacity>

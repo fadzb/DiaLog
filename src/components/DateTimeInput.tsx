@@ -88,7 +88,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
           style={{ flexDirection: 'row', alignSelf: 'center' }}
           onPress={this.togglePicker}
         >
-          <Icon name="clock" style={{ backgroundColor: 'white', color: 'orange' }} />
+          <Icon name="clock" style={{ backgroundColor: 'white', color: SECONDARY }} />
           <Text
             style={{
               marginLeft: 10,

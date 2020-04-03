@@ -6,7 +6,8 @@ import {
   ADD_CHANNEL_KEY,
   SET_CHO_RATIO,
   SET_INSULIN_SUGGESTIONS,
-  UPDATE_DISPLAY_NAME,
+  UPDATE_MESSAGES_IN_CHANNEL,
+  UPDATE_MESSAGES_SEEN,
 } from '../actions/types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
@@ -22,6 +23,8 @@ const initialState: any = {
   choRatio: 0,
   insulinSuggestions: false,
   displayName: '',
+  messagesInChannel: 0,
+  messagesSeen: 0,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -94,6 +97,18 @@ const rootReducer = (state = initialState, action: any) => {
       const newValue = action.payload;
 
       return { ...state, insulinSuggestions: newValue };
+    }
+
+    case UPDATE_MESSAGES_IN_CHANNEL: {
+      const newMessages = action.payload;
+
+      return { ...state, messagesInChannel: newMessages };
+    }
+
+    case UPDATE_MESSAGES_SEEN: {
+      const newSeenCounter = action.payload;
+
+      return { ...state, messagesSeen: newSeenCounter };
     }
 
     //Default

@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
-import { addName } from '../actions/actions';
+import { addName, updateMessagesSeen } from '../actions/actions';
 import { styles } from '../styles/HomeScreen';
 import { getIcon } from '../utils/IconUtils';
 import { ActivityChart } from '../components/ActivityChart';
@@ -26,6 +26,9 @@ interface HomeScreenProps {
   addName: (name: any) => void;
   widgets: any;
   logs: Log[];
+  messagesInChannel: number;
+  messagesSeen: number;
+  updateMessagesSeen: (number: number) => void;
 }
 
 class HomeScreen extends React.Component<HomeScreenProps> {
@@ -151,7 +154,13 @@ class HomeScreen extends React.Component<HomeScreenProps> {
 
             {/* Chat */}
             {renderChat && (
-              <ChatWidget navigation={this.props.navigation} channelKey={this.props.channelKey} />
+              <ChatWidget
+                navigation={this.props.navigation}
+                channelKey={this.props.channelKey}
+                messagesInChannel={this.props.messagesInChannel}
+                updateMessagesSeen={this.props.updateMessagesSeen}
+                messagesSeen={this.props.messagesSeen}
+              />
             )}
 
             {/* Training Modules */}
@@ -162,7 +171,7 @@ class HomeScreen extends React.Component<HomeScreenProps> {
               <View style={GLOBAL.shadowBox}>
                 <Card style={styles.card}>
                   <CardItem header>
-                    <Text>Other Apps</Text>
+                    <Text style={styles.header}>Other Apps</Text>
                   </CardItem>
                   <CardItem>
                     <ScrollView horizontal={true}>
@@ -243,6 +252,8 @@ const mapStateToProps = (state: any) => {
     widgets: state.widgets,
     logs: state.logs,
     channelKey: state.channelKey,
+    messagesInChannel: state.messagesInChannel,
+    messagesSeen: state.messagesSeen,
   };
 };
 
@@ -250,6 +261,9 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     addName: (name: any) => {
       dispatch(addName(name));
+    },
+    updateMessagesSeen: (number: number) => {
+      dispatch(updateMessagesSeen(number));
     },
   };
 };

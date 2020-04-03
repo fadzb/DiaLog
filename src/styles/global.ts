@@ -15,6 +15,11 @@ export const GLOBAL = StyleSheet.create({
       width: 1,
     },
   },
+
+  // activity types
+  types: {
+    fontWeight: '600',
+  },
 });
 
 export const PRIMARY = 'rgba(0,106,255,1)';

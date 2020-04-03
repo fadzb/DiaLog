@@ -1,7 +1,11 @@
+import * as React from 'react';
 import { asyncGetAllKeys, asyncMultiGetItems } from '../storage/AsyncStorage';
 import { DateUtils } from './DateUtils';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
+import { Text } from 'native-base';
+import { GLOBAL } from '../styles/global';
+import { G } from 'react-native-svg';
 
 export function getLogHeader(log: Log) {
   const timeLabel = DateUtils.parseDateTimeIntoLabel(log.time);
@@ -22,12 +26,12 @@ export function makeNotesFromItem(item: FoodItem) {
   let notes = '';
 
   notes += `Food: ${item.name} \n`;
-  notes += `Serving Size: ${item.servingUnit}`;
+  notes += `Serving Size: ${item.serving_qty} ${item.servingUnit}`;
 
   return notes;
 }
 
-// get activity type
+// get activity types
 export function getType(log: Log) {
   let type = '';
   let count = 0;
@@ -37,6 +41,35 @@ export function getType(log: Log) {
   log.glucose && (count ? (type += '/ Glucose ') : (type += 'Glucose ') && count++);
 
   return type;
+}
+
+// get activity typess
+export function getTypes(log: Log) {
+  let types = [];
+
+  log.cho &&
+    types.push(
+      <Text key={'food'} style={[GLOBAL.types, { color: 'orange' }]}>
+        {' '}
+        Food{' '}
+      </Text>,
+    );
+  log.insulin &&
+    types.push(
+      <Text key={'insulin'} style={[GLOBAL.types, { color: 'blue' }]}>
+        {' '}
+        Insulin{' '}
+      </Text>,
+    );
+  log.glucose &&
+    types.push(
+      <Text key={'glucose'} style={[GLOBAL.types, { color: 'green' }]}>
+        {' '}
+        Glucose{' '}
+      </Text>,
+    );
+
+  return types;
 }
 
 // gets logs for date from redux store (no direct AsyncStorage API call)

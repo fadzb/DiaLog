@@ -4,6 +4,7 @@ export interface FoodItem {
   photo_url: string;
   servingUnit: string;
   servingWeight: string;
+  serving_qty: string;
 }
 
 export const FoodItemInstance: FoodItem = {
@@ -12,4 +13,5 @@ export const FoodItemInstance: FoodItem = {
   photo_url: '',
   servingUnit: '',
   servingWeight: '',
+  serving_qty: '',
 };

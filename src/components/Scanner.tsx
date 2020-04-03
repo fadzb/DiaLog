@@ -49,8 +49,8 @@ export class Scanner extends React.PureComponent<ScannerProps> {
   onBarCodeRead = () => {
     this.closeCamera();
 
-    // Hard-coding a UPC-A
-    let upc = zebra('038000000102');
+    // Hard-coding a UPC-A of Coco-Cola
+    let upc = zebra('049000006841');
 
     try {
       if (upc.type !== 'UPC-A') {
