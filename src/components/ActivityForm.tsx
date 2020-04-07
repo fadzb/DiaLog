@@ -195,7 +195,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Glucose"
                 onChangeText={this.handleGlucoseChange}
                 keyboardType={'numeric'}
-                maxLength={2}
+                maxLength={3}
               />
               <Badge success style={styles.badge}>
                 <Text>{this.state.glucoseInput} mmo/l</Text>
@@ -216,7 +216,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Insulin"
                 onChangeText={this.handleInsulinChange}
                 keyboardType={'numeric'}
-                maxLength={2}
+                maxLength={3}
               />
               <Badge info style={styles.badge}>
                 <Text>{this.state.insulinInput} Units</Text>
@@ -237,7 +237,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder={this.getName() || 'Enter Carbohydrate'}
                 onChangeText={this.handleChoChange}
                 keyboardType={'numeric'}
-                maxLength={3}
+                maxLength={4}
               />
               <Badge warning style={styles.badge}>
                 <Text>{this.state.choInput} g</Text>

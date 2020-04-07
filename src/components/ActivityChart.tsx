@@ -79,13 +79,13 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
 
   // Update scale
   handleFocus = () => {
-    this.endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+    this.endX = new Date().getTime() + 1000 * 60 * 60 * paddingHours; //Add padding hours
     this.startX = this.endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 
     this.setState({ selectedLog: null });
   };
 
-  endX = new Date().getTime() + 1000 * 60 * 60 * (paddingHours - 1); //Add padding hours
+  endX = new Date().getTime() + 1000 * 60 * 60 * paddingHours; //Add padding hours
   startX = this.endX - oneDayInMS / (oneDayTimeSpan ? 1 : 2);
 
   scaleX = scaleTime()
@@ -183,7 +183,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
               key={`grindLine-${i}`}
             />
 
-            <Text x={x - 15} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
+            <Text fontSize={10} x={x - 15} y={height + outerVerticalPadding} key={`timeStamp-${i}`}>
               {`${timeStamps[i]}:00`}
             </Text>
           </G>
@@ -195,7 +195,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
             x2={x}
             y2={height - 10}
             stroke="black"
-            strokeWidth="0.3"
+            strokeWidth="0.1"
             key={`grindLine-${i}`}
           />
         ),
@@ -227,7 +227,7 @@ export class ActivityChart extends React.Component<ActivityChartProps> {
           />
           {/* Only render label every 5 units */}
           {true && (
-            <Text x={0} y={y} key={`timeStamp-${i}`}>
+            <Text fontSize={9} x={0} y={y} key={`timeStamp-${i}`}>
               {`${maxGlucose - (i * maxGlucose) / numLabels}`}
             </Text>
           )}

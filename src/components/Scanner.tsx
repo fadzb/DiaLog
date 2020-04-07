@@ -46,31 +46,47 @@ export class Scanner extends React.PureComponent<ScannerProps> {
 
   // TODO: Handle EAN-13 Barcodes (need to use different API)
   // Currently only works for UPC-A barcodes (USA & Canada) UK Barcodes are EAN-13 starting with country code 50 instead of 0
-  onBarCodeRead = () => {
-    this.closeCamera();
+  onBarCodeRead = (barcodeScan: any) => {
+    // Render Spinner and Close camera
+    this.setState({ showSpinner: true, show: false });
+
+    let upc: any = {};
 
     // Hard-coding a UPC-A of Coco-Cola
-    let upc = zebra('049000006841');
+    try {
+      upc = zebra('049000006346');
+    } catch (error) {
+      Alert.alert('Error', error);
+      console.log(error);
+      this.setState({ showSpinner: false, show: true });
+      return;
+    }
 
     try {
       if (upc.type !== 'UPC-A') {
         upc = upc.toUPCA();
       }
-    } catch (e) {
-      console.error('[zebra] error:', e);
+    } catch (error) {
+      Alert.alert('Error', error);
+      console.log(error);
+      this.setState({ showSpinner: false, show: true });
+      return;
     }
 
     try {
-      const promise = requestFoodDetailsFromBarcode(upc);
+      const promise = requestFoodDetailsFromBarcode(upc.code);
 
       promise
         .then(responseJson => {
           const foodItem = parseFoodItemFromBarcode(responseJson);
-          this.setState({ item: foodItem, modalVisible: true });
+          console.log(foodItem);
+          this.setState({ showSpinner: false, item: foodItem, modalVisible: true });
         })
-        .catch(error => Alert.alert(error));
+        .catch(error => Alert.alert('Error', error));
     } catch (error) {
-      Alert.alert(error);
+      console.log(error);
+      this.setState({ showSpinner: false, show: true });
+      Alert.alert('Error', error);
     }
   };
 

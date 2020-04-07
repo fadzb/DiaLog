@@ -46,7 +46,7 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
                   onPressOut={() => onPressOut(log)}
                   selected={this.props.selectedLog == log}
                 >
-                  <Text>{getLogHeader(log)}</Text>
+                  {getLogHeader(log)}
                 </ListItem>
               );
             })}

@@ -2,7 +2,7 @@ import { FoodItem } from '../typings/FoodItem';
 import { fakeJson } from './FakeJson';
 import { fakeDetailedJson } from './FakeDetailedJson';
 import { fakeBarcodeJson } from './FakeBarcodeJson';
-const API_ENABLED = false;
+const API_ENABLED = true;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -89,6 +89,9 @@ export function parseFoodItems(responseJSON: any) {
       servingUnit: parsedJson.common[i].serving_unit,
       servingWeight: parsedJson.common[i].serving_weight_grams,
     };
+    if (foodItem.photo_url == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png') {
+      continue;
+    }
     foodItems.push(foodItem);
   }
 

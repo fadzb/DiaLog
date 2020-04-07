@@ -12,13 +12,25 @@ export function getLogHeader(log: Log) {
 
   // If today
   if (DateUtils.sameDay(log.time, new Date())) {
-    return `Today at ${timeLabel} : ${getType(log)}`;
+    return (
+      <Text>
+        Today at {timeLabel} : {getTypes(log)}
+      </Text>
+    );
   }
   // yesterday
   else if (DateUtils.sameDay(log.time, DateUtils.getDayXdaysAgo(1))) {
-    return `Yesterday at ${timeLabel} : ${getType(log)}`;
+    return (
+      <Text>
+        Yesterday at {timeLabel} : {getTypes(log)}
+      </Text>
+    );
   } else {
-    return `${DateUtils.parseDateTimeIntoDateLabel(log.time)} : ${getType(log)}`;
+    return (
+      <Text>
+        {DateUtils.parseDateTimeIntoDateLabel(log.time)} : ${getTypes(log)}
+      </Text>
+    );
   }
 }
 

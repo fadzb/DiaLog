@@ -38,9 +38,9 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
     // Navigate to Log Act Screen with props (Food Item)
     const { item } = this.props;
     const itemToLog = item;
-    itemToLog.cho = String(Number(item.cho) * this.state.quantity);
+    itemToLog.cho = String(Math.round(Number(item.cho) * this.state.quantity));
     itemToLog.serving_qty = String(Number(item.serving_qty) * this.state.quantity);
-    itemToLog.servingWeight = String(Number(item.servingWeight) * this.state.quantity);
+    itemToLog.servingWeight = String(Math.round(Number(item.servingWeight) * this.state.quantity));
 
     this.props.navigation.navigate('LogAct', { item: itemToLog });
     // Unfortunately, this does not unmount previously mounted components so some memory leak here
@@ -65,7 +65,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
     const { quantity } = this.state;
     const { item } = this.props;
     const cho = Math.round(Number(item.cho) * quantity);
-    const weight = Number(item.servingWeight) * quantity;
+    const weight = Math.round(Number(item.servingWeight) * quantity);
 
     return (
       <Modal
@@ -84,7 +84,7 @@ export class FoodItemModal extends React.Component<FoodItemModalProps> {
             <View style={{ marginLeft: 'auto' }}>
               {this.props.insulinSuggestions && (
                 <DAFNESuggestion>
-                  {suggestInsulinDose(Number(this.props.item.cho), this.props.choRatio)}
+                  {suggestInsulinDose(Number(cho), this.props.choRatio)}
                 </DAFNESuggestion>
               )}
             </View>
