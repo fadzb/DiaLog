@@ -37,18 +37,13 @@ export class ModuleHeader extends React.Component<ModuleHeaderProps> {
           visible={this.state.modalVisible}
           onRequestClose={this.handleCloseModal}
         >
-          <Header>
-            <Title>{module.moduleName}</Title>
-          </Header>
-          <Body style={{}}>
-            <ModuleContent module={module} />
-            <TouchableOpacity
-              style={{ position: 'absolute', bottom: 20, borderWidth: 5 }}
-              onPress={this.handleCloseModal}
-            >
-              <Text>Back to Modules</Text>
-            </TouchableOpacity>
-          </Body>
+          <ModuleContent module={module} />
+          <TouchableOpacity
+            style={{ position: 'absolute', bottom: 20, borderWidth: 5 }}
+            onPress={this.handleCloseModal}
+          >
+            <Text>Back to Modules</Text>
+          </TouchableOpacity>
         </Modal>
         <Button onPress={this.handleOpenModal}>
           <Text>{module.moduleName}</Text>

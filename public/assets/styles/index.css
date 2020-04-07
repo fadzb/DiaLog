@@ -21,9 +21,16 @@ td.moduleGroupTD:focus {
   padding: 20px;
 }
 .moduleContent {
+  resize: both;
   height: 200px;
   /* width: 500px; */
   font-size: 14pt;
+  background-color: white;
+  -moz-appearance: textfield-multiline;
+  -webkit-appearance: textarea;
+  border: 1px solid gray;
+  overflow: auto;
+  resize: both;
 }
 .moduleForm form {
   display: grid;
@@ -51,6 +58,8 @@ td.moduleGroupTD:focus {
 
 /* The device with borders */
 .smartphone {
+  /* overflow: scroll;
+  background-color: white; */
   position: relative;
   width: 360px;
   height: 640px;
@@ -90,6 +99,7 @@ td.moduleGroupTD:focus {
 }
 /* The screen (or content) of the device */
 .smartphone .content {
+  overflow: scroll;
   width: 360px;
   height: 640px;
   background: white;

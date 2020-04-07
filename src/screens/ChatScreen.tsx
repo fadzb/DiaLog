@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'native-base';
 import { connect } from 'react-redux';
 import PromptChannelKey from '../components/PromptChannelKey';
-import { addChannelKey } from '../actions/actions';
+import { addChannelKey, updateMessagesInChannel, updateMessagesSeen } from '../actions/actions';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
   getMessages,
@@ -16,10 +16,11 @@ import { Message } from '../typings/Message';
 
 interface ChatScreenProps {
   navigation: any;
-
-  // Redux
   channelKey: string;
   addChannelKey: (key: string) => void;
+  updateMessagesInChannel: (newMessages: number) => void;
+  messagesInChannel: number;
+  updateMessagesSeen: (number: number) => void;
 }
 
 class ChatScreen extends React.Component<ChatScreenProps> {
@@ -46,10 +47,16 @@ class ChatScreen extends React.Component<ChatScreenProps> {
   onSend = (messages: Message[]) => {
     const message = messages[0];
 
+    // pre-emptively update the local counter
+    this.props.updateMessagesSeen(this.props.messagesInChannel + 1);
+
     sendMessage(this.props.channelKey, message);
   };
 
   handleNewMessages = (messages: Message[]) => {
+    // Update new messages counter
+    this.props.updateMessagesInChannel(messages.length);
+
     this.setMessages(messages);
   };
 
@@ -102,6 +109,7 @@ const mapStateToProps = (state: any) => {
     widgets: state.widgets,
     logs: state.logs,
     channelKey: state.channelKey,
+    messagesInChannel: state.messagesInChannel,
   };
 };
 
@@ -109,6 +117,12 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     addChannelKey: (key: string) => {
       dispatch(addChannelKey(key));
+    },
+    updateMessagesInChannel: (newMessages: number) => {
+      dispatch(updateMessagesInChannel(newMessages));
+    },
+    updateMessagesSeen: (number: number) => {
+      dispatch(updateMessagesSeen(number));
     },
   };
 };

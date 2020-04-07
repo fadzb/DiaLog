@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Platform, Button } from 'react-native';
+import { View, Platform, Button, Dimensions, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Text } from 'native-base';
+import { Text, Icon } from 'native-base';
 import { styles } from '../styles/LogActScreen';
 import { DateUtils } from '../utils/DateUtils';
+import { SECONDARY, PRIMARY } from '../styles/global';
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 interface DateTimeInputProps {
   currentTime: any;
@@ -19,7 +21,7 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
 
   state = {
     dateTime: this.props.currentTime,
-    show: false,
+    show: SCREEN_HEIGHT > 800 ? true : false,
   };
 
   setDateTime = (event: any, dateTime: any) => {
@@ -45,6 +47,12 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     });
   };
 
+  togglePicker = () => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+
   // Update time if parent component updated in meantime
   componentDidUpdate = (prevProps: any) => {
     if (prevProps.currentTime != this.props.currentTime) {
@@ -56,24 +64,42 @@ export default class DateTimeInput extends React.Component<DateTimeInputProps> {
     const { show, dateTime } = this.state;
 
     return (
-      <View style={{ marginVertical: 20 }}>
+      <View style={{ marginVertical: 10, minWidth: '80%' }}>
         <View style={styles.pickerControls}>
-          {!show && <Button onPress={this.showPicker} title="Change Time" />}
+          {/* {!show && <Button onPress={this.showPicker} title="Change Time" />} */}
           {show && <Button onPress={this.hidePicker} title="Hide" />}
         </View>
         {show && (
           <DateTimePicker
+            style={{ width: 300 }}
             display={'default'}
             is24Hour={true}
             value={dateTime}
             mode={'datetime'}
             onChange={this.setDateTime}
+            maximumDate={new Date()}
           />
         )}
         {ANDROID && show && (
           <DateTimePicker value={dateTime} mode={'time'} onChange={this.setDateTime} />
         )}
-        <Text>{DateUtils.parseDate(dateTime)}</Text>
+
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignSelf: 'center' }}
+          onPress={this.togglePicker}
+        >
+          <Icon name="clock" style={{ backgroundColor: 'white', color: SECONDARY }} />
+          <Text
+            style={{
+              marginLeft: 10,
+              marginTop: 3,
+              fontSize: 22,
+              color: PRIMARY,
+            }}
+          >
+            {DateUtils.parseDateTimeIntoDateLabel(dateTime)}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

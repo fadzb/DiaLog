@@ -46,16 +46,33 @@
                     <label>Module Name</label>
                     <input type="text" name="moduleName" id="moduleName" />
                   </p>
+
+                  <p>
+                    <!-- Module Desc (Short desc) -->
+                    <label>Module Description</label>
+                    <input type="text" name="moduleDesc" id="moduleDesc" />
+                  </p>
+
+                  <!-- <p> -->
+                  <!-- Module Thumbnail -->
+                  <!-- <label>Module Thumbnail</label> -->
+                  <!--  -->
+                  <!-- </p> -->
+
                   <p>
                     <!-- Module Content (TODO: Embedd Media) -->
                     <label>Module Content</label>
-                    <textarea
-                      class="moduleContent"
-                      type="text"
-                      name="moduleContent"
-                      id="moduleContent"
-                    ></textarea>
                   </p>
+
+                  <div
+                    class="moduleContent"
+                    name="moduleContent"
+                    id="moduleContent"
+                    contenteditable="true"
+                  >
+                    <div style="font-size: large;"></div>
+                  </div>
+
                   <!-- Submit -->
                   <p class="full">
                     <button type="submit">Submit</button>

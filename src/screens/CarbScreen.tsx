@@ -9,6 +9,9 @@ import { View } from 'native-base';
 import { MLKitLabels } from '../components/MLKitLabels';
 import { connect } from 'react-redux';
 import { setChoRatio } from '../actions/actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import LinearGradient from 'react-native-linear-gradient';
+import { GradientContainer } from '../components/GradientContainer';
 
 const SEARCH_PLACEHOLDER = 'Search for Food';
 
@@ -63,7 +66,8 @@ class CarbScreen extends React.Component<CarbScreenProps> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <GradientContainer>
+          {/* <View style={{}}> */}
           <SearchBar
             placeholder={SEARCH_PLACEHOLDER}
             handleSubmit={this.handleSubmit}
@@ -77,23 +81,27 @@ class CarbScreen extends React.Component<CarbScreenProps> {
               closeLabels={this.handleCloseLabels}
             />
           )}
-          <ScrollView style={{ flex: 1 }}>
-            <View style={styles.foodListContainer}>
-              <FoodList
-                ref={ref => (this.foodListRef = ref)}
-                navigation={this.props.navigation}
-                query={this.state.query}
-                choRatio={this.props.choRatio}
-                insulinSuggestions={this.props.insulinSuggestions}
-              />
-            </View>
+
+          <ScrollView style={{ marginBottom: 20 }}>
+            <FoodList
+              ref={ref => (this.foodListRef = ref)}
+              navigation={this.props.navigation}
+              query={this.state.query}
+              choRatio={this.props.choRatio}
+              insulinSuggestions={this.props.insulinSuggestions}
+            />
           </ScrollView>
-        </SafeAreaView>
-        <Scanner
-          navigation={this.props.navigation}
-          updateLabels={this.handleLabels}
-          choRatio={this.props.choRatio}
-        />
+
+          <View>
+            <Scanner
+              navigation={this.props.navigation}
+              updateLabels={this.handleLabels}
+              choRatio={this.props.choRatio}
+              insulinSuggestions={this.props.insulinSuggestions}
+              clearSearch={this.clearFoodList}
+            />
+          </View>
+        </GradientContainer>
       </View>
     );
   }

@@ -8,8 +8,6 @@ import store from './src/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import SplashScreen from './src/screens/SplashScreen.tsx';
 
-// TODO: loading component not working
-
 const RNRedux = () => (
   <Provider store={store.getStore()}>
     <PersistGate persistor={store.getPersistor()} loading={<SplashScreen />}>

@@ -10,7 +10,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "deploy:release": "react-native run-ios --device 'Faddle’s iPhone' --configuration Release",
     "deploy:debug": "react-native run-ios --device 'Faddle’s iPhone' --configuration Debug",
-    "host:local": "cd functions && npm run build && firebase serve --only hosting && cd .."
+    "host:local": "cd functions && firebase serve --only hosting && cd .."
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.1.0",
@@ -33,15 +33,17 @@
     "react-native-gesture-handler": "^1.5.0",
     "react-native-gifted-chat": "^0.13.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^11.5.3",
     "react-native-numeric-input": "^1.8.3",
     "react-native-paper": "^3.2.1",
     "react-native-reanimated": "^1.4.0",
+    "react-native-render-html": "^4.2.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-screens": "^1.0.0-alpha.23",
     "react-native-svg": "^9.13.6",
     "react-native-vector-icons": "^6.6.0",
-    "react-native-webview": "^7.4.3",
+    "react-native-webview": "^9.0.1",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.7.0",

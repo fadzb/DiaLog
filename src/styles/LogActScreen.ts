@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   inputPills: {
     width: '90%',
     marginTop: 10,
+    backgroundColor: 'white',
   },
   submitButton: {
     width: '70%',
@@ -27,5 +28,10 @@ export const styles = StyleSheet.create({
   pickerControls: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  button: {},
+  buttonText: {
+    fontWeight: '600',
+    fontSize: 16,
   },
 });

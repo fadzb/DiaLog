@@ -13,6 +13,7 @@ import {
   Text,
   Right,
   Button,
+  Toast,
 } from 'native-base';
 import { styles } from '../styles/RegisterScreen';
 import { connect } from 'react-redux';
@@ -35,7 +36,11 @@ class RegisterScreen extends React.Component<RegisterScreenProps> {
   // Currently the onAuthStateChanged which wraps around the App will render the Home Page when a user is logged in
   onSuccessfulRegister = (userCredential: any) => {
     //TODO: Show an alert box or maybe send an email
-    console.log(userCredential.user.email);
+    Toast.show({
+      text: `Account Registered! `,
+      type: 'success',
+      duration: 4000,
+    });
   };
 
   handleEmailChange = (email: string) => {

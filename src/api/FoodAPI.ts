@@ -82,12 +82,16 @@ export function parseFoodItems(responseJSON: any) {
 
   for (let i = 0; i < parsedJson.common.length; i++) {
     const foodItem: FoodItem = {
-      name: parsedJson.common[i].food_name,
+      name: captilize(parsedJson.common[i].food_name),
       photo_url: parsedJson.common[i].photo.thumb,
       cho: '0',
-      servingUnit: '',
-      servingWeight: '',
+      serving_qty: parsedJson.common[i].serving_qty,
+      servingUnit: parsedJson.common[i].serving_unit,
+      servingWeight: parsedJson.common[i].serving_weight_grams,
     };
+    if (foodItem.photo_url == 'https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png') {
+      continue;
+    }
     foodItems.push(foodItem);
   }
 
@@ -106,11 +110,12 @@ export function parseMoreDetails(responseJSON: any) {
   }
 
   const detailedItem: FoodItem = {
-    name: parsedJson.foods[0].food_name,
+    name: captilize(parsedJson.foods[0].food_name),
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
-    servingUnit: parsedJson.foods[0].serving_qty + ' ' + parsedJson.foods[0].serving_unit,
+    servingUnit: parsedJson.foods[0].serving_unit,
     servingWeight: parsedJson.foods[0].serving_weight_grams,
+    serving_qty: parsedJson.foods[0].serving_qty,
   };
 
   return detailedItem;
@@ -128,12 +133,20 @@ export function parseFoodItemFromBarcode(responseJSON: any) {
   }
 
   const foodItem: FoodItem = {
-    name: parsedJson.foods[0].food_name,
+    name: captilize(parsedJson.foods[0].food_name),
     photo_url: parsedJson.foods[0].photo.thumb,
     cho: parsedJson.foods[0].nf_total_carbohydrate,
     servingUnit: parsedJson.foods[0].serving_unit,
     servingWeight: parsedJson.foods[0].serving_weight_grams,
+    serving_qty: parsedJson.foods[0].serving_qty,
   };
 
   return foodItem;
+}
+
+// https://stackoverflow.com/a/7592235/10610784
+function captilize(string: string) {
+  return string.replace(/(?:^|\s)\S/g, function(a) {
+    return a.toUpperCase();
+  });
 }

@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { View, Text, Card, CardItem, List, ListItem } from 'native-base';
 import { Log } from '../typings/Log';
-import { sortByDateDescending } from '../utils/ActivityLogUtils';
+import { sortByDateDescending, getLogHeader } from '../utils/ActivityLogUtils';
+import { styles } from '../styles/HomeScreen';
+import { GLOBAL } from '../styles/global';
 
 interface RecentLogsWidgetProps {
   logs: Log[];
   onSelectLog: (log: Log) => void;
   onPressOut?: (log: Log) => void;
   maxLogs?: number;
+  preview?: boolean;
+  selectedLog: Log;
 }
 
 export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
@@ -28,10 +32,10 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
     }
 
     return (
-      <View>
-        <Card>
+      <View style={GLOBAL.shadowBox}>
+        <Card style={this.props.preview ? styles.card : {}}>
           <CardItem header>
-            <Text>Recent Logs</Text>
+            <Text style={this.props.preview ? styles.header : {}}>Recent Logs</Text>
           </CardItem>
           <List>
             {sortedLogs.slice(0, this.props.maxLogs).map((log: Log, index: any) => {
@@ -40,8 +44,9 @@ export class RecentLogsWidget extends React.Component<RecentLogsWidgetProps> {
                   key={index}
                   onPress={() => this.props.onSelectLog(log)}
                   onPressOut={() => onPressOut(log)}
+                  selected={this.props.selectedLog == log}
                 >
-                  <Text>{String(new Date(log.time))}</Text>
+                  {getLogHeader(log)}
                 </ListItem>
               );
             })}

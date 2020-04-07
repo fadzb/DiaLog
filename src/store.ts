@@ -11,11 +11,9 @@ const initialState: any = {
   widgets: WIDGETS,
   choRatio: DEFAULT_CHO_RATIO,
   insulinSuggestions: DEFAULT_INSULIN_SUGGESTIONS,
+  messagesInChannel: 0,
+  messagesSeen: 0,
 };
-
-// export default createStore(rootReducer, initialState);
-
-//TODO: Persisted Store
 
 // Persist Config
 const persistConfig = {

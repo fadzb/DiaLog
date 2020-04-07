@@ -66,3 +66,4 @@ buck-out/
 # Firebase
 /.firebase/
 firebase-debug.log
+/ios/GoogleService-Info.plist

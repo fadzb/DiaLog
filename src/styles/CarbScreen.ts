@@ -1,5 +1,6 @@
 import { colors } from '../colors';
 import { StyleSheet } from 'react-native';
+import { TERTIARY } from './global';
 
 export const styles = StyleSheet.create({
   container: {
@@ -21,15 +22,17 @@ export const styles = StyleSheet.create({
   },
   listItemContainer: {
     height: 60,
-    width: '90%',
+    width: '96%',
     padding: 10,
     marginVertical: 1,
     marginHorizontal: 1,
-    borderColor: colors.GRAY_LIGHT,
-    borderWidth: 3,
+    borderColor: TERTIARY,
+    borderWidth: 5,
+    borderRadius: 15,
+    backgroundColor: 'white',
   },
   foodListContainer: {
-    flex: 0,
+    flex: 1,
   },
   scrollViewContainer: {
     borderWidth: 1,
@@ -72,7 +75,8 @@ export const styles = StyleSheet.create({
   scannerContainer: {
     flex: 1,
     backgroundColor: 'black',
-    marginBottom: 40,
+    marginBottom: 5,
+    width: '95%',
   },
   cameraContainer: {
     flex: 1,

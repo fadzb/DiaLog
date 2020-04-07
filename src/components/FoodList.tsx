@@ -47,8 +47,7 @@ export class FoodList extends React.Component<FoodListProps> {
     }
 
     return (
-      <View>
-        <Text style={{ alignSelf: 'flex-start' }}>{query}</Text>
+      <View style={{ alignItems: 'center', marginTop: 10 }}>
         {foodItems.map((item: FoodItem, index: any) => {
           return (
             <FoodItemContainer

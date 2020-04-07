@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { styles } from '../styles/LogActScreen';
-import { Item, Input, Button, Text, Form, Badge, View } from 'native-base';
+import { Item, Input, Button, Text, Form, Badge, Icon, CardItem, View, Toast } from 'native-base';
 import DateTimeInput from './DateTimeInput';
 import { Log } from '../typings/Log';
 import { FoodItem } from '../typings/FoodItem';
 import ActivityAddButton from './ActivityAddButton';
 import { makeNotesFromItem } from '../utils/ActivityLogUtils';
+import { getIcon } from '../utils/IconUtils';
+import { TouchableOpacity, AccessibilityInfo } from 'react-native';
+import { Card } from 'react-native-paper';
+import { GLOBAL, PRIMARY, SECONDARY } from '../styles/global';
+import { DateUtils } from '../utils/DateUtils';
 
 interface ActivityFormProps {
   handleSubmit: () => void;
   item: FoodItem;
   currentTime: any;
+  navigation: any;
 
   //Redux dispatch actions
   addLog: (log: Log) => void;
@@ -84,6 +90,20 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
       notes: notesInput,
     };
 
+    // Empty Log
+    if (log.insulin == 0 && log.cho == 0 && log.glucose == 0) {
+      Toast.show({
+        text: `Error: Cannot Submit Empty Log!`,
+        buttonText: 'Okay',
+      });
+      return;
+    }
+
+    Toast.show({
+      text: `Log at ${DateUtils.parseDateTimeIntoDateLabel(dateTimeInput)} Added!`,
+      buttonText: 'Okay',
+    });
+
     // Dispatch redux action
     this.props.addLog(log);
 
@@ -121,9 +141,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     });
   };
 
-  //TODO: Make the inputs more discrete initially, so it is clear to the user that not all fields are neccessary
   //TODO: Add a Clear button
-  //TODO: Allow user to add a note
   //TODO: Format time more appropriately
 
   // Componenet Updated: May have moved off and back onto screen
@@ -147,16 +165,29 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
     return (
       <View style={{ flex: 1 }}>
         <Form style={styles.form}>
-          <DateTimeInput
-            currentTime={this.state.dateTimeInput}
-            updateDateTime={this.handleUpdateDateTime}
-          />
+          <View
+            style={[
+              {
+                backgroundColor: 'white',
+                marginVertical: 20,
+                borderRadius: 30,
+                // borderWidth: 3,
+                paddingHorizontal: 10,
+              },
+              GLOBAL.shadowBox,
+            ]}
+          >
+            <DateTimeInput
+              currentTime={this.state.dateTimeInput}
+              updateDateTime={this.handleUpdateDateTime}
+            />
+          </View>
 
           {/* TODO: Refactor: export component to ActivityInput */}
           {/* <ActivityInput placeholder="Enter Glucose" badgeType="glucose" /> */}
 
           {this.state.addGlucose ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.glucoseRef = input;
@@ -164,6 +195,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Glucose"
                 onChangeText={this.handleGlucoseChange}
                 keyboardType={'numeric'}
+                maxLength={3}
               />
               <Badge success style={styles.badge}>
                 <Text>{this.state.glucoseInput} mmo/l</Text>
@@ -171,12 +203,12 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <ActivityAddButton success handlePress={() => this.setState({ addGlucose: true })}>
-              <Text>Add Glucose</Text>
+              <Text style={styles.buttonText}>Add Blood Glucose</Text>
             </ActivityAddButton>
           )}
 
           {this.state.addInsulin ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.insulinRef = input;
@@ -184,6 +216,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder="Enter Insulin"
                 onChangeText={this.handleInsulinChange}
                 keyboardType={'numeric'}
+                maxLength={3}
               />
               <Badge info style={styles.badge}>
                 <Text>{this.state.insulinInput} Units</Text>
@@ -191,12 +224,12 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             </Item>
           ) : (
             <ActivityAddButton info handlePress={() => this.setState({ addInsulin: true })}>
-              <Text>Add Insulin</Text>
+              <Text style={styles.buttonText}>Add Insulin</Text>
             </ActivityAddButton>
           )}
 
           {this.getName() || this.state.addCho ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.choRef = input;
@@ -204,19 +237,37 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
                 placeholder={this.getName() || 'Enter Carbohydrate'}
                 onChangeText={this.handleChoChange}
                 keyboardType={'numeric'}
+                maxLength={4}
               />
               <Badge warning style={styles.badge}>
                 <Text>{this.state.choInput} g</Text>
               </Badge>
             </Item>
           ) : (
-            <ActivityAddButton warning handlePress={() => this.setState({ addCho: true })}>
-              <Text>Add Carbohydrate</Text>
-            </ActivityAddButton>
+            <View style={{}}>
+              <ActivityAddButton
+                warning
+                style={{ backgroundColor: SECONDARY }}
+                handlePress={() => this.setState({ addCho: true })}
+              >
+                <Text style={styles.buttonText}>Add Carbohydrate</Text>
+              </ActivityAddButton>
+              <TouchableOpacity onPressOut={() => this.props.navigation.navigate('Carb')}>
+                <Icon
+                  style={{
+                    position: 'absolute',
+                    right: -40,
+                    bottom: 13,
+                    color: PRIMARY,
+                  }}
+                  name={'search'}
+                />
+              </TouchableOpacity>
+            </View>
           )}
 
           {this.state.addNotes || this.state.notesInput ? (
-            <Item rounded style={styles.inputPills}>
+            <Item rounded style={[styles.inputPills, GLOBAL.shadowBox]}>
               <Input
                 ref={input => {
                   this.textInputs.notesRef = input;
@@ -234,7 +285,7 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
             <Button
               light
               onPress={() => this.setState({ addNotes: true })}
-              style={{ marginVertical: 20 }}
+              style={[{ marginVertical: 20 }, GLOBAL.shadowBox]}
             >
               <Text>Add Notes...</Text>
             </Button>
@@ -242,18 +293,21 @@ export class ActivityForm extends React.Component<ActivityFormProps> {
         </Form>
 
         <View
-          style={{
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            marginBottom: 36,
-            flex: 1,
-          }}
+          style={[
+            {
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              marginBottom: 36,
+              flex: 1,
+            },
+            GLOBAL.shadowBox,
+          ]}
         >
           <Button
-            style={{ width: '70%', justifyContent: 'center', marginVertical: 20 }}
+            style={{ width: '65%', justifyContent: 'center', marginVertical: 20, borderRadius: 10 }}
             onPress={this.handleSubmit}
           >
-            <Text>Submit Log</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 21 }}>SUBMIT LOG</Text>
           </Button>
         </View>
       </View>

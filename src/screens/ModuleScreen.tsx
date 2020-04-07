@@ -1,8 +1,24 @@
 import * as React from 'react';
-import { Container, Header, Title, Content } from 'native-base';
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  View,
+  List,
+  ListItem,
+  Left,
+  Thumbnail,
+  Text,
+  Body,
+  Right,
+  Button,
+} from 'native-base';
 import { styles } from '../styles/TrainScreen';
 import { ModuleHeader } from '../components/ModuleHeader';
 import { TrainModule } from '../typings/TrainModule';
+import { WebView } from 'react-native-webview';
+const DAFNE_IMAGE = require('../assets/images/dafne.png');
 
 interface ModuleScreenProps {
   navigation: any;
@@ -19,20 +35,41 @@ export class ModuleScreen extends React.Component<ModuleScreenProps> {
     moduleGroup: this.props.navigation.getParam('moduleGroup'),
   };
 
+  handlePress = (module: TrainModule) => {
+    this.props.navigation.navigate('Web', { module: module });
+  };
+
   render() {
     const { moduleList, moduleGroup } = this.state;
 
     return (
-      <Container style={styles.container}>
-        <Header>
-          <Title>{moduleGroup}</Title>
-        </Header>
-        <Content style={styles.contentContainer}>
+      <View>
+        <List>
+          <ListItem itemHeader>
+            <Text>{moduleGroup}</Text>
+          </ListItem>
           {moduleList.map((module: TrainModule, index: any) => {
-            return <ModuleHeader module={module} key={index} />;
+            return (
+              <ListItem key={`list-item-${module}`} thumbnail>
+                <Left>
+                  <Thumbnail square source={DAFNE_IMAGE} />
+                </Left>
+                <Body>
+                  <Text>{module.moduleName}</Text>
+                  <Text note numberOfLines={1}>
+                    {module.desc} ...
+                  </Text>
+                </Body>
+                <Right>
+                  <Button onPress={() => this.handlePress(module)}>
+                    <Text>View</Text>
+                  </Button>
+                </Right>
+              </ListItem>
+            );
           })}
-        </Content>
-      </Container>
+        </List>
+      </View>
     );
   }
 }

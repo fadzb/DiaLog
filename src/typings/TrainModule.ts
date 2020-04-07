@@ -3,4 +3,7 @@ export interface TrainModule {
   // levels: TrainLevel[]; : Not using levels atm
   moduleGroup: string;
   moduleContent: string;
+  // new fields
+  thumbnail: string;
+  desc: string;
 }

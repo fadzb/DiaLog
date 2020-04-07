@@ -3,8 +3,17 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 target 'HealthyApp' do
   # Pods for HealthyApp
+
+  #lin grad 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  
   # pod 'RNSVGRect', :path => "../nsode_modules/react-native/Libraries/RNSVGRect"
   # Firebase ML Kit
+  pod 'Firebase'
+  pod 'Firebase/InAppMessaging'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/InAppMessagingDisplay'
+
   pod 'Firebase/MLVision'
   # On device ml
   pod 'Firebase/MLVisionLabelModel'

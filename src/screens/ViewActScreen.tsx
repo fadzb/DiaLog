@@ -7,6 +7,8 @@ import { Log } from '../typings/Log';
 import { ScrollView } from 'react-native';
 import { RecentLogsWidget } from '../components/RecentLogsWidget';
 import { LogDetails } from '../components/LogDetails';
+import { GradientContainer } from '../components/GradientContainer';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface ViewActScreenProps {
   navigation: any;
@@ -30,7 +32,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   }
 
   state = {
-    selectedLog: null,
+    selectedLog: {},
   };
 
   handleAddNewLog = () => {
@@ -43,7 +45,7 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
 
   handleFocus = () => {
     // Reset the selected log
-    // this.setState({ selectedLog: null });
+    this.setState({ selectedLog: null });
   };
 
   // Remove listener
@@ -54,33 +56,49 @@ class ViewActScreen extends React.Component<ViewActScreenProps> {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ActivityChart
-          preview={false}
-          logs={this.props.logs}
-          onSelectLog={this.handleSelectLog}
-          navigation={this.props.navigation}
-        />
-        <Button
-          style={{ width: '98%', alignSelf: 'center', justifyContent: 'center' }}
-          onPress={this.handleAddNewLog}
-        >
-          <Text>Add New Log</Text>
-        </Button>
-
-        {/* Recent Logs */}
-        {this.props.logs.length > 0 && (
-          <ScrollView>
-            <RecentLogsWidget logs={this.props.logs} onSelectLog={this.handleSelectLog} />
-          </ScrollView>
-        )}
-
-        {/* Log Details */}
-        {this.state.selectedLog && (
-          <LogDetails
-            log={this.state.selectedLog}
-            closeDetails={() => this.setState({ selectedLog: null })}
+        <GradientContainer>
+          {/* <LinearGradient colors={['rgba(245,248,114,1)', 'white']} style={{}}> */}
+          <ActivityChart
+            preview={false}
+            logs={this.props.logs}
+            onSelectLog={this.handleSelectLog}
+            selectedLog={this.state.selectedLog}
+            navigation={this.props.navigation}
           />
-        )}
+          {/* </LinearGradient> */}
+          <Button
+            style={{
+              width: '98%',
+              margin: 5,
+              borderRadius: 10,
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={this.handleAddNewLog}
+          >
+            <Text style={{ fontWeight: 'bold', fontSize: 21 }}>ADD NEW LOG</Text>
+          </Button>
+
+          {/* Recent Logs */}
+          {this.props.logs.length > 0 && (
+            <ScrollView>
+              <RecentLogsWidget
+                logs={this.props.logs}
+                onSelectLog={this.handleSelectLog}
+                selectedLog={this.state.selectedLog}
+                maxLogs={10}
+              />
+            </ScrollView>
+          )}
+
+          {/* Log Details */}
+          {this.state.selectedLog && (
+            <LogDetails
+              log={this.state.selectedLog}
+              closeDetails={() => this.setState({ selectedLog: null })}
+            />
+          )}
+        </GradientContainer>
       </View>
     );
   }

@@ -5,12 +5,15 @@ import { styles } from '../styles/CarbScreen';
 import { requestFoodDetails, parseMoreDetails } from '../api/FoodAPI';
 import { FoodItemModal } from './FoodItemModal';
 import { View } from 'native-base';
+import { GLOBAL } from '../styles/global';
+
+const TRUNCATE_AFTER = 20;
 
 interface FoodItemContainerProps {
   navigation: any;
   item: FoodItem;
   key: string;
-  choRatio: string;
+  choRatio: number;
   insulinSuggestions: boolean;
 }
 
@@ -59,9 +62,16 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
     this.setState({ modalVisible: false });
   };
 
+  truncate(string: string) {
+    return string.length > TRUNCATE_AFTER ? string.substr(0, TRUNCATE_AFTER) + '...' : string;
+  }
+
   render() {
     return (
-      <TouchableOpacity onPress={this.handleClick} style={styles.listItemContainer}>
+      <TouchableOpacity
+        onPress={this.handleClick}
+        style={[styles.listItemContainer, GLOBAL.shadowBox]}
+      >
         {this.state.modalVisible && (
           <FoodItemModal
             navigation={this.props.navigation}
@@ -74,7 +84,13 @@ export class FoodItemContainer extends React.Component<FoodItemContainerProps> {
         )}
         <View style={styles.row}>
           <Image source={{ uri: this.props.item.photo_url }} style={{ width: 40, height: 40 }} />
-          <Text style={{ fontSize: 22, marginLeft: 20 }}>{this.props.item.name} </Text>
+          <Text style={{ fontSize: 22, marginLeft: 20, alignSelf: 'center' }}>
+            {this.truncate(this.props.item.name)}{' '}
+          </Text>
+          <Text style={{ marginLeft: 'auto' }}>
+            {this.props.item.serving_qty} {this.props.item.servingUnit}
+          </Text>
+          <Text></Text>
         </View>
       </TouchableOpacity>
     );

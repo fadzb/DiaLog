@@ -6,6 +6,8 @@ import {
   ADD_CHANNEL_KEY,
   SET_CHO_RATIO,
   SET_INSULIN_SUGGESTIONS,
+  UPDATE_MESSAGES_IN_CHANNEL,
+  UPDATE_MESSAGES_SEEN,
 } from './types';
 import { Log } from '../typings/Log';
 import { Widget } from '../typings/Widget';
@@ -55,5 +57,19 @@ export const setInsulinSuggestions = (value: boolean) => {
   return {
     type: SET_INSULIN_SUGGESTIONS,
     payload: value,
+  };
+};
+
+export const updateMessagesInChannel = (newMessages: number) => {
+  return {
+    type: UPDATE_MESSAGES_IN_CHANNEL,
+    payload: newMessages,
+  };
+};
+
+export const updateMessagesSeen = (number: number) => {
+  return {
+    type: UPDATE_MESSAGES_SEEN,
+    payload: number,
   };
 };

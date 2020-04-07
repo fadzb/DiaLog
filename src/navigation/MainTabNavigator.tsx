@@ -5,75 +5,72 @@ import LogActScreen from '../screens/LogActScreen';
 import ViewActScreen from '../screens/ViewActScreen';
 import { getIcon } from '../utils/IconUtils';
 import ProfileScreen from '../screens/ProfileScreen';
+import { PRIMARY, SECONDARY, TERTIARY } from '../styles/global';
+import { View, Text } from 'native-base';
+import * as React from 'react';
 
 export const TabNavigator = createBottomTabNavigator(
   {
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        tabBarLabel: 'Home',
+        tabBarLabel: ({ tintColor }: any) => (
+          <Text style={{ fontSize: 13, color: tintColor }}>Home</Text>
+        ),
+        tabBarIcon: ({ tintColor }) => getIcon('home', tintColor),
       },
     },
     Carb: {
       screen: CarbScreen,
       navigationOptions: {
-        tabBarLabel: 'Food',
+        tabBarLabel: ({ tintColor }: any) => (
+          <Text style={{ fontSize: 13, color: tintColor }}>Food</Text>
+        ),
+        tabBarIcon: ({ tintColor }) => getIcon('food', tintColor),
       },
     },
     LogAct: {
       screen: LogActScreen,
       navigationOptions: {
-        tabBarLabel: 'Add Log',
+        tabBarLabel: ({ tintColor }: any) => (
+          <Text style={{ fontSize: 13, color: tintColor }}>Add Log</Text>
+        ),
+        tabBarIcon: ({ tintColor }) => getIcon('addLog', tintColor),
       },
     },
     ViewAct: {
       screen: ViewActScreen,
       navigationOptions: {
-        tabBarLabel: 'Activity',
+        tabBarLabel: ({ tintColor }: any) => (
+          <Text style={{ fontSize: 13, color: tintColor }}>Activity</Text>
+        ),
+        tabBarIcon: ({ tintColor }) => getIcon('activity', tintColor),
       },
     },
     Profile: {
       screen: ProfileScreen,
       navigationOptions: {
-        tabBarLabel: 'Settings',
+        tabBarLabel: ({ tintColor }: any) => (
+          <Text style={{ fontSize: 13, color: tintColor }}>Settings</Text>
+        ),
+        tabBarIcon: ({ tintColor }) => getIcon('settings', tintColor),
       },
     },
   },
   {
-    defaultNavigationOptions: ({ navigation }: any) => ({
-      // eslint-disable-next-line react/prop-types
-      tabBarIcon: () => {
-        const { routeName } = navigation.state;
-        let icon = '';
-        switch (routeName) {
-          case 'Home':
-            icon = 'home';
-            break;
-          case 'Carb':
-            icon = 'food';
-            break;
-          case 'LogAct':
-            icon = 'addLog';
-            break;
-          case 'ViewAct':
-            icon = 'activity';
-            break;
-          case 'Profile':
-            icon = 'settings';
-            break;
-          default:
-            icon = 'home';
-        }
-
-        return getIcon(icon);
-      },
-      // tab bar options can go here
-    }),
+    // tab bar options can go here
+    tabBarOptions: {
+      activeTintColor: SECONDARY,
+      inactiveTintColor: PRIMARY,
+      // activeBackgroundColor: SECONDARY,
+      tabStyle: {},
+    },
   },
 );
 
 TabNavigator.navigationOptions = ({ navigation }: any) => {
   // const { routeName } = navigation.state.routes[navigation.state.index];
+  // console.log(navigation.state.index);
 
   // You can do whatever you like here to pick the title based on the route name
   // const headerTitle = routeName;
