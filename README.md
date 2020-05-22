@@ -1,9 +1,4 @@
-# HealthyApp
-
-Commit Info
-initialWorkBranch => Setup Login as Landing screen and added Router Dependency, need to install redux for state management and configure router properly.
-
-# DiaLog
+# ![](https://github.com/fadzb/HealthyApp/blob/newReadMe/readme-files/logo.jpg)
 
 DiaLog is a cross-platform mobile app designed to improve health outcomes for Diabetics (Type 1 Focused). The app was implemented as part of a [Final Year Project](https://drive.google.com/file/d/1hrip-ltuZB2yZoSM6YA3ZADtmoyNBE4D/view?usp=sharing).
 
@@ -11,15 +6,15 @@ The app was built using TypeScript, React-Native and Redux.
 
 ## Screenshots
 
-[Insert screenshots]
+![](https://github.com/fadzb/HealthyApp/blob/newReadMe/readme-files/screens1.jpg)
 
 ## Use Cases
 
-[Insert Diagram]
+![](https://github.com/fadzb/HealthyApp/blob/newReadMe/readme-files/use-cases.jpg)
 
 ## Firebase
 
-Firebase was selected as the MBaaS for the following services: [Insert Diagram]
+Firebase was selected as the MBaaS for the following services: ![](https://github.com/fadzb/HealthyApp/blob/newReadMe/readme-files/mbaas.jpg)
 
 ## Installation
 
