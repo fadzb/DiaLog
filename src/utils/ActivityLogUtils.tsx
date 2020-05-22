@@ -28,7 +28,7 @@ export function getLogHeader(log: Log) {
   } else {
     return (
       <Text>
-        {DateUtils.parseDateTimeIntoDateLabel(log.time)} : ${getTypes(log)}
+        {DateUtils.parseDateTimeIntoDateLabel(log.time)} : {getTypes(log)}
       </Text>
     );
   }
